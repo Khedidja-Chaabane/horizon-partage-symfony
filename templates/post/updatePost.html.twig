@@ -1,15 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Post{% endblock %}
+{% block title %}New Post
+{% endblock %}
 
 {% block body %}
 
-<div class="example-wrapper">
-    <h1>Modifier le Post</h1>
-
-    {{ form_start(formUpdatePost) }}
-    {{ form_widget(formUpdatePost) }}
-    <button type="submit">Register</button>
-{{ form_end(formUpdatePost) }}
-</div>
+	<div class="example-wrapper">
+		<h1>Modifier le Post</h1>
+		{% if app.user and app.user == post.auteur %}
+			{{ form_start(formUpdatePost) }}
+			{{ form_widget(formUpdatePost) }}
+			<button type="submit">Register</button>
+			{{ form_end(formUpdatePost) }}
+			<form action="{{ path('delete_post', {'id': post.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer le post {{ post.titre|lower }} ?')">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+				<button class="btn p-0">
+					<i class="text-danger" data-feather="trash"></i>
+					Supprimer
+				</button>
+			</form>
+		{% endif %}
+	</div>
 {% endblock %}

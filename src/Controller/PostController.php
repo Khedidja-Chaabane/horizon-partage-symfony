@@ -82,7 +82,22 @@ public function showPost(int $id, PostRepository $postRepository): Response
 
 public function updatePost(int $id,Request $request, PostRepository $postRepository): Response
 {
-    $post = $postRepository->find($id);
+     // Vérification que l'utilisateur est connecté
+     $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_home');
+        }
+    $post = $postRepository->find($id); // chercher l'article par son id
+     // Vérification que le post existe
+     if (!$post) {
+        // Si le post n'existe pas, rediriger vers la page d'accueil ou afficher un message d'erreur
+        return $this->redirectToRoute('app_home');
+    }
+     // Vérification que l'utilisateur est l'auteur du post
+     if ($post->getAuteur() !== $user) {
+        // Si l'utilisateur n'est pas l'auteur, on le redirige vers la page d'accueil
+        return $this->redirectToRoute('app_home');
+    }
     // Création du formulaire lié à l'objet $post
     $form = $this->createForm(PostType::class, $post);
 
@@ -126,7 +141,23 @@ public function updatePost(int $id,Request $request, PostRepository $postReposit
 
 public function deletePost(int $id, PostRepository $postRepository, Request $request): Response
 {
-    $post = $postRepository->find($id);     // Récupération du post à supprimer
+     // Vérification que l'utilisateur est connecté
+     $user = $this->getUser();
+    if (!$user) {
+        return $this->redirectToRoute('app_home');
+    }
+
+    $post = $postRepository->find($id);
+
+    // Vérification que le post existe
+    if (!$post) {
+        return $this->redirectToRoute('app_home');
+    }
+
+    // Vérification que l'utilisateur est l'auteur du post
+    if ($post->getAuteur() !== $user) {
+        return $this->redirectToRoute('app_home');
+    }
     // Vérification de la validité du token envoyé avec la requête
 
     if ($this->isCsrfTokenValid(

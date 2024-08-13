@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}Profil de {{ user.userName }}{% endblock %}
 
 {% block body %}
 <style>
@@ -9,8 +9,30 @@
 </style>
 
 <div class="example-wrapper">
-   <h1>Profil de {{ user.nomUser }}</h1>
+   <h1>Bonjour {{ user.userName }}</h1>
+   <h2>Informations du profil : </h2>
 <p>Email : {{ user.email }}</p>
 <p>Prénom : {{ user.prenomUser }}</p>
+<p>Nom : {{ user.nomUser }}</p>
+
+<div class="container">
+ <h2>Posts rédigés : </h2>
+    {% if posts is not empty %}
+        <ul>
+            {% for post in posts %}
+           
+                <li>
+                    <a href="{{ path('show_post', { 'id': post.id }) }}">{{ post.titre }}</a>
+                    
+                </li>
+               
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun post trouvé.</p>
+        			<a class="btn" href="{{ path('new_post')}}">Rédiger un post ?</a>
+
+    {% endif %}
+</div>
 </div>
 {% endblock %}

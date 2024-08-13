@@ -37,6 +37,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'auteur', orphanRemoval: true)]
     private Collection $posts;
 
+    #[ORM\Column(length: 255 , unique: true)]
+    private ?string $userName = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -129,6 +132,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+    * Récupère la collection de posts associés à cet utilisateur.
      * @return Collection<int, Post>
      */
     public function getPosts(): Collection
@@ -138,9 +142,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addPost(Post $post): static
     {
-        if (!$this->posts->contains($post)) {
-            $this->posts->add($post);
-            $post->setAuteur($this);
+        if (!$this->posts->contains($post)) {// Vérifie si le post n'est pas déjà dans la collection
+            $this->posts->add($post);// Ajoute le post à la collection de l'utilisateur
+            $post->setAuteur($this);// Définit cet utilisateur comme l'auteur du post
         }
 
         return $this;
@@ -148,12 +152,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removePost(Post $post): static
     {
-        if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
-            if ($post->getAuteur() === $this) {
-                $post->setAuteur(null);
+        if ($this->posts->removeElement($post)) { // Supprime le post de la collection de l'utilisateur
+        // Si le post appartient encore à cet utilisateur, on le désassocie
+        if ($post->getAuteur() === $this) {
+                $post->setAuteur(null);// Définit l'auteur du post à null (désassocie l'utilisateur du post)
             }
         }
+
+        return $this;
+    }
+
+    public function getUserName(): ?string
+    {
+        return $this->userName;
+    }
+
+    public function setUserName(string $userName): static
+    {
+        $this->userName = $userName;
 
         return $this;
     }

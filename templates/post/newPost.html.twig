@@ -6,10 +6,11 @@
 
 <div class="example-wrapper">
     <h1>Nouveau Post</h1>
-
+{% if app.user %}
     {{ form_start(postForm) }}
     {{ form_widget(postForm) }}
     <button type="submit">Register</button>
 {{ form_end(postForm) }}
+{% endif %}
 </div>
 {% endblock %}

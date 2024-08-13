@@ -22,8 +22,8 @@
 			<a href="{{ path('new_post')}}">Ajouter un Nouveau post</a>
 		{% endif %}
 		<div class="container">
-		{% if post.image %}
-			<img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+			{% if post.image %}
+				<img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
 			{% endif %}
 			<div class="mt-3 mb-3">
 				<h5 class="text-center">{{ post.titre |capitalize }}</h5>
@@ -37,17 +37,18 @@
 						{{ post.datePublication|date('d/m/Y H:i') }}</small>
 				</p>
 			</div>
-			<a href="{{ path('update_post', {'id': post.id}) }}" class="btn">Modifier le Post</a>
-			<form action="{{ path('delete_post' , {'id' : post.id })}}" method="post" onclick="return confirm('ssouhaitez-vous vraiment supprimer le post {{ post.titre|lower }} ?')">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id ) }}">
-				<button class=" btn p-0">
-					<i class="text-danger" data-feather="trash"></i>
-Supprimer
-				</button>
-
-			</form>
+			{# Afficher les boutons Modifier et Supprimer uniquement si l'utilisateur connecté est l'auteur du post #}
+			{% if app.user and app.user == post.auteur %}
+				<a href="{{ path('update_post', {'id': post.id}) }}" class="btn">Modifier le Post</a>
+				<form action="{{ path('delete_post', {'id': post.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer le post {{ post.titre|lower }} ?')">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+					<button class="btn p-0">
+						<i class="text-danger" data-feather="trash"></i>
+						Supprimer
+					</button>
+				</form>
+			{% endif %}
 		</div>
-
 
 	</div>
 {% endblock %}
