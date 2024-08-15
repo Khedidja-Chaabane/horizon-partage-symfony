@@ -31,8 +31,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $role = null;
+    #[ORM\Column(type: 'json')]
+    private array $roles = []; // Rôles sous forme de tableau JSON
 
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'auteur', orphanRemoval: true)]
     private Collection $posts;
@@ -98,26 +98,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?string
-    {
-        return $this->role;
+    
+    public function getRoles(): array
+{
+    // Commencer par le rôle de base pour tous les utilisateurs
+    $roles = $this->roles;
+
+    // Assurer que 'ROLE_USER' est toujours inclus
+    if (!in_array('ROLE_USER', $roles, true)) {
+        $roles[] = 'ROLE_USER';
     }
 
-    public function setRole(?string $role): static
+    return array_unique($roles);
+}
+
+
+public function setRoles(array $roles): self
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
-    }
-    public function getRoles(): array
-    {
-        // return an array of roles, e.g., ['ROLE_USER']
-        return ['ROLE_USER'];
     }
 
     public function getSalt(): ?string
     {
-        // Le sel n'est pas nécessaire lorsque vous utilisez bcrypt ou argon2i
+        // Le sel n'est pas nécessaire lorsque on utilise bcrypt 
         return null;
     }
 

@@ -28,13 +28,14 @@ class UserController extends AbstractController
                     $form->get('plainPassword')->getData()  // Mot de passe en clair récupéré depuis le formulaire
                 )
             );
-
+            // Assigner le rôle par défaut 'ROLE_USER'
+            $user->setRoles(['ROLE_USER']);
             // Sauvegarder l'utilisateur
             $entityManager->persist($user);
             $entityManager->flush();
 
             // Redirection ou autre traitement après l'enregistrement
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('user/register.html.twig', [

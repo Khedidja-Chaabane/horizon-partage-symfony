@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du role
+{% endblock %}
+
+{% block body %}
+	<div class="container my-4">
+		<h1>Modification du role</h1>
+		{# {% include "_flashes.html.twig" %} #}
+
+		<h1>Update Role for {{ user.userName }}</h1>
+
+    {{ form_start(updateUserRoleForm) }}
+        {{ form_widget(updateUserRoleForm) }}
+        <button type="submit">Update Role</button>
+    {{ form_end(updateUserRoleForm) }}
+
+    <a href="{{ path('gestion_users') }}">Back to user management</a>
+	</div>
+{% endblock %}

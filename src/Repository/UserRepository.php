@@ -20,7 +20,16 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
+    
+ //  UPDATE
+ public function save(User $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
 
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

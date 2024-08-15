@@ -12,11 +12,12 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ path('app_forum')}}">Forum</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+         {% if app.user %}
+          {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ path('app_admin')}}">Dashboard</a>
         </li>
-       
-        {% if app.user %}
+{% endif %}
         <li class="nav-item">
           <a class="nav-link" href="{{ path('app_profile')}}">Profil</a>
         </li>
@@ -31,9 +32,7 @@
           <a class="nav-link" href="{{ path('app_login')}}">Connexion</a>
         </li>
         {% endif %}
-        {% if app.user %}
- {# <li class="nav-item">Bonjour {{ user.userName }}</li> #}
-{% endif %}
+        
       </ul>
     </div>
   </div>

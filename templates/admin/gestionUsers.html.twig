@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion Users
+{% endblock %}
+
+{% block body %}
+	<div class="container my-4">
+		<h1>Gestion des utilisateurs</h1>
+		{# {% include "_flashes.html.twig" %} #}
+
+		{% if users is not empty %}
+			<table class="table table-striped mt-4">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Email</th>
+						<th>Pseudo</th>
+						<th>Rôle</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr>
+							<td>{{ user.nomUser|capitalize }}</td>
+							<td>{{ user.prenomUser|capitalize }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{ user.userName }}</td>
+
+							<td>
+								{% for role in user.roles %}
+									{{ role }}
+								{% endfor %}
+							</td>
+							<td>
+								<a href="{{ path('gestion_users_role', {'id': user.id}) }}">modifier le rôle</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}
