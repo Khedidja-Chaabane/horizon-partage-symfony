@@ -1,20 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ActionController!{% endblock %}
+{% block title %}Nos actions{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container">
+        <h1>Nos actions</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
+        {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/jijil/horizon-partage-sf/src/Controller/ActionController.php'|file_link(0) }}">src/Controller/ActionController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/jijil/horizon-partage-sf/templates/action/index.html.twig'|file_link(0) }}">templates/action/index.html.twig</a></code></li>
-    </ul>
-</div>
+        {% for action in actions %}
+            <div class="card mb-4">
+                <img src="{{ asset('images/action/' ~ action.image) }}" alt="{{ action.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ action.titre | capitalize }}</h5>
+                    <p class="card-text">
+                        {% if action.tarif %}
+                            <small class="text-muted">{{ action.tarif }} €</small>
+                        {% else %}
+                            <strong class="text-muted">Gratuit</strong>
+                        {% endif %}
+                    </p>
+                    <p class="card-text">{{ action.description | capitalize | slice(0, 100) ~ '...' }}</p>
+
+                    {% if action.date %}
+                        <p class="card-text">
+                            <small class="text-muted">Date : {{ action.date | date('d/m/Y') }}</small>
+                        </p>
+                    {% endif %}
+
+                    {% if action.horaire %}
+                        <p class="card-text">
+                            <small class="text-muted">Horaire : {{ action.horaire | date('H:i') }}</small>
+                        </p>
+                    {% endif %}
+
+                    {% if action.nombrePlaces %}
+                        <p class="card-text">
+                            <small class="text-muted">Nombre de places : {{ action.nombrePlaces }}</small>
+                        </p>
+                    {% endif %}
+
+                    {% if action.lieu %}
+                        <p class="card-text">
+                            <small class="text-muted">Lieu : {{ action.lieu | capitalize }}</small>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -56,7 +56,9 @@ class PostController extends AbstractController
             }
             $post->setDatePublication(new \DateTimeImmutable('now'));
             $post->setAuteur($this->getUser());
-            $postRepository->add($post, true); //save c'est add dans autres versions de sf
+            $postRepository->add($post, true); 
+            $this->addFlash('success', 'le post a bien été ajouté');
+
             return $this->redirectToRoute('app_forum');
         }
         return $this->render('post/newPost.html.twig', [
@@ -126,6 +128,7 @@ public function updatePost(int $id,Request $request, PostRepository $postReposit
 
         // Enregistrement du post modifié
         $postRepository->add($post, true);
+        $this->addFlash('success', 'le produit a bien été modifié');
 
         return $this->redirectToRoute('app_forum');
     }
@@ -169,9 +172,9 @@ public function deletePost(int $id, PostRepository $postRepository, Request $req
             unlink($this->getParameter('post') . '/' . $post->getImage() );
         }
         $postRepository->remove($post, true);
-        //$this->addFlash('success', 'le produit a bien été supprimé');
+        $this->addFlash('success', 'le post a bien été ajouté');
     } else {
-        //$this->addFlash('error', 'le produit ne peut pas etre supprimé');
+        $this->addFlash('error', 'le post ne peut pas etre supprimé');
     }
     return $this->redirectToRoute('app_forum');
 }

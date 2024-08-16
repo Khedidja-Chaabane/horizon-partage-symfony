@@ -20,22 +20,22 @@ class Action
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
     private ?float $tarif = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\Column]
+   #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $nombrePlaces = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $horaire = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $lieu = null;
 
     public function getId(): ?int
@@ -108,10 +108,9 @@ class Action
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setDate(?\DateTimeInterface $date): static
     {
         $this->date = $date;
-
         return $this;
     }
 
@@ -120,12 +119,12 @@ class Action
         return $this->horaire;
     }
 
-    public function setHoraire(\DateTimeInterface $horaire): static
+    public function setHoraire(?\DateTimeInterface $horaire): static
     {
         $this->horaire = $horaire;
-
         return $this;
     }
+
 
     public function getLieu(): ?string
     {

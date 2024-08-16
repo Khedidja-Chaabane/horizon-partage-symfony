@@ -33,9 +33,10 @@ class UserController extends AbstractController
             // Sauvegarder l'utilisateur
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->addFlash('success', 'Inscription réussie , veuillez vous connecter !');
 
             // Redirection ou autre traitement après l'enregistrement
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('user/register.html.twig', [

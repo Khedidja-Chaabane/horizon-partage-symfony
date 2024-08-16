@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestions des actions{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+		<h1>Gestion des actions</h1>
+		{# {% include "_flashes.html.twig" %} #}
+
+		{% if actions is not empty %}
+			<table class="table table-striped mt-4">
+				<thead>
+					<tr>
+						<th>Titre</th>
+						<th>Tarif</th>
+						<th>Date</th>
+						<th>Horaire</th>
+						<th>Nombre de places</th>
+                        <th>Lieu</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for action in actions %}
+						<tr>
+							<td>{{ action.titre|capitalize }}</td>
+                            {% if action.tarif %}
+							<td>{{ action.tarif}} €</td>
+                            {% else %}
+                            <td>Gratuit</td>
+                            {% endif %}
+                           {% if action.date %}
+							<td>{{ action.date | date('d/m/Y') }}</td>
+                            {% else %}
+                            <td>/</td>
+                            {% endif %}
+                            {% if action.horaire %}
+							<td>{{ action.horaire | date('H:i') }}</td>
+                             {% else %}
+                            <td>/</td>
+                            {% endif %}
+                             {% if action.nombrePlaces %}
+							<td>{{ action.nombrePlaces }}</td>
+                             {% else %}
+                            <td>/</td>
+                            {% endif %}
+							 {% if action.lieu %}
+							<td>{{ action.lieu}}</td>
+                             {% else %}
+                            <td>/</td>
+                            {% endif %}
+							
+							<td>
+								<a href="{{ path('admin_update_action', {'id': action.id}) }}">modifier </a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+   
+{% endblock %}

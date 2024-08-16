@@ -17,18 +17,14 @@ class PostType extends AbstractType
     {
         $builder
         ->add('titre', null, [
-                'label' => 'titre du produit',
+                'label' => 'titre du post',
                 'required' => true,
                 'label_attr' => [
                     "class" => "text-success"
                 ],
                 'attr' => [
                     'placeholder' => 'saisir un titre',
-                    'class' => 'border border-warning'
-                ],
-                'help' => 'le titre doit etre ......',
-                'help_attr' => [
-                    'class' => 'text-info text-center'
+                    'class' => 'border border-success'
                 ],
                 'row_attr' => [
                     "class" => "shadow p-3 col-md-6"
@@ -41,7 +37,7 @@ class PostType extends AbstractType
                         'min' => 5,
                         'minMessage' => 'veuillez saisir au minimum 5 caracters',
                         'max' => 50,
-                        'maxMessage' => 'veuillez saisir au max 50 caracters',
+                        'maxMessage' => 'veuillez saisir au max 100 caracters',
 
                     ])
                 ]
