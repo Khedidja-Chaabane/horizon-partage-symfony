@@ -6,7 +6,6 @@ use App\Entity\Action;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -78,9 +77,13 @@ class ActionType extends AbstractType
                     new Positive(['message' => 'Le prix doit être supérieur à 0']),
                 ]
             ])
+            
+            // Ajout d'un champ pour téléverser une nouvelle image
             ->add('image', FileType::class, [
-                'required' => true,
-                'mapped' => false
+                'required' => false, // Non requis, car l'utilisateur peut garder l'image actuelle
+                'mapped' => false,
+                'label' => 'Nouvelle image ',
+                'attr' => ['readonly' => true],
             ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text',

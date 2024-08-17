@@ -18,4 +18,17 @@ class ActionController extends AbstractController
             'actions' => $actions,
         ]);
     }
+
+    // Affichage d'une action spécifique
+    #[Route('/action/{id}', name: 'show_action')]
+    public function showAction(int $id, ActionRepository $actionRepo): Response
+    {
+        $action = $actionRepo->find($id);
+        if(!$action){
+            return  $this->redirectToRoute('app_actions');
+        }
+        return $this->render('action/showAction.html.twig', [
+        'action' => $action
+    ]);
+    }
 }

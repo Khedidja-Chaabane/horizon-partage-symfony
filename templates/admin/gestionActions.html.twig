@@ -5,7 +5,7 @@
 {% block body %}
 <div class="container my-4">
 		<h1>Gestion des actions</h1>
-		{# {% include "_flashes.html.twig" %} #}
+            <a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
 
 		{% if actions is not empty %}
 			<table class="table table-striped mt-4">
@@ -49,10 +49,21 @@
                              {% else %}
                             <td>/</td>
                             {% endif %}
-							
 							<td>
-								<a href="{{ path('admin_update_action', {'id': action.id}) }}">modifier </a>
+												<a href="{{ path('show_action', {'id': action.id}) }}" class="btn btn-secondary"><i class="bi bi-eye-fill"></i> Afficher</a>
+
 							</td>
+							<td>
+								<a class="btn btn-warning" href="{{ path('admin_update_action', {'id': action.id}) }}"><i class="bi bi-pencil-square"></i> Modifier </a>
+							</td>
+							<td> 
+							<form action="{{ path('admin_delete_action', {'id': action.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'action {{ action.titre|lower }} ?')">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ action.id) }}">
+                <button class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Supprimer 
+                </button>
+            </form>
+			</td>
 						</tr>
 					{% endfor %}
 				</tbody>

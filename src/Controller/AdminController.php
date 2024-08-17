@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Action;
+use App\Entity\Categorie;
 use App\Form\ActionType;
+use App\Form\CategorieType;
 use App\Form\UserRoleType;
 use App\Repository\ActionRepository;
+use App\Repository\CategorieRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,7 +101,7 @@ class AdminController extends AbstractController
 
                 if ($imageFile) {
                     // 1ere étape: définir le nom du fichier
-                    $nomImage = date('YmdHis') . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                    $nomImage = date('YmdHis') . '-' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
 
                     // 2eme étape : enregistrer le fichier dans le projet
                     $imageFile->move(
@@ -116,7 +119,7 @@ class AdminController extends AbstractController
                 $this->addFlash('success', 'l\'action a bien été ajoutée');
 
                 //redirection 
-                return $this->redirectToRoute('app_actions');
+                return $this->redirectToRoute('gestion_actions');
             }
         }
 
@@ -161,25 +164,26 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupération du fichier image soumis par l'utilisateur
             $imageFile = $form->get('image')->getData();
-
             if ($imageFile) {
-                $nomImage = date('YmdHis') . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                // Si une nouvelle image est soumise
+                $nomImage = date('YmdHis') . '-' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
 
                 // Enregistrement du fichier dans le répertoire des actions
-                $imageFile->move(
-                    $this->getParameter('action'),
-                    $nomImage
-                );
+                $imageFile->move($this->getParameter('action'), $nomImage);
 
-                // Suppression de l'ancienne image s'il y en a une
-                if ($action->getImage() && file_exists($this->getParameter('action') . '/' . $action->getImage())) {
+                // Suppression de l'ancienne image
+                if ($action->getImage()) {
                     unlink($this->getParameter('action') . '/' . $action->getImage());
                 }
 
+                // Mise à jour de l'image dans l'entité
                 $action->setImage($nomImage);
+            } else {
+                // Si aucune nouvelle image n'est soumise, conserver l'image actuelle
+                $action->setImage($action->getImage());
             }
-
             // Enregistrement de l'action
             $actionRepo->add($action, true);
             $this->addFlash('success', 'L\'action a bien été modifiée');
@@ -189,7 +193,70 @@ class AdminController extends AbstractController
 
         return $this->render('admin/updateAction.html.twig', [
             'formUpdateAction' => $form->createView(),
-            'action' => $action
+            'action' => $action,
+            'imagePath' => $this->getParameter('action') . '/' . $action->getImage(), // Chemin de l'image actuelle pour l'affichage
         ]);
+    }
+
+    //supprimer une action
+    #[Route('admin/action/{id}/delete', name: 'admin_delete_action', methods: ['POST'])]
+    public function deleteAction(int $id, ActionRepository $actionRepo, Request $request): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+        $action = $actionRepo->find($id);
+        if (!$action) {
+            return $this->redirectToRoute('gestion_actions');
+        }
+        if ($this->isCsrfTokenValid(
+            'delete' . $action->getId(),
+            $request->request->get('_token')
+        )) {
+            if ($action->getImage()) {
+                unlink($this->getParameter('action') . '/' . $action->getImage());
+            }
+            $actionRepo->remove($action, true);
+            $this->addFlash('success', 'l\'action a bien été supprimée');
+        } else {
+            $this->addFlash('error', 'l\'action ne peut pas etre supprimée');
+        }
+        return $this->redirectToRoute('gestion_actions');
+    }
+
+ /// Partie Catégories
+ 
+ // Créer une nouvelle catégorie
+ #[Route ('/admin/new-category', name:'admin_new_category')]
+ public function newCategory(Request $request , CategorieRepository $catRepo) : Response
+ {
+    if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+        $category = new Categorie();
+        $form = $this->createForm(CategorieType::class , $category);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid()){
+            $catRepo->add($category, true);
+            $this->addFlash('success', 'Catégorie ajoutée avec succes');
+            return $this->redirectToRoute('gestion_categories');
+        }
+        return $this->render('admin/newCategory.html.twig', [
+            'newCategoryForm'=>$form->createView()
+            ]);
+ }
+
+ // Gestion actions // afficher toutes les catégories
+ #[Route('/admin/gestionCategories', name: 'gestion_categories')]
+    public function manageCategories( CategorieRepository $catRepo): Response
+    {
+        if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+            $categories = $catRepo->findAll();
+            return $this->render('admin/gestionCategories.html.twig', [
+                'categories' => $categories,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
     }
 }

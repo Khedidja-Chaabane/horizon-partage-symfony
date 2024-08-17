@@ -1,55 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nos actions{% endblock %}
+{% block title %}Nos actions
+{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Nos actions</h1>
+	<div class="container">
+		<h1>Nos actions</h1>
 
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
-        {% endif %}
+		{% if is_granted('ROLE_ADMIN') %}
+			<a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
+		{% endif %}
 
-        {% for action in actions %}
-            <div class="card mb-4">
-                <img src="{{ asset('images/action/' ~ action.image) }}" alt="{{ action.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+		{% for action in actions %}
+			<div class="card mb-4">
+				<img src="{{ asset('images/action/' ~ action.image) }}" alt="{{ action.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
 
-                <div class="card-body">
-                    <h5 class="card-title">{{ action.titre | capitalize }}</h5>
-                    <p class="card-text">
-                        {% if action.tarif %}
-                            <small class="text-muted">{{ action.tarif }} €</small>
-                        {% else %}
-                            <strong class="text-muted">Gratuit</strong>
-                        {% endif %}
-                    </p>
-                    <p class="card-text">{{ action.description | capitalize | slice(0, 100) ~ '...' }}</p>
+				<div class="card-body">
+					<h5 class="card-title">{{ action.titre | capitalize }}</h5>
+					<p class="card-text">
+						{% if action.tarif %}
+							<small class="text-muted">{{ action.tarif }}
+								€</small>
+						{% else %}
+							<strong class="text-muted">Gratuit</strong>
+						{% endif %}
+					</p>
 
-                    {% if action.date %}
-                        <p class="card-text">
-                            <small class="text-muted">Date : {{ action.date | date('d/m/Y') }}</small>
-                        </p>
-                    {% endif %}
+					{% if action.date %}
+						<p class="card-text">
+							<small class="text-muted">Date :
+								{{ action.date | date('d/m/Y') }}</small>
+						</p>
+					{% endif %}
 
-                    {% if action.horaire %}
-                        <p class="card-text">
-                            <small class="text-muted">Horaire : {{ action.horaire | date('H:i') }}</small>
-                        </p>
-                    {% endif %}
+					{% if action.horaire %}
+						<p class="card-text">
+							<small class="text-muted">Horaire :
+								{{ action.horaire | date('H:i') }}</small>
+						</p>
+					{% endif %}
 
-                    {% if action.nombrePlaces %}
-                        <p class="card-text">
-                            <small class="text-muted">Nombre de places : {{ action.nombrePlaces }}</small>
-                        </p>
-                    {% endif %}
+					{% if action.nombrePlaces %}
+						<p class="card-text">
+							<small class="text-muted">Nombre de places :
+								{{ action.nombrePlaces }}</small>
+						</p>
+					{% endif %}
 
-                    {% if action.lieu %}
-                        <p class="card-text">
-                            <small class="text-muted">Lieu : {{ action.lieu | capitalize }}</small>
-                        </p>
-                    {% endif %}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+					{% if action.lieu %}
+						<p class="card-text">
+							<small class="text-muted">Lieu :
+								{{ action.lieu | capitalize }}</small>
+						</p>
+					{% endif %}
+				</div>
+				<div class="card-footer text-center border-0">
+					<a href="{{ path('show_action', {'id': action.id}) }}" class="btn btn-secondary">En savoir plus</a>
+
+				</div>
+				
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}

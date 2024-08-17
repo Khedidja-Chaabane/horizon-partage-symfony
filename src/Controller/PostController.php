@@ -73,7 +73,9 @@ class PostController extends AbstractController
 public function showPost(int $id, PostRepository $postRepository): Response
 {
     $post = $postRepository->findPostById($id);
-
+    if(!$post){
+            return  $this->redirectToRoute('app_forum');
+        }
     return $this->render('post/showPost.html.twig', [
         'post' => $post
     ]);
@@ -87,18 +89,18 @@ public function updatePost(int $id,Request $request, PostRepository $postReposit
      // Vérification que l'utilisateur est connecté
      $user = $this->getUser();
         if (!$user) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
     $post = $postRepository->find($id); // chercher l'article par son id
      // Vérification que le post existe
      if (!$post) {
         // Si le post n'existe pas, rediriger vers la page d'accueil ou afficher un message d'erreur
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_forum');
     }
      // Vérification que l'utilisateur est l'auteur du post
      if ($post->getAuteur() !== $user) {
         // Si l'utilisateur n'est pas l'auteur, on le redirige vers la page d'accueil
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_forum');
     }
     // Création du formulaire lié à l'objet $post
     $form = $this->createForm(PostType::class, $post);
@@ -154,12 +156,12 @@ public function deletePost(int $id, PostRepository $postRepository, Request $req
 
     // Vérification que le post existe
     if (!$post) {
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_forum');
     }
 
     // Vérification que l'utilisateur est l'auteur du post
     if ($post->getAuteur() !== $user) {
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_forum');
     }
     // Vérification de la validité du token envoyé avec la requête
 
@@ -172,7 +174,7 @@ public function deletePost(int $id, PostRepository $postRepository, Request $req
             unlink($this->getParameter('post') . '/' . $post->getImage() );
         }
         $postRepository->remove($post, true);
-        $this->addFlash('success', 'le post a bien été ajouté');
+        $this->addFlash('success', 'le post a bien été supprimé');
     } else {
         $this->addFlash('error', 'le post ne peut pas etre supprimé');
     }
