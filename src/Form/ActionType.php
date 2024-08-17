@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Action;
+use App\Entity\Categorie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -46,6 +48,12 @@ class ActionType extends AbstractType
 
                     ])
                 ]
+            ])
+            ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'nom',
+                'label' => 'Catégorie',
+                'placeholder' => 'Sélectionnez une catégorie',
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'description de l\'action',

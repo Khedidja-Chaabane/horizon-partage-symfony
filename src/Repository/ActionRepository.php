@@ -39,6 +39,26 @@ class ActionRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    // Méthode pour trouver toutes les actions par catégorie
+    //public function findByCategory($category)
+   // {
+       // return $this->createQueryBuilder('a')
+          //  ->andWhere('a.categorie = :category')
+          //  ->setParameter('category', $category)
+           // ->orderBy('a.id', 'ASC')
+           // ->getQuery()
+          //  ->getResult()
+     //   ;
+   // }
+   public function findByCategorieName(string $categorieName): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.categorie', 'c')
+            ->where('c.nom = :categorieName')
+            ->setParameter('categorieName', $categorieName)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Action[] Returns an array of Action objects
 //     */

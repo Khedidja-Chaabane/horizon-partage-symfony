@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ActionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Categorie;
 
 #[ORM\Entity(repositoryClass: ActionRepository::class)]
 class Action

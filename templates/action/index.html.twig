@@ -17,14 +17,7 @@
 
 				<div class="card-body">
 					<h5 class="card-title">{{ action.titre | capitalize }}</h5>
-					<p class="card-text">
-						{% if action.tarif %}
-							<small class="text-muted">{{ action.tarif }}
-								€</small>
-						{% else %}
-							<strong class="text-muted">Gratuit</strong>
-						{% endif %}
-					</p>
+					
 
 					{% if action.date %}
 						<p class="card-text">

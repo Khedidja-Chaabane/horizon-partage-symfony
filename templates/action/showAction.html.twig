@@ -1,70 +1,82 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Post {{action.titre}}
+{% block title %}Post
+	{{action.titre}}
 {% endblock %}
 
 {% block body %}
-	
+
 
 	<div class="container ">
-		 {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
-        {% endif %}
+		{% if is_granted('ROLE_ADMIN') %}
+			<a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
+		{% endif %}
 		<div class="container">
-			
-				<img src="{{ asset('images/action/' ~ action.image )}}" alt="{{ action.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
-			
+
+			<img src="{{ asset('images/action/' ~ action.image )}}" alt="{{ action.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+
 			<div class="mt-3 mb-3">
 				<h5 class="text-center">{{ action.titre |capitalize }}</h5>
-				 <p class="card-text">
-                        {% if action.tarif %}
-                            <small class="text-muted">{{ action.tarif }} €</small>
-                        {% else %}
-                            <strong class="text-muted">Gratuit</strong>
-                        {% endif %}
-						 {% if action.date %}
-                        <p class="card-text">
-                            <small class="text-muted">Date : {{ action.date | date('d/m/Y') }}</small>
-                        </p>
-                    {% endif %}
+				<p class="card-text">
+					<small class="text-muted">Catégorie :
+						{{ action.categorie.nom |capitalize}}</small>
+				</p>
+				<p class="card-text">
 
-                    {% if action.horaire %}
-                        <p class="card-text">
-                            <small class="text-muted">Horaire : {{ action.horaire | date('H:i') }}</small>
-                        </p>
-                    {% endif %}
+					{% if action.tarif %}
+						<small class="text-muted">{{ action.tarif }}
+							€</small>
+					{% else %}
+						<strong class="text-muted">Gratuit</strong>
+					{% endif %}
+					{% if action.date %}
+						<p class="card-text">
+							<small class="text-muted">Date :
+								{{ action.date | date('d/m/Y') }}</small>
+						</p>
+					{% endif %}
 
-                    {% if action.nombrePlaces %}
-                        <p class="card-text">
-                            <small class="text-muted">Nombre de places : {{ action.nombrePlaces }}</small>
-                        </p>
-                    {% endif %}
+					{% if action.horaire %}
+						<p class="card-text">
+							<small class="text-muted">Horaire :
+								{{ action.horaire | date('H:i') }}</small>
+						</p>
+					{% endif %}
 
-                    {% if action.lieu %}
-                        <p class="card-text">
-                            <small class="text-muted">Lieu : {{ action.lieu | capitalize }}</small>
-                        </p>
-                    {% endif %}
+					{% if action.nombrePlaces %}
+						<p class="card-text">
+							<small class="text-muted">Nombre de places :
+								{{ action.nombrePlaces }}</small>
+						</p>
+					{% endif %}
+
+					{% if action.lieu %}
+						<p class="card-text">
+							<small class="text-muted">Lieu :
+								{{ action.lieu | capitalize }}</small>
+						</p>
+					{% endif %}
+				</p>
 				<p class="card-text">{{ action.description |capitalize}}</p>
-				
+
 			</div>
 			{% if is_granted('ROLE_ADMIN') %}
-					<div class="card-footer text-center border-0">
-						<a class="btn btn-warning" href="{{ path('admin_update_action', {'id': action.id}) }}">
-							<i class="bi bi-pencil-square"></i>
-							Modifier
-						</a>
-						<div>
-							<form action="{{ path('admin_delete_action', {'id': action.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'action {{ action.titre|lower }} ?')">
-								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ action.id) }}">
-								<button class="btn btn-danger">
-									<i class="bi bi-trash"></i>
-									Supprimer
-								</button>
-							</form>
-						</div>
+				<div class="card-footer text-center border-0">
+					<a class="btn btn-warning" href="{{ path('admin_update_action', {'id': action.id}) }}">
+						<i class="bi bi-pencil-square"></i>
+						Modifier
+					</a>
+					<div>
+						<form action="{{ path('admin_delete_action', {'id': action.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'action {{ action.titre|lower }} ?')">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ action.id) }}">
+							<button class="btn btn-danger">
+								<i class="bi bi-trash"></i>
+								Supprimer
+							</button>
+						</form>
 					</div>
-				{% endif %}
+				</div>
+			{% endif %}
 		</div>
 
 	</div>
