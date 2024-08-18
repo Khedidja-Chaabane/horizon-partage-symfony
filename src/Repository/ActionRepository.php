@@ -50,11 +50,15 @@ class ActionRepository extends ServiceEntityRepository
           //  ->getResult()
      //   ;
    // }
-   public function findByCategorieName(string $categorieName): array
+    /**
+     * @param string $categorieName
+     * @return Action[]
+     */
+    public function findByCategorieName(string $categorieName): array
     {
         return $this->createQueryBuilder('a')
             ->join('a.categorie', 'c')
-            ->where('c.nom = :categorieName')
+            ->andWhere('c.nom = :categorieName')
             ->setParameter('categorieName', $categorieName)
             ->getQuery()
             ->getResult();

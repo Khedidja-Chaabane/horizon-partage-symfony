@@ -1,38 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Forum
+{% block title %}Forum{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forum.css') }}">
 {% endblock %}
 
 {% block body %}
+    <div class="container">
+        <!-- Titre du forum -->
+        <h1 class="forum-title">Bienvenue sur notre Forum</h1>
+        
+        <!-- Bouton pour ajouter un nouveau post -->
+        {% if app.user %}
+            <a class="btn new-post-btn" href="{{ path('new_post') }}">Écrire un post</a>
+        {% endif %}
 
-	<div class="container">
-		{% if app.user %}
-			<a class="btn" href="{{ path('new_post')}}">Ajouter un Nouveau post</a>
-		{% endif %}
-		{% for post in posts %}
-			<div class="card mb-4">
-					{% if post.image %}
-				<img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
-				{% endif %}
-				<div class="card-body">
-					<h5 class="card-title">{{ post.titre |capitalize }}</h5>
-					<p class="card-text">{{ post.texte |capitalize |slice(0, 100) ~ '...' }}</p>
-					<p class="card-text">
-						<small class="text-muted">Publié par:
-							{{ post.auteur.prenomUser }}</small>
-					</p>
-					<p class="card-text">
-						<small class="text-muted">Publié le
-							{{ post.datePublication|date('d/m/Y H:i') }}</small>
-					</p>
-					<div class="card-footer text-center border-0">
-						<a href="{{ path('show_post', {'id': post.id}) }}" class="btn">Lire le Post</a>
+        <!-- Description du forum -->
+        <p class="forum-description">Partagez vos expériences, posez des questions et engagez des discussions avec la communauté.</p>
 
-					</div>
-				</div>
-			</div>
-		{% endfor %}
+        <div class="row">
+            <!-- Section des posts récents -->
+            <div class="col-md-8">
+                {% for post in recentPosts %}
+                    <div class="card card-post">
+                        {% if post.image %}
+                            <img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.titre | capitalize }}</h5>
+                            <p class="card-text">{{ post.texte | capitalize | slice(0, 100) ~ '...' }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">Publié par : {{ post.auteur.prenomUser }}</small>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Publié le {{ post.datePublication|date('d/m/Y H:i') }}</small>
+                            </p>
+                            <div class="card-footer text-center border-0">
+                                <a href="{{ path('show_post', {'id': post.id}) }}" class="btn btn-primary">Lire le Post</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <a href="{{ path('all_posts') }}" class="btn see-all-posts-btn">Voir tous les posts</a>
+            </div>
 
-
-	</div>
+            <!-- Section des règles du forum -->
+            <div class="col-md-4">
+                <div class="forum-rules">
+                    <h4>Règles du Forum</h4>
+                    <p>🤝 <strong>Respect et Courtoisie</strong></p>
+                    <p>- Traitez tous les membres avec respect. Les insultes, le harcèlement ou tout comportement agressif ne seront pas tolérés.</p>
+                    <p>📚 <strong>Contenu Approprié</strong></p>
+                    <p>- Publiez du contenu pertinent et approprié. Les messages offensants, haineux ou illégaux sont interdits.</p>
+                    <p>🔒 <strong>Confidentialité</strong></p>
+                    <p>- Respectez la vie privée des autres membres. Ne partagez pas d'informations personnelles sans consentement.</p>
+                    <p>Pour toute question ou pour signaler un problème, veuillez contacter les administrateurs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

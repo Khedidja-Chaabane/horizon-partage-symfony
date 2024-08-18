@@ -55,6 +55,23 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+   // Méthode pour afficher les posts récents
+/**
+ * Récupère les posts récents depuis la base de données.
+ *
+ * @param int $limit Le nombre maximal de posts à récupérer
+ * @return Produit[] Retourne un tableau d'objets Post
+ */
+public function findRecentPosts($limit)
+{
+    return $this->createQueryBuilder('p') //  Création d'un QueryBuilder pour l'entité "Post"
+        ->orderBy('p.date_publication', 'DESC') //  Trier les résultats par date de publication, du plus récent au plus ancien
+        ->setMaxResults($limit) //  Limiter le nombre de résultats retournés à la valeur de $limit
+        ->getQuery() // Génèrer la requête SQL à partir du QueryBuilder
+        ->getResult(); //  Exécute la requête et renvoie les résultats sous forme de tableau d'objets "Post"
+}
+
     //    /**
     //     * @return Post[] Returns an array of Post objects
     //     */

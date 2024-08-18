@@ -5,13 +5,25 @@
 
 {% block body %}
 	<div class="container">
-		<h1>Nos actions</h1>
-
+		
+<h2>{% if categorieName %}  {{ categorieName| capitalize }}{% else %} <h1>Toutes nos actions</h1>{% endif %}</h2>
 		{% if is_granted('ROLE_ADMIN') %}
 			<a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
 		{% endif %}
-
+ {# Afficher le formulaire avec les boutons pour les catégories #}
+    {{ form_start(categorieFilterForm) }}
+        <div class="btn-group mb-3" role="group">
+            {{ form_widget(categorieFilterForm.cours) }}
+            {{ form_widget(categorieFilterForm.atelier) }}
+            {{ form_widget(categorieFilterForm.service) }}
+        </div>
+    {{ form_end(categorieFilterForm) }}
+	 {# Afficher les actions associées à la catégorie sélectionnée ou toutes les actions #}
+    {% if actions is empty %}
+        <p>Aucune action trouvée{% if categorieName %} pour la catégorie {{ categorieName }}{% endif %}.</p>
+    {% else %}
 		{% for action in actions %}
+		
 			<div class="card mb-4">
 				<img src="{{ asset('images/action/' ~ action.image) }}" alt="{{ action.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
 
@@ -54,5 +66,6 @@
 				
 			</div>
 		{% endfor %}
+		 {% endif %}
 	</div>
 {% endblock %}

@@ -13,17 +13,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
 
-    // Page d'accueil du forum avec tous les posts
+    // Page d'accueil du forum 
     #[Route('/forum', name: 'app_forum')]
     public function index(PostRepository $postRepository): Response
     {
-        // Récupère tous les posts depuis le repository
-        $posts = $postRepository->findAll();
+        $recentPosts = $postRepository->findRecentPosts(6); // Récupère les 6 posts les plus récents 
+
         return $this->render('post/index.html.twig', [
-            'posts' => $posts,
+            'recentPosts' => $recentPosts,
         ]);
     }
 
+    //Page pour afficher tout les posts
+    #[Route('/allPosts', name: 'all_posts')]
+    public function allPosts(PostRepository $postRepository): Response
+    {
+    // Récupère tous les posts depuis le repository
+       $posts = $postRepository->findAll();
+       return $this->render('post/allPosts.html.twig', [
+            'posts' => $posts,
+        ]);
+    }
 
     //creation d'un nouveau post
     #[Route('/new-post', name: 'new_post')]

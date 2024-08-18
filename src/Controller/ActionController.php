@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Action;
 use App\Form\ActionType;
+use App\Form\CategorieFilterType;
 use App\Repository\ActionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +15,36 @@ class ActionController extends AbstractController
 {
     // Page actions 
     #[Route('/actions', name: 'app_actions')]
-    public function index(ActionRepository $actionRepo): Response
+    public function index(ActionRepository $actionRepo, Request $request): Response
     {
-        // Affichage de toutes les actions
-        $actions = $actionRepo->findAll();
+        // Créer une variable pour stocker la catégorie sélectionnée
+        $categorieName = null;
+        // Créer le formulaire
+        $form = $this->createForm(CategorieFilterType::class);
+        $form->handleRequest($request);
+         // Si le formulaire est soumis et valide
+         if ($form->isSubmitted() && $form->isValid()) {
+            // Vérifier quel bouton a été cliqué et définir la catégorie en conséquence
+            if ($form->get('cours')->isClicked()) {
+                $categorieName = 'cours';
+            } elseif ($form->get('atelier')->isClicked()) {
+                $categorieName = 'atelier';
+            } elseif ($form->get('service')->isClicked()) {
+                $categorieName = 'service';
+            }
+        }
+         // Récupérer les actions en fonction de la catégorie sélectionnée
+         if ($categorieName) {
+            // Récupérer les actions pour la catégorie sélectionnée
+            $actions = $actionRepo->findByCategorieName($categorieName);
+        } else {
+            // Récupérer toutes les actions par défaut
+            $actions = $actionRepo->findAll();
+        }
         return $this->render('action/index.html.twig', [
             'actions' => $actions,
+            'categorieFilterForm' => $form->createView(),
+            'categorieName' => $categorieName,
         ]);
     }
 
