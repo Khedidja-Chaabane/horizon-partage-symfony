@@ -1,63 +1,71 @@
-/* public/css/forum.css */
-
 /* Style pour le titre de la page */
 .forum-title {
     text-align: center;
     margin: 30px 0;
-    font-size: 2.5rem;
+    font-size: 35px;
     font-weight: bold;
-    color: #2c3e50;
+    color: #3F4446;
 }
 
 /* Style pour le bouton ajouter un nouveau post */
 .new-post-btn {
-    display: block;
-    margin-left: auto;
-    margin-right: 0;
-    margin-bottom: 20px;
-    background-color: #28a745;
+    float: right;
+    background-color: #67BC45;
     color: #fff;
+    font-weight: bold;
 }
 
 /* Style pour le texte de description */
 .forum-description {
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 1.2rem;
+    margin: 30px 0;
+    font-size: 20px;
     color: #7f8c8d;
 }
-
-/* Style pour la carte des posts */
-.card-post {
-    margin-bottom: 20px;
-    border: none;
-}
-
-/* Style pour le bloc des règles du forum */
-.forum-rules {
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    color: #2c3e50;
-    font-size: 1rem;
-}
-
-/* Style pour les icônes des règles */
-.forum-rules h4 {
+/* Style pour les h4 */
+h4 {
     font-weight: bold;
     margin-bottom: 15px;
+    text-align: center;
+}
+/* Style pour le bloc des règles du forum */
+.forum-rules {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ebf2f3;
+    border-radius: 10px;
+    color: #3F4446;
+    font-size: 16px;
 }
 
 .forum-rules p {
     margin-bottom: 10px;
-    line-height: 1.6;
+    line-height: 30px;
+}
+
+
+/* Style pour le container et les cartes des posts */
+.posts-container{
+    padding: 10px;
+}
+.card-post {
+    margin-bottom: 20px;
+}
+
+/* Style pour le bouton Lire le post */
+.read-post-btn{
+    width: 80%;
+    background-color: #3F4446;
+    color: white;
+    margin-top: 10px;
 }
 
 /* Style pour le bouton voir tous les posts */
 .see-all-posts-btn {
     width: 100%;
-    background-color: #28a745;
+    background-color: #67BC45;
     color: white;
     margin-top: 20px;
-}
+    font-weight: bold;
 
+}
