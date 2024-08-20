@@ -17,7 +17,7 @@ class PostController extends AbstractController
     #[Route('/forum', name: 'app_forum')]
     public function index(PostRepository $postRepository): Response
     {
-        $recentPosts = $postRepository->findRecentPosts(6); // Récupère les 6 posts les plus récents 
+        $recentPosts = $postRepository->findRecentPosts(5); // Récupère les 5 posts les plus récents 
 
         return $this->render('post/index.html.twig', [
             'recentPosts' => $recentPosts,
@@ -69,14 +69,14 @@ class PostController extends AbstractController
             $postRepository->add($post, true); 
             $this->addFlash('success', 'le post a bien été ajouté');
 
-            return $this->redirectToRoute('app_forum');
+            return $this->redirectToRoute('show_post', ['id' => $post->getId()]);
         }
         return $this->render('post/newPost.html.twig', [
             'postForm' => $form->createView()
         ]);
     }
 
-    // Voir un post spécifique
+    // Afficher un post spécifique
      
     #[Route('/post/{id}', name: 'show_post')]
 
@@ -84,7 +84,7 @@ public function showPost(int $id, PostRepository $postRepository): Response
 {
     $post = $postRepository->findPostById($id);
     if(!$post){
-            return  $this->redirectToRoute('app_forum');
+            return  $this->redirectToRoute('all_posts');
         }
     return $this->render('post/showPost.html.twig', [
         'post' => $post
@@ -104,13 +104,13 @@ public function updatePost(int $id,Request $request, PostRepository $postReposit
     $post = $postRepository->find($id); // chercher l'article par son id
      // Vérification que le post existe
      if (!$post) {
-        // Si le post n'existe pas, rediriger vers la page d'accueil ou afficher un message d'erreur
-        return $this->redirectToRoute('app_forum');
+        // Si le post n'existe pas, rediriger vers la page all posts
+        return $this->redirectToRoute('all_posts');
     }
      // Vérification que l'utilisateur est l'auteur du post
      if ($post->getAuteur() !== $user) {
-        // Si l'utilisateur n'est pas l'auteur, on le redirige vers la page d'accueil
-        return $this->redirectToRoute('app_forum');
+        // Si l'utilisateur n'est pas l'auteur, on le redirige vers la page all posts
+        return $this->redirectToRoute('all_posts');
     }
     // Création du formulaire lié à l'objet $post
     $form = $this->createForm(PostType::class, $post);
@@ -140,13 +140,13 @@ public function updatePost(int $id,Request $request, PostRepository $postReposit
 
         // Enregistrement du post modifié
         $postRepository->add($post, true);
-        $this->addFlash('success', 'le produit a bien été modifié');
+        $this->addFlash('success', 'le post a bien été modifié');
 
-        return $this->redirectToRoute('app_forum');
+        return $this->redirectToRoute('show_post', ['id' => $post->getId()]);
     }
 
     return $this->render('post/updatePost.html.twig', [
-        'formUpdatePost' => $form->createView(),
+        'postForm' => $form->createView(),
         'post' => $post
     ]);
 }
@@ -159,19 +159,19 @@ public function deletePost(int $id, PostRepository $postRepository, Request $req
      // Vérification que l'utilisateur est connecté
      $user = $this->getUser();
     if (!$user) {
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_login');
     }
 
     $post = $postRepository->find($id);
 
     // Vérification que le post existe
     if (!$post) {
-        return $this->redirectToRoute('app_forum');
+        return $this->redirectToRoute('all_posts');
     }
 
     // Vérification que l'utilisateur est l'auteur du post
     if ($post->getAuteur() !== $user) {
-        return $this->redirectToRoute('app_forum');
+        return $this->redirectToRoute('all_posts');
     }
     // Vérification de la validité du token envoyé avec la requête
 
@@ -188,6 +188,6 @@ public function deletePost(int $id, PostRepository $postRepository, Request $req
     } else {
         $this->addFlash('error', 'le post ne peut pas etre supprimé');
     }
-    return $this->redirectToRoute('app_forum');
+    return $this->redirectToRoute('all_posts');
 }
 }

@@ -1,16 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}New Post{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forum/formPost.css') }}">
+{% endblock %}
 
 {% block body %}
+<div class="container my-5">
+    <div class="d-flex justify-content-end mb-4">
+        <a class="btn btn-secondary" href="{{ path('all_posts') }}"><i class="bi bi-arrow-left-square"></i> Retour</a>
+    </div>
+    <h1 class="text-center mb-4 mt-4">Nouveau Post</h1>
 
-<div class="example-wrapper">
-    <h1>Nouveau Post</h1>
-{% if app.user %}
-    {{ form_start(postForm) }}
-    {{ form_widget(postForm) }}
-    <button type="submit">Register</button>
-{{ form_end(postForm) }}
-{% endif %}
+    {% if app.user %}
+        <div class="d-flex justify-content-center">
+{# Conteneur pour centrer le formulaire #}
+             <div class="col-lg-8 col-md-10">
+                {{ form_start(postForm) }}
+                {{ form_widget(postForm) }}
+                <button type="submit" class="btn btn-submit w-100 mt-3">Enregistrer</button>
+                {{ form_end(postForm) }}
+            </div>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

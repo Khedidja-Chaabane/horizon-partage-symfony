@@ -1,0 +1,71 @@
+/* Style pour le titre de la page */
+.forum-title {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 35px;
+    font-weight: bold;
+    color: #3F4446;
+}
+
+/* Style pour le bouton ajouter un nouveau post */
+.new-post-btn {
+    float: right;
+    background-color: #67BC45;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Style pour le texte de description */
+.forum-description {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 20px;
+    color: #7f8c8d;
+}
+/* Style pour les h4 */
+h4 {
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+/* Style pour le bloc des règles du forum */
+.forum-rules {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ebf2f3;
+    border-radius: 10px;
+    color: #3F4446;
+    font-size: 16px;
+}
+
+.forum-rules p {
+    margin-bottom: 10px;
+    line-height: 30px;
+}
+
+
+/* Style pour le container et les cartes des posts */
+.posts-container{
+    padding: 10px;
+}
+.card-post {
+    margin-bottom: 20px;
+}
+
+/* Style pour le bouton Lire le post */
+.read-post-btn{
+    width: 80%;
+    background-color: #3F4446;
+    color: white;
+    margin-top: 10px;
+}
+
+/* Style pour le bouton voir tous les posts */
+.see-all-posts-btn {
+    width: 100%;
+    background-color: #67BC45;
+    color: white;
+    margin-top: 20px;
+    font-weight: bold;
+
+}

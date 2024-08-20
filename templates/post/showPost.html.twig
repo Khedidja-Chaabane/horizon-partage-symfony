@@ -1,43 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Post {{post.titre}}
+{% block title %}Post : {{post.titre}}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forum/showPost.css') }}">
 {% endblock %}
 
 {% block body %}
-	
+<div class="container">
+    {% if app.user %}
+    <div class="d-flex justify-content-end mb-4 mt-4">
+        <a class="btn new-post-btn" href="{{ path('new_post')}}">✏️ Écrire un post</a>
+    </div>
+    {% endif %}
+    <div class="d-flex justify-content-end mb-4 mt-4">
+        <a class="btn btn-secondary btn-retour" href="{{ path('all_posts')}}"><i class="bi bi-arrow-left-square"></i> Retour</a>
+    </div>
+                <h5 class="post-title">{{ post.titre |capitalize }}</h5>
 
-	<div class="container my-6">
-		{% if app.user %}
-			<a href="{{ path('new_post')}}">Ajouter un Nouveau post</a>
-		{% endif %}
-		<div class="container">
-			{% if post.image %}
-				<img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
-			{% endif %}
-			<div class="mt-3 mb-3">
-				<h5 class="text-center">{{ post.titre |capitalize }}</h5>
-				<p class="card-text">{{ post.texte |capitalize}}</p>
-				<p class="card-text">
-					<small class="text-muted">Publié par:
-						{{ post.auteur.prenomUser }}</small>
-				</p>
-				<p class="card-text">
-					<small class="text-muted">Publié le
-						{{ post.datePublication|date('d/m/Y H:i') }}</small>
-				</p>
-			</div>
-			{# Afficher les boutons Modifier et Supprimer uniquement si l'utilisateur connecté est l'auteur du post #}
-			{% if app.user and app.user == post.auteur %}
-				<a href="{{ path('update_post', {'id': post.id}) }}" class="btn">Modifier le Post</a>
-				<form action="{{ path('delete_post', {'id': post.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer le post {{ post.titre|lower }} ?')">
-					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
-					<button class="btn p-0">
-						<i class="text-danger" data-feather="trash"></i>
-						Supprimer
-					</button>
-				</form>
-			{% endif %}
-		</div>
-
-	</div>
+    <div class="row p-2 mt-2">
+	 <!-- Image du post -->
+        {% if post.image %}
+        <div class="col-md-4 img-container">
+            <img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="post-img">
+        </div>
+        <!-- Contenu du post à gauche -->
+        <div class="col-md-8 post-container">
+            <p class="card-text">{{ post.texte |capitalize}}</p>
+            <p class="card-text">
+                <small class="text-muted">Par :
+                    {{ post.auteur.prenomUser }}</small>
+            </p>
+            <p class="card-text">
+                <small class="text-muted">Publié le
+                    {{ post.datePublication|date('d/m/Y H:i') }}</small>
+            </p>
+{% else %}
+{# Si y a pas d'image le contenu s'affiche au centre de la page #}
+ <div class="container post-container ">
+            <p class="card-text">{{ post.texte |capitalize}}</p>
+            <p class="card-text">
+                <small class="text-muted">Par :
+                    {{ post.auteur.prenomUser }}</small>
+            </p>
+            <p class="card-text">
+                <small class="text-muted">Publié le
+                    {{ post.datePublication|date('d/m/Y H:i') }}</small>
+            </p>
+ {% endif %}
+            {% if app.user and app.user == post.auteur %}
+                <div class="text-center">
+				<a href="{{ path('update_post', {'id': post.id}) }}" class="btn btn-edit-post mt-2 mb-2">Modifier le Post</a>
+                <form action="{{ path('delete_post', {'id': post.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer le post {{ post.titre|lower }} ?')">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+                    <button class="btn btn-delete-post mt-2 mb-2">
+                        Supprimer
+                    </button>
+                </form>
+				</div>
+            {% endif %}
+            
+        </div>
+        
+       
+    </div>
+</div>
 {% endblock %}

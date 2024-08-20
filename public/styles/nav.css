@@ -1,0 +1,18 @@
+/* Style pour les liens */
+.nav-link {
+    color: #3F4446;
+}
+
+/* Couleur verte pour le lien actif */
+.active {
+    color:#67BC45 !important;
+    font-weight: bold;
+}
+
+/* Style pour le logo image */
+.navbar-brand img {
+   height: 80px;
+   width: 100px;
+}
+
+

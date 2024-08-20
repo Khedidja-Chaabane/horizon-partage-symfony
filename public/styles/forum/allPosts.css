@@ -1,0 +1,21 @@
+.btn-new-post{
+    float: right;
+    background-color: #67BC45;
+    color: #fff;
+    font-weight: bold;
+}
+.btn-retour{
+    float: right;
+    font-weight: bold;
+}
+.card-title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.read-post-btn{
+    width: 80%;
+    background-color: #3F4446;
+    color: white;
+    margin-top: 10px;
+}

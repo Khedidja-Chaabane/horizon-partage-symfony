@@ -17,51 +17,50 @@ class PostType extends AbstractType
     {
         $builder
         ->add('titre', null, [
-                'label' => 'titre du post',
+                'label' => 'Titre du post',
                 'required' => true,
                 'label_attr' => [
-                    "class" => "text-success"
+                    'class' => 'mt-2 mb-2' // Espacement du label
                 ],
                 'attr' => [
-                    'placeholder' => 'saisir un titre',
-                    'class' => 'border border-success'
-                ],
-                'row_attr' => [
-                    "class" => "shadow p-3 col-md-6"
+                    'placeholder' => 'Saisir un titre',
+                    'class' => 'form-control w-100' // Champ occupe toute la largeur
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'veuillez saisir un titre'
+                        'message' => 'Veuillez saisir un titre',
                     ]),
                     new Length([
                         'min' => 5,
-                        'minMessage' => 'veuillez saisir au minimum 5 caracters',
-                        'max' => 50,
-                        'maxMessage' => 'veuillez saisir au max 100 caracters',
-
+                        'minMessage' => 'Veuillez saisir au minimum 5 caractères',
+                        'max' => 255,
+                        'maxMessage' => 'Veuillez saisir au maximum 255 caractères',
                     ])
                 ]
             ])
-            ->add('texte' , TextareaType::class, [
-                'label' => 'contenu',
+            ->add('texte', TextareaType::class, [
+                'label' => 'Contenu',
                 'label_attr' => [
-                    "class" => "text-success"
+                    'class' => 'mt-2 mb-2' // Espacement du label
                 ],
                 'attr' => [
-                    'placeholder' => 'saisir un contenu',
-                    'class' => 'border border-warning', "rows" => 8
+                    'placeholder' => 'Saisir un contenu',
+                    'class' => 'form-control w-100', // Champ occupe toute la largeur
+                    'rows' => 10 // Hauteur du champ de texte
                 ],
-                'required' => true,
-                'row_attr' => [
-                    "class" => "shadow p-3 col-md-12"
-                ]
-                ])
-                ->add('image', FileType::class, [
+                'required' => true
+            ])
+            ->add('image', FileType::class, [
+                'label' => 'Ajouter une image',
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'label_attr' => [
+                    'class' => 'mt-2 mb-2' // Espacement du label
+                ],
+                'attr' => [
+                    'class' => 'form-control-file w-100' // Champ occupe toute la largeur
+                ]
             ]);
-            
-           
     }
 
     public function configureOptions(OptionsResolver $resolver): void

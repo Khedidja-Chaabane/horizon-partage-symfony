@@ -5,7 +5,7 @@
 {% block stylesheets %}
 {# Appel de la fonction parent() pour inclure le contenu du bloc stylesheets du parent (le fichier base.html.twig ) #}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/forum.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/forum/forum.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -47,7 +47,7 @@
                             <h5 class="card-title">{{ post.titre | capitalize }}</h5>
                             <p class="card-text">{{ post.texte | capitalize | slice(0, 150) ~ ' ...' }}</p>
                             <p class="card-text">
-                                <small class="text-muted">Publié par : {{ post.auteur.userName }}</small>
+                                <small class="text-muted">Par : {{ post.auteur.userName }}</small>
                             </p>
                             <div class="card-footer text-center border-0">
                                 <a href="{{ path('show_post', {'id': post.id}) }}" class="btn read-post-btn">Lire le Post</a>

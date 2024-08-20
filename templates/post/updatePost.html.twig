@@ -1,24 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Post
+{% block title %}Modifier le Post : {{post.titre|capitalize}}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forum/formPost.css') }}">
 {% endblock %}
 
 {% block body %}
-
-	<div class="example-wrapper">
-		<h1>Modifier le Post</h1>
+	<div class="container my-5">
+	<div class="d-flex justify-content-end mb-4 mt-4">
+            <a class="btn btn-secondary btn-retour"href="{{ path('show_post', {'id': post.id}) }}"><i class="bi bi-arrow-left-square"></i> Retour</a>
+        </div>
+		<h1 class="text-center mb-4 mt-4">Modifier le Post</h1>
 		{% if app.user and app.user == post.auteur %}
-			{{ form_start(formUpdatePost) }}
-			{{ form_widget(formUpdatePost) }}
-			<button type="submit">Register</button>
-			{{ form_end(formUpdatePost) }}
-			<form action="{{ path('delete_post', {'id': post.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer le post {{ post.titre|lower }} ?')">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
-				<button class="btn p-0">
-					<i class="text-danger" data-feather="trash"></i>
-					Supprimer
-				</button>
-			</form>
+			<div class="d-flex justify-content-center">
+				<div class="col-lg-8 col-md-10">
+					{# Afficher l'image actuelle s'il y en a une #}
+					{% if post.image %}
+						<div class="text-center mb-4">
+							<img src="{{ asset('images/post/' ~ post.image) }}" alt="{{ post.titre }}" class="img-fluid" style="max-height: 300px;">
+							<p class="text-muted mt-2">Image actuelle</p>
+						</div>
+					{% endif %}
+					
+					{# Affichage du formulaire #}
+					{{ form_start(postForm) }}
+					{{ form_widget(postForm) }}
+					<button type="submit" class="btn btn-submit w-100 mt-4">Enregistrer</button>
+					{{ form_end(postForm) }}
+				</div>
+			</div>
+
+			<div class="text-center mt-3">
+				<form action="{{ path('delete_post', {'id': post.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer le post {{ post.titre| capitalize }} ?')">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+					<button class="btn btn-delete-post mt-2 mb-2">Supprimer</button>
+				</form>
+			</div>
 		{% endif %}
 	</div>
 {% endblock %}
