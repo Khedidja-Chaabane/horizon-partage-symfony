@@ -4,7 +4,7 @@
 }
 
 /* Couleur verte pour le lien actif */
-.active {
+.nav-link.active {
     color:#67BC45 !important;
     font-weight: bold;
 }

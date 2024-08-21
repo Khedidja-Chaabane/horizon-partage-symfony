@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Un compte existe déja avec cette adresse mail')]
+#[UniqueEntity(fields: ['userName'], message: 'Ce pseudo est déjà pris.')]
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
