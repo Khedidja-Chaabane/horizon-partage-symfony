@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -108,7 +109,20 @@ class RegistrationFormType extends AbstractType
                         'maxMessage' => 'Votre mot de passe ne peut pas dépasser {{ limit }} caractères',
                     ]),
                 ]
-            ]);    }
+            ])
+            ->add('photoProfile', FileType::class, [
+                'label' => 'Photo de profil',
+                'mapped' => false, // Ne pas mapper directement sur l'entité
+                'required' => false, // Rendre le champ facultatif
+                'label_attr' => [
+                    'class' => 'mt-2 mb-2'
+                ],
+                'attr' => [
+                    'class' => 'form-control-file w-100' // Champ occupe toute la largeur
+                ]
+            ]);    
+        
+        }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

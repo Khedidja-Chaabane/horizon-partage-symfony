@@ -6,7 +6,7 @@
 parameters:
     post: '%kernel.project_dir%/public/images/post'
     action: '%kernel.project_dir%/public/images/action'
-
+    user: '%kernel.project_dir%/public/images/user'
 services:
     # default configuration for services in *this* file
     _defaults:

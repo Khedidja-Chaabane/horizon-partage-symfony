@@ -41,6 +41,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255 , unique: true)]
     private ?string $userName = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photoProfile = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -176,6 +179,18 @@ public function setRoles(array $roles): self
     public function setUserName(string $userName): static
     {
         $this->userName = $userName;
+
+        return $this;
+    }
+
+    public function getPhotoProfile(): ?string
+    {
+        return $this->photoProfile;
+    }
+
+    public function setPhotoProfile(?string $photoProfile): static
+    {
+        $this->photoProfile = $photoProfile;
 
         return $this;
     }

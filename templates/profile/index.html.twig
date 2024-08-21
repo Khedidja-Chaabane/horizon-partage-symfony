@@ -1,21 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Profil de {{ user.userName }}{% endblock %}
+{% block stylesheets %}
+{# Appel de la fonction parent() pour inclure le contenu du bloc stylesheets du parent (le fichier base.html.twig ) #}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/user/profile.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-   <h1>Bonjour {{ user.userName }}</h1>
+<div class="container">
+<div class="bonjour">
+{% if user.photoProfile %}
+<img src="{{asset('images/user/' ~ user.photoProfile)}}" alt="{{user.userName}}" class="profile-img">
+{% else %}
+<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="profile-img">
+{% endif %} 
+   <h5>Bonjour {{ user.userName }}</h5>
+</div>
+   <div class="row">
+   <div class="col-md-6">
+   <div class="profile-infos">
    <h2>Informations du profil : </h2>
 <p>Email : {{ user.email }}</p>
 <p>Prénom : {{ user.prenomUser }}</p>
 <p>Nom : {{ user.nomUser }}</p>
+   </div>
+   </div>
 
-<div class="container">
+<div class="col-md-6">
  <h2>Posts rédigés : </h2>
     {% if posts is not empty %}
         <ul>
@@ -34,5 +47,6 @@
 
     {% endif %}
 </div>
+   </div>
 </div>
 {% endblock %}
