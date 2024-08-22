@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mise à jour du profil{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/user/forms.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+	<div class="d-flex justify-content-end mb-4 mt-4">
+            <a class="btn btn-secondary btn-retour"href="{{ path('app_profile', {'id': user.id}) }}"><i class="bi bi-arrow-left-square"></i> Retour</a>
+        </div>
+
+    <h1 class="text-center mb-4 mt-4"> Modification du profil </h1>
+
+ <div class="d-flex justify-content-center">
+  <div class="col-lg-8 col-md-10">
+  {% if user.photoProfile %}
+						<div class="text-center mb-4">
+						<img src="{{asset('images/user/' ~ user.photoProfile)}}" alt="{{user.userName}}" class="profile-img rounded-circle">
+							<p class="text-muted mt-2">Photo de Profil actuelle </p>
+						</div>
+					{% endif %}
+   {{ form_start(formProfile) }}
+    {{ form_widget(formProfile) }}
+    <button type="submit" class="btn btn-submit w-100 mt-4">Sauvegarder</button>
+{{ form_end(formProfile) }}
+
+  </div>
+ </div>
+
+</div>
+{% endblock %}

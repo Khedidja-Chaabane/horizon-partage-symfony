@@ -1,52 +1,73 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil de {{ user.userName }}{% endblock %}
+{% block title %}Profil de
+	{{ user.userName }}
+{% endblock %}
 {% block stylesheets %}
-{# Appel de la fonction parent() pour inclure le contenu du bloc stylesheets du parent (le fichier base.html.twig ) #}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/user/profile.css') }}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/user/profile.css') }}">
 {% endblock %}
 
 {% block body %}
+	<div class="container my-4">
+		<div class="row ">
+			<div class="col-md-2 ">
+				<div class="profile-header text-center mb-2 ">
+					{% if user.photoProfile %}
+						<img src="{{asset('images/user/' ~ user.photoProfile)}}" alt="{{user.userName}}" class="profile-img rounded-circle">
+					{% else %}
+						<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="default-profile-img rounded-circle">
+					{% endif %}
+					<h5 class="mb-2">Bonjour
+						{{ user.userName }}</h5>
+				</div>
+			</div>
+		</div>
 
-<div class="container">
-<div class="bonjour">
-{% if user.photoProfile %}
-<img src="{{asset('images/user/' ~ user.photoProfile)}}" alt="{{user.userName}}" class="profile-img">
-{% else %}
-<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="profile-img">
-{% endif %} 
-   <h5>Bonjour {{ user.userName }}</h5>
-</div>
-   <div class="row">
-   <div class="col-md-6">
-   <div class="profile-infos">
-   <h2>Informations du profil : </h2>
-<p>Email : {{ user.email }}</p>
-<p>Prénom : {{ user.prenomUser }}</p>
-<p>Nom : {{ user.nomUser }}</p>
-   </div>
-   </div>
+		<div class="row mt-4">
+			<div class="col-md-6">
+				<div class="profile-infos">
+					<h4 class="infos-title text-center mt-2 mb-2">Informations du profil :</h4>
+					<p>
+						<strong>Email :
+						</strong>
+						{{ user.email }}</p>
+					<p>
+						<strong>Prénom :
+						</strong>
+						{{ user.prenomUser }}</p>
+					<p>
+						<strong>Nom :
+						</strong>
+						{{ user.nomUser }}</p>
+					<p>
+						<strong>Pseudo :</strong>
+						{{ user.userName }}</p>
+					<div class="text-center">
+						<a href="{{ path('update_profile', {'id': user.id}) }}" class="btn btn-update w-100 mt-4">Modifier mon profil</a>
 
-<div class="col-md-6">
- <h2>Posts rédigés : </h2>
-    {% if posts is not empty %}
-        <ul>
-            {% for post in posts %}
-           
-                <li>
-                    <a href="{{ path('show_post', { 'id': post.id }) }}">{{ post.titre }}</a>
-                    
-                </li>
-               
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun post trouvé.</p>
-        			<a class="btn" href="{{ path('new_post')}}">Rédiger un post ?</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 text-center menu">
+				<div class="card menu-card">
+					<div class="card-header">
+						Mon menu
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<a href="{{ path('app_profile_posts') }}" class="btn w-100">Mes posts</a>
+						</li>
+						<li class="list-group-item">
+							<a href="#" class="btn w-100">Mon agenda</a>
+						</li>
+						<li class="list-group-item">
+							<a href="#" class="btn w-100">Mes dons</a>
+						</li>
+					</ul>
+				</div>
 
-    {% endif %}
-</div>
-   </div>
-</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

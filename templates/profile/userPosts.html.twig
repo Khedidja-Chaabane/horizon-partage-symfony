@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts de {{user.userName}}{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/user/profile.css') }}">
+{% endblock %}{% block body %}
+<div class="container my-4">
+<div class="d-flex justify-content-end mb-4 mt-4">
+            <a class="btn btn-secondary btn-retour"href="{{ path('app_profile', {'id': user.id}) }}"><i class="bi bi-arrow-left-square"></i> Retour</a>
+        </div>
+
+		{% if posts is not empty %}     		
+			<div class="row">
+            <h1>Mes posts rédigés</h1>
+        {% for post in posts %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4"> <!-- Chaque post occupe 1/4 de la ligne sur grands écrans -->
+                <div class="card h-100">
+                    {% if post.image %}
+                        <img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.titre | capitalize }}</h5>
+                        <p class="card-text">{{ post.texte | capitalize | slice(0, 200) ~ ' ...' }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">Par :
+                                {{ post.auteur.userName }}</small>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">Publié le
+                                {{ post.datePublication|date('d/m/Y H:i') }}</small>
+                        </p>
+                    </div>
+                    <div class="card-footer text-center border-0">
+                        <a href="{{ path('show_post', {'id': post.id}) }}" class="btn read-post-btn">Lire le Post</a>
+                    </div>
+                     <div class="card-footer text-center border-0">
+				<a href="{{ path('update_post', {'id': post.id}) }}" class="btn btn-edit-post mt-2 mb-2">Modifier le Post</a>
+                    </div>
+                     <div class="card-footer text-center border-0">
+<form action="{{ path('delete_post', {'id': post.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer le post {{ post.titre|lower }} ?')">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+                    <button class="btn btn-delete-post mt-2 mb-2">
+                        Supprimer
+                    </button>
+                </form>                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="text-center mt-3">
+        <p>Aucun post trouvé.</p>
+        			<a class="btn new-post" href="{{ path('new_post')}}">✏️ Rédiger un post ?</a>
+</div>
+    {% endif %}
+    <div>
+   
+{% endblock %}

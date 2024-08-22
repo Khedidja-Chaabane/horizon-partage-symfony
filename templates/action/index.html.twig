@@ -22,7 +22,8 @@
     {% if actions is empty %}
         <p>Aucune action trouvée{% if categorieName %} pour la catégorie {{ categorieName }}{% endif %}.</p>
     {% else %}
-		{% for action in actions %}
+	{% for action in actions %}
+		<div class="col-lg-3 col-md-4 col-sm-6 mb-4"><!-- Chaque action occupe 1/4 de la ligne sur grands écrans -->
 		
 			<div class="card mb-4">
 				<img src="{{ asset('images/action/' ~ action.image) }}" alt="{{ action.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
@@ -64,6 +65,7 @@
 
 				</div>
 				
+			</div>
 			</div>
 		{% endfor %}
 		 {% endif %}

@@ -1,44 +1,56 @@
 <nav class="navbar navbar-expand-lg bg-white sticky-top">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="{{ path('app_home') }}">
-			<img src="{{ asset('images/logoWhite.png') }}" alt="Logo">
-		</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link {% if app.request.get('_route') == 'app_home' %}active{% endif %}" aria-current="page" href="{{ path('app_home')}}">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link {% if app.request.get('_route') == 'app_forum' %}active{% endif %}" href="{{ path('app_forum')}}">Forum</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link{% if app.request.get('_route') == 'app_actions' %}active{% endif %}" href="{{ path('app_actions')}}">Nos actions</a>
-				</li>
-				{% if app.user %}
-					{% if is_granted('ROLE_ADMIN') %}
-						<li class="nav-item">
-							<a class="nav-link {% if app.request.get('_route') == 'app_admin' %}active{% endif %}" aria-current="page" href="{{ path('app_admin')}}">Dashboard</a>
-						</li>
-					{% endif %}
-					<li class="nav-item">
-						<a class="nav-link {% if app.request.get('_route') == 'app_profile' %}active{% endif %}" href="{{ path('app_profile') }}">Profil</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link {% if app.request.get('_route') == 'app_logout' %}active{% endif %}" href="{{ path('app_logout')}}">Déconnexion</a>
-					</li>
-				{% else %}
-					<li class="nav-item">
-						<a class="nav-link {% if app.request.get('_route') == 'app_register' %}active{% endif %}" href="{{ path('app_register')}}">Inscription</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link {% if app.request.get('_route') == 'app_login' %}active{% endif %}" href="{{ path('app_login')}}">Connexion</a>
-					</li>
-				{% endif %}
-
-			</ul>
-		</div>
-	</div>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('app_home') }}">
+            <img src="{{ asset('images/logoWhite.png') }}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.get('_route') == 'app_home' %}active{% endif %}" aria-current="page" href="{{ path('app_home')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.get('_route') == 'app_actions' %}active{% endif %}" href="{{ path('app_actions')}}">Nos actions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.get('_route') == 'app_forum' %}active{% endif %}" href="{{ path('app_forum')}}">Forum</a>
+                </li>
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.get('_route') == 'app_admin' %}active{% endif %}" href="{{ path('app_admin')}}">Dashboard</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <!-- Section utilisateur à droite -->
+            {% if app.user %}
+                <div class="d-flex justify-content-end align-items-center">
+                    <!-- Affichage de la photo de profil -->
+                    {% if app.user.photoProfile %}
+                        <a href="{{ path('app_profile') }}">
+                            <img src="{{ asset('images/user/' ~ app.user.photoProfile) }}" alt="Photo de profil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_profile') }}">
+                            <img src="{{ asset('images/default-profile-img.png') }}" alt="default-profile-img" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                        </a>
+                    {% endif %}
+                    <div class="d-flex flex-column">
+                        <span class="navbar-text">Bonjour, {{ app.user.userName }}</span>
+                        <a class="nav-link p-0" href="{{ path('app_logout')}}">Déconnexion</a>
+                    </div>
+                </div>
+            {% else %}
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.get('_route') == 'app_register' %}active{% endif %}" href="{{ path('app_register')}}">Inscription</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.get('_route') == 'app_login' %}active{% endif %}" href="{{ path('app_login')}}">Connexion</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+    </div>
 </nav>

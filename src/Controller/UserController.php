@@ -44,9 +44,6 @@ class UserController extends AbstractController
                 );
                 //3ème étape: enregistrer le nom du fichier dans l'objet
                 $user->setPhotoProfile($nomImage);
-            } else {
-                // Si aucune image n'est téléchargée, définir une image par défaut
-                $user->setPhotoProfile('default-profile-img.png');
             }
             
             // Assigner le rôle par défaut 'ROLE_USER'
