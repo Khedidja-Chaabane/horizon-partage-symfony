@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous soutenir{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-6">
+            <p>Votre générosité peut faire une différence. En soutenant Horizon Partagé, vous contribuez à améliorer la vie de nombreuses personnes à travers nos actions et projets. Vos dons permettent de financer des services essentiels, des cours, des ateliers, et bien plus encore. Ensemble, nous pouvons créer une communauté solidaire et offrir un avenir prometteur à ceux qui en ont besoin. Chaque don compte et nous rapproche un peu plus de nos objectifs. Merci pour votre soutien précieux.</p>
+        </div>
+        <div class="col-md-6">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-success">Je donne</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

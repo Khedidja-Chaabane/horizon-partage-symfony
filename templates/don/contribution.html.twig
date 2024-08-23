@@ -1,0 +1,34 @@
+{# templates/don/contribution.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Contribution{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    <h1>Votre Contribution</h1>
+
+    {% if contribution is not empty %}
+        <ul>
+            {% for montant in contribution %}
+                <li>{{ montant }} €</li>
+                {# Utiliser des indices basés sur zéro (loop.index0) garantit une correspondance correcte avec les éléments du tableau php, évitant ainsi des erreurs d'indexation. #}
+                {# Ici, loop.index0 est utilisé pour générer les URL des actions d'augmentation, de diminution, et de suppression. Chaque élément de la liste de contributions a un index unique basé sur zéro. En utilisant loop.index0, je fais correspondre ces actions aux indices réels des éléments dans le tableau contribution. #}
+                 <a href="{{ path('augmenter_don', {'index': loop.index0}) }}">+</a>
+                    <a href="{{ path('diminuer_don', {'index': loop.index0}) }}">-</a>
+                    <a href="{{ path('supprimer_don', {'index': loop.index0}) }}">Supprimer</a>
+            {% endfor %}
+        </ul>
+        <p>Total: {{ total }} €</p>
+                <a href="{{ path('vider_contribution') }}" class="btn btn-danger">Vider le panier</a>
+
+{% if app.user %}
+        <p><a href="#">Valider mon paiment</a></p>
+            {% else %}
+            <p>Pour valider votre don, veuillez vous <a href="{{ path('app_login') }}">connecter</a>.</p>
+ {% endif %}
+    {% else %}
+        <p>Votre contribution est vide.</p>
+        <a href="{{ path('dons') }}">Faire un don</a>
+    {% endif %}
+</div>
+{% endblock %}

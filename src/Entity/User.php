@@ -44,9 +44,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoProfile = null;
 
+    #[ORM\OneToMany(targetEntity: Don::class, mappedBy: 'donateur')]
+    private Collection $dons;
+
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->dons = new ArrayCollection();
+    
     }
 
     public function getId(): ?int
@@ -194,4 +200,36 @@ public function setRoles(array $roles): self
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Don>
+     */
+    public function getDons(): Collection
+    {
+        return $this->dons;
+    }
+
+    public function addDon(Don $don): static
+    {
+        if (!$this->dons->contains($don)) {
+            $this->dons->add($don);
+            $don->setDonateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDon(Don $don): static
+    {
+        if ($this->dons->removeElement($don)) {
+            // set the owning side to null (unless already changed)
+            if ($don->getDonateur() === $this) {
+                $don->setDonateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 }

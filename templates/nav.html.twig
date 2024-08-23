@@ -12,10 +12,19 @@
                     <a class="nav-link {% if app.request.get('_route') == 'app_home' %}active{% endif %}" aria-current="page" href="{{ path('app_home')}}">Home</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {% if app.request.get('_route') == 'about' %}active{% endif %}" aria-current="page" href="{{ path('about')}}">Qui sommes nous ?</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {% if app.request.get('_route') == 'app_actions' %}active{% endif %}" href="{{ path('app_actions')}}">Nos actions</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {% if app.request.get('_route') == 'dons' %}active{% endif %}" href="{{ path('dons')}}">Nous soutenir</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {% if app.request.get('_route') == 'app_forum' %}active{% endif %}" href="{{ path('app_forum')}}">Forum</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link {% if app.request.get('_route') == 'contribution' %}active{% endif %}" href="{{ path('contribution')}}">Contribution</a>
                 </li>
                 {% if app.user and is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
