@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agir avec nous
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		
+{# <h2>{% if categorieName %}  {{ categorieName| capitalize }}{% else %} <h1>Toutes nos actions</h1>{% endif %}</h2> #}
+
+		{# {% if is_granted('ROLE_ADMIN') %}
+			<a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
+		{% endif %} #}
+ {# Afficher le formulaire avec les boutons pour les catégories #}
+    {# {{ form_start(categorieFilterForm) }}
+        <div class="btn-group mb-3" role="group">
+            {{ form_widget(categorieFilterForm.cours) }}
+            {{ form_widget(categorieFilterForm.atelier) }}
+            {{ form_widget(categorieFilterForm.service) }}
+        </div>
+    {{ form_end(categorieFilterForm) }} #}
+	 {# Afficher les actions associées à la catégorie sélectionnée ou toutes les actions #}
+    {# {% if annonces is empty %}
+        <p>Aucune action trouvée{% if categorieName %} pour la catégorie {{ categorieName }}{% endif %}.</p>
+    {% else %} #}
+	{% for annonce in annonces %}
+		<div class="col-lg-3 col-md-4 col-sm-6 mb-4"><!-- Chaque annonce occupe 1/4 de la ligne sur grands écrans -->
+		
+			<div class="card mb-4">
+
+				<div class="card-body">
+					<h5 class="card-title">{{ annonce.titre | capitalize }}</h5>
+					
+
+					
+						<p class="card-text">
+							{{ annonce.description | capitalize | slice(0, 200) ~ ' ...' }}
+						</p>
+					
+
+					
+				</div>
+				<div class="card-footer text-center border-0">
+					<a href="{{ path('showAnnonce', {'id': annonce.id}) }}" class="btn btn-secondary">En savoir plus</a>
+
+				</div>
+				
+			</div>
+			</div>
+		{% endfor %}
+		 {# {% endif %} #}
+	</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'annonce {{annonce.titre}}{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1>Modifier l'annonce {{annonce.titre}}</h1>
+
+    {{ form_start(updateAnnonceForm) }}
+    {{ form_widget(updateAnnonceForm) }}
+    <button type="submit">Sauvegarder</button>
+{{ form_end(updateAnnonceForm) }}
+
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+.btn.montant-btn {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.btn.montant-btn.selected {
+    background-color: #F17DA0;
+    color: white;
+}
+.btn-don{
+    background-color: #F17DA0;
+    color: white; 
+}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\UserRoleType;
 use App\Repository\ActionRepository;
+use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -109,4 +110,21 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
     }
-}
+
+    // Gestion des annonces
+
+    #[Route('/admin/gestionAnnonces' , name: 'gestion_annonces')]
+    public function manageAnnonces(AnnonceRepository $annonceRepo): Response
+    {
+        if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+            $annonces = $annonceRepo->findAll();
+            
+            return $this->render('admin/gestionAnnonces.html.twig', [
+               'annonces'=>$annonces,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
+    } 
+    }
+

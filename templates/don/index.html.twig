@@ -1,18 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Nous soutenir{% endblock %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/don/don.css') }}">
+{% endblock %}
 {% block body %}
 <div class="container my-4">
+<h1>Faire un don financier</h1>
     <div class="row">
         <div class="col-md-6">
             <p>Votre générosité peut faire une différence. En soutenant Horizon Partagé, vous contribuez à améliorer la vie de nombreuses personnes à travers nos actions et projets. Vos dons permettent de financer des services essentiels, des cours, des ateliers, et bien plus encore. Ensemble, nous pouvons créer une communauté solidaire et offrir un avenir prometteur à ceux qui en ont besoin. Chaque don compte et nous rapproche un peu plus de nos objectifs. Merci pour votre soutien précieux.</p>
+            <h3>Par courrier</h3>
+            <p>Il suffit d’envoyer un chèque ou un mandat libellé à l’ordre d’Horizon partagé
+            <br>
+123 Rue de l'Association,  
+75000 Paris, France  </p>
         </div>
         <div class="col-md-6">
-            {{ form_start(form) }}
-                {{ form_widget(form) }}
-                <button type="submit" class="btn btn-success">Je donne</button>
-            {{ form_end(form) }}
+        <h3>En ligne</h3>
+           {{ form_start(form) }}
+
+<div class="btn-group" role="group" aria-label="Montant de don">
+<h5>Choisissez le montant de votre don </h5>
+    <button type="button" class="btn montant-btn" onclick="setMontant(10)">10€</button>
+    <button type="button" class="btn montant-btn selected" onclick="setMontant(20)">20€</button>
+    <button type="button" class="btn montant-btn" onclick="setMontant(50)">50€</button>
+    <button type="button" class="btn montant-btn" onclick="setMontant(100)">100€</button>
+</div>
+
+<div>
+<h5>Ou saisissez le montant de votre don </h5>
+
+    {# Montant personnalisé #}
+    {{ form_row(form.montant_personnalise) }}
+</div>
+
+{{ form_widget(form.montant) }} {# Champ caché pour le montant sélectionné #}
+
+<button type="submit" class="btn btn-don">Je donne</button>
+
+{{ form_end(form) }}
+
+
         </div>
     </div>
 </div>

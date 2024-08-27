@@ -21,9 +21,13 @@ class Categorie
     #[ORM\OneToMany(targetEntity: Action::class, mappedBy: 'categorie')]
     private Collection $actions;
 
+    #[ORM\OneToMany(targetEntity: Annonce::class, mappedBy: 'categorie')]
+    private Collection $annonces;
+
     public function __construct()
     {
         $this->actions = new ArrayCollection();
+        $this->annonces = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,6 +71,36 @@ class Categorie
             // set the owning side to null (unless already changed)
             if ($action->getCategorie() === $this) {
                 $action->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Annonce>
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->annonces;
+    }
+
+    public function addAnnonce(Annonce $annonce): static
+    {
+        if (!$this->annonces->contains($annonce)) {
+            $this->annonces->add($annonce);
+            $annonce->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonce $annonce): static
+    {
+        if ($this->annonces->removeElement($annonce)) {
+            // set the owning side to null (unless already changed)
+            if ($annonce->getCategorie() === $this) {
+                $annonce->setCategorie(null);
             }
         }
 

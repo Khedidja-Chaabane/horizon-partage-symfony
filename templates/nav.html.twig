@@ -18,6 +18,9 @@
                     <a class="nav-link {% if app.request.get('_route') == 'app_actions' %}active{% endif %}" href="{{ path('app_actions')}}">Nos actions</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {% if app.request.get('_route') == 'app_annonces' %}active{% endif %}" href="{{ path('app_annonces')}}">Agir avec nous</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {% if app.request.get('_route') == 'dons' %}active{% endif %}" href="{{ path('dons')}}">Nous soutenir</a>
                 </li>
                 <li class="nav-item">

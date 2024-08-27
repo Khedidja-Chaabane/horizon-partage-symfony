@@ -1,14 +1,31 @@
-// navbar, pour ajouter la classe active
-// document.addEventListener('DOMContentLoaded', function() {
-//     const currentPath = window.location.pathname.split("/").pop(); // Récupère le chemin actuel
-//     const navLinks = document.querySelectorAll('.nav-link'); // Sélectionne tous les liens de navigation
-  
-//     navLinks.forEach(link => {
-//       // Vérifie si le chemin du lien correspond au chemin actuel
-//       if (link.getAttribute('href') === currentPath) {
-//              link.classList.add('active'); // Ajoute la classe active au lien correspondant
-//       } else {
-//         link.classList.remove('active'); // Retire la classe active des autres liens
-//       }
-//     });
-//   });
+// SCRIPT POUR LES DONS
+// Sélectionner tous les boutons de montant
+const montantButtons = document.querySelectorAll('.montant-btn');
+// Sélectionner le champ caché pour stocker le montant sélectionné
+const hiddenMontantInput = document.querySelector('input[name="don[montant]"]');
+// Sélectionner le champ de montant personnalisé
+const customMontantInput = document.querySelector('input[name="don[montant_personnalise]"]');
+
+// Fonction pour définir le montant sélectionné
+function setMontant(montant) {
+    hiddenMontantInput.value = montant; // Mettre à jour le champ caché
+    customMontantInput.value = ''; // Effacer le montant personnalisé
+
+    // Mise à jour des styles des boutons
+    montantButtons.forEach(button => {
+        if (parseInt(button.textContent) === montant) {
+            button.classList.add('selected'); // Ajouter la classe 'selected' au bouton cliqué
+        } else {
+            button.classList.remove('selected'); // Enlever la classe 'selected' des autres boutons
+        }
+    });
+}
+
+// Ajouter un listener pour vider le champ de montant caché lorsque l'utilisateur saisit un montant personnalisé
+customMontantInput.addEventListener('input', function() {
+    hiddenMontantInput.value = ''; // Effacer le montant sélectionné via boutons
+    montantButtons.forEach(button => button.classList.remove('selected')); // Enlever la classe 'selected' de tous les boutons
+});
+
+// Initialiser le montant par défaut (20€)
+setMontant(20);

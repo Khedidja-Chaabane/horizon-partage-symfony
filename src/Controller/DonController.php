@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DonController extends AbstractController
 {
     #[Route('/don', name: 'dons')]
-    public function index(Request $request): Response
+    public function index(Request $request, SessionInterface $session): Response
     {
         $form = $this->createForm(DonType::class);
         $form->handleRequest($request);
@@ -22,16 +22,21 @@ class DonController extends AbstractController
             $data = $form->getData();
 
             // Vérifier si un montant personnalisé est saisi, sinon utiliser le montant sélectionné
-            $montant = $data['montant_personnalise'] ?? $data['montant'];
+            $montant = $data['montant_personnalise'] ?: $data['montant'];
 
-            // Ajouter le don à la session
-            $session = $request->getSession();
+            if ($montant > 0) {
+                                // Récupère la contribution actuelle de la session ou initialise un tableau vide
+
             $contribution = $session->get('contribution', []);
+                            // Ajoute le montant du don à la liste des contributions
+
             $contribution[] = $montant;
+                            // Met à jour la session avec la nouvelle liste de contributions
+
             $session->set('contribution', $contribution);
-            $this->addFlash('success', 'Montant ajouté');
-            // Rediriger vers la page de la contribution
+
             return $this->redirectToRoute('contribution');
+        }
         }
 
         return $this->render('don/index.html.twig', [

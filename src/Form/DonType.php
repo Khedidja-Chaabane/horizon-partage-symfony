@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Don;
+//use App\Entity\Don;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,18 +14,15 @@ class DonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('montant', ChoiceType::class, [
-                'choices' => [
-                    '10€' => 10,
-                    '20€' => 20,
-                    '50€' => 50,
-                    '100€' => 100,
-                    'Montant personnalisé' => null, // Pour sélectionner un montant personnalisé
-                ],
-                'placeholder' => 'Sélectionnez un montant ou entrez un montant personnalisé',
+         // Champ caché pour stocker le montant sélectionné via les boutons
+         ->add('montant', HiddenType::class, [
+                'required' => false,
             ])
             ->add('montant_personnalise', IntegerType::class, [
-                'required' => false, // Ce champ est optionnel
+                'required' => false, // Champ optionnel pour le montant personnalisé
+                'attr' => [
+                    'placeholder' => 'Saisissez votre montant ici',
+                ],
             ]);
     }
 
