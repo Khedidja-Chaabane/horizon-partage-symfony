@@ -1,20 +1,100 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AboutController!{% endblock %}
-
+{% block title %}About
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/about/about.css') }}">
+{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<div
+		class="container my-4">
+		<!-- Première Carte -->
+		<div class="row mt-3 mb-3">
+			<div class="col-12">
+				<div class="card mb-3">
+					<div class="row g-0">
+						<div class="col-md-4">
+							<img src="{{ asset('images/logoWhite.png') }}" class="img-fluid " alt="notre histoire">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">Notre histoire</h5>
+								<p class="card-text">
+									Fondée en 2024, l'association Horizon Partagé est née de la volonté de créer un espace de solidarité et de soutien au sein de notre communauté. Nous avons commencé avec une petite équipe de bénévoles dévoués et avons le souhait de grandir pour devenir une organisation reconnue pour son impact social et ses initiatives innovantes.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+		<!-- Deuxième Carte -->
+		<div class="row mt-3 mb-3">
+			<div class="col-12">
+				<div class="card mb-3">
+					<div class="row g-0">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/jijil/horizon-partage-sf/src/Controller/AboutController.php'|file_link(0) }}">src/Controller/AboutController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/jijil/horizon-partage-sf/templates/about/index.html.twig'|file_link(0) }}">templates/about/index.html.twig</a></code></li>
-    </ul>
-</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">Notre mission</h5>
+								<p class="card-text">
+									Notre mission est de promouvoir l'entraide et la solidarité à travers divers programmes et services qui répondent aux besoins de la communauté. Nous nous engageons à offrir un soutien juridique, éducatif, psychique et social à ceux qui en ont besoin, en mettant l'accent sur l'inclusion et le respect de la dignité humaine.
+								</p>
+							</div>
+
+						</div>
+						<div class="col-md-4">
+							<img src="{{ asset('images/about/about2.jpg') }}" class="img-fluid" alt="mission">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Troisième Carte -->
+		<div class="row mt-3 mb-3">
+			<div class="col-12">
+				<div class="card mb-3">
+					<div class="row g-0">
+						<div class="col-md-4">
+							<img src="{{ asset('images/about/solidarite.png') }}" class="img-fluid rounded-start" alt="valeurs">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">Nos valeurs</h5>
+								<p class="card-text">
+									Solidarité, respect, intégrité, et engagement sont au cœur de tout ce que nous faisons. Nous croyons que chaque individu mérite d'être traité avec dignité et d'avoir accès aux ressources nécessaires pour mener une vie épanouissante.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Quatrième Carte -->
+		<div class="row mt-3 mb-3">
+			<div class="col-12">
+				<div class="card mb-3">
+					<div class="row g-0">
+
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">Notre équipe</h5>
+								<p class="card-text">
+									Solidarité, respect, intégrité, et engagement sont au cœur de tout ce que nous faisons. Nous croyons que chaque individu mérite d'être traité avec dignité et d'avoir accès aux ressources nécessaires pour mener une vie épanouissante.
+								</p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<img src="{{ asset('images/about/team.jpg') }}" class="img-fluid rounded-start" alt="team">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
 {% endblock %}

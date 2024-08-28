@@ -7,7 +7,7 @@ function scrollToContent() {
     mainContent.scrollIntoView({ behavior: 'smooth' });
     
 }
-
+//-------------------------------------------------------------------------------
 
 // SCRIPT POUR LES DONS
 // Sélectionner tous les boutons de montant

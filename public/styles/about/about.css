@@ -1,0 +1,34 @@
+.card {
+    border: none; /* Enlève la bordure par défaut */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre douce pour un effet d'élévation */
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.card-body {
+    margin: 20px ;
+    padding: 20px; /* Espace autour du contenu de la carte */
+}
+
+.card-title {
+    color: #333; /* Couleur du titre de la carte */
+    font-weight: bold; /* Titre en gras */
+    margin-bottom: 15px; /* Espace sous le titre */
+}
+
+.card-text {
+    margin-top: 20px;
+    color: #555; /* Couleur du texte de la carte */
+    line-height: 35px; /* Espace entre les lignes de texte */
+    text-align: justify;
+    
+
+}
+
+.img-fluid {
+   width: 100%;
+height: 300px; 
+   border-radius: 20px;
+}
+
+
