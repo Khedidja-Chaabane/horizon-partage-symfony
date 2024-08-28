@@ -6,23 +6,18 @@
 {% block body %}
 	<div class="container">
 		
-{# <h2>{% if categorieName %}  {{ categorieName| capitalize }}{% else %} <h1>Toutes nos actions</h1>{% endif %}</h2> #}
-
-		{# {% if is_granted('ROLE_ADMIN') %}
-			<a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
-		{% endif %} #}
- {# Afficher le formulaire avec les boutons pour les catégories #}
-    {# {{ form_start(categorieFilterForm) }}
+<h2>{% if categorieName %}  {{ categorieName| capitalize }}{% endif %}</h2>
+ {# Afficher le formulaire avec les boutons pour les catégories  #}
+    {{ form_start(annonceFilterForm) }}
         <div class="btn-group mb-3" role="group">
-            {{ form_widget(categorieFilterForm.cours) }}
-            {{ form_widget(categorieFilterForm.atelier) }}
-            {{ form_widget(categorieFilterForm.service) }}
+            {{ form_widget(annonceFilterForm) }}
+           <a href="{{ path('dons')}}" class="btn btn-success">Faire un don</a>
         </div>
-    {{ form_end(categorieFilterForm) }} #}
-	 {# Afficher les actions associées à la catégorie sélectionnée ou toutes les actions #}
-    {# {% if annonces is empty %}
-        <p>Aucune action trouvée{% if categorieName %} pour la catégorie {{ categorieName }}{% endif %}.</p>
-    {% else %} #}
+    {{ form_end(annonceFilterForm) }} 
+	 {# Afficher les actions associées à la catégorie sélectionnée ou toutes les actions #} 
+    {% if annonces is empty %}
+        <p>Aucune annonce trouvée{% if categorieName %} pour la catégorie {{ categorieName| capitalize }}{% endif %}.</p>
+    {% else %}
 	{% for annonce in annonces %}
 		<div class="col-lg-3 col-md-4 col-sm-6 mb-4"><!-- Chaque annonce occupe 1/4 de la ligne sur grands écrans -->
 		
@@ -48,6 +43,6 @@
 			</div>
 			</div>
 		{% endfor %}
-		 {# {% endif %} #}
+		  {% endif %}
 	</div>
 {% endblock %}

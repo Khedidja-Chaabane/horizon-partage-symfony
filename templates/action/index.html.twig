@@ -7,9 +7,7 @@
 	<div class="container">
 		
 <h2>{% if categorieName %}  {{ categorieName| capitalize }}{% else %} <h1>Toutes nos actions</h1>{% endif %}</h2>
-		{% if is_granted('ROLE_ADMIN') %}
-			<a href="{{ path('admin_new_action') }}" class="btn btn-success text-white">Ajouter une nouvelle action</a>
-		{% endif %}
+		
  {# Afficher le formulaire avec les boutons pour les catégories #}
     {{ form_start(categorieFilterForm) }}
         <div class="btn-group mb-3" role="group">

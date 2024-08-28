@@ -14,15 +14,15 @@ class CategorieFilterType extends AbstractType
         $builder
         ->add('cours', SubmitType::class, [
                 'label' => 'Cours',
-                'attr' => ['class' => 'btn btn-primary'],
+                'attr' => ['class' => 'btn btn-success'],
             ])
             ->add('atelier', SubmitType::class, [
                 'label' => 'Atelier',
-                'attr' => ['class' => 'btn btn-primary'],
+                'attr' => ['class' => 'btn btn-success'],
             ])
             ->add('service', SubmitType::class, [
                 'label' => 'Service',
-                'attr' => ['class' => 'btn btn-primary'],
+                'attr' => ['class' => 'btn btn-success'],
             ]);
     }
 

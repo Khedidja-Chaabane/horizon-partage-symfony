@@ -1,0 +1,58 @@
+.hero {
+    /* background-image: url("{{ asset('/images/hero.jpg') }}"); */
+    /* Jai opté pour la définiton de l'image du fond en ligne dans twig car je n'arrivais pas à l'afficher depuis le css */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    text-align: center;
+   
+}
+
+h1 {
+    background-color: rgba(0, 100, 0, 0.277); /* Couleur de fond semi-transparente pour le texte */
+    padding: 20px; /* Espacement autour du texte */
+    color: white; /* Couleur du texte */
+    font-size: 35px; /* Taille du texte */
+    border-radius: 5px; /* Bords arrondis */
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+
+}
+/* Bouton placé au bas de la section 'hero', utilisé pour scroller. Il est animé avec une
+    animation CSS (bounce) pour le rendre plus visible et inciter à l'interaction. */
+.scroll-button {
+    position: absolute; /* Positionnement absolu par rapport au parent (hero) */
+    bottom: 150px; /* Positionné en bas de la section hero */
+    background: none; /* Pas de fond */
+    border: none; /* Pas de bordure */
+    font-size: 50px; /* Taille du texte pour être grand et visible */
+    font-weight: bolder;
+    color: white;
+    cursor: pointer; /* Change le curseur à pointer lorsqu'on survole le bouton */
+    animation: bounce 2s infinite; /* Animation de rebond pour attirer l'attention de l'utilisateur */
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+
+}
+
+/* Animation 'bounce' définie pour le bouton de défilement. 
+Elle déplace légèrement le bouton vers le haut et vers le bas pour attirer l'attention de l'utilisateur */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+    
+}
+
+.container {
+    padding: 20px; /* Espacement intérieur pour rendre le contenu plus aéré */
+   
+}

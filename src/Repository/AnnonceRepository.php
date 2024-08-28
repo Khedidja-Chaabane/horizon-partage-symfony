@@ -39,6 +39,36 @@ class AnnonceRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    //Filtre par catégorie
+    /**
+ * @param string $categorieName // Ce commentaire de ligne indique que la méthode attend une chaîne de caractères pour le nom de la catégorie.
+ * @param bool $onlyActive       // Cette ligne indique que la méthode prend également un booléen pour déterminer si seules les annonces actives doivent être retournées.
+ * @return Annonce[]             // Indique que cette méthode retournera un tableau d'objets de type `Annonce`.
+ */
+public function findByCategorieName(string $categorieName, bool $onlyActive = true): array
+{
+    // Créer un QueryBuilder pour construire une requête SQL dynamiquement
+    $qb = $this->createQueryBuilder('a')
+        // Faire une jointure entre l'entité 'Annonce' (alias 'a') et l'entité 'Categorie' (alias 'c')
+        ->join('a.categorie', 'c')
+        // Ajouter une condition pour que le nom de la catégorie corresponde au paramètre donné
+        ->andWhere('c.nom = :categorieName')
+        // Définir la valeur du paramètre :categorieName avec la variable $categorieName
+        ->setParameter('categorieName', $categorieName);
+
+    // Vérifier si seules les annonces actives doivent être retournées
+    if ($onlyActive) {
+        // Ajouter une condition pour que le statut de l'annonce soit vrai (actif)
+        $qb->andWhere('a.status = :status')
+           // Définir la valeur du paramètre :status à vrai (true)
+           ->setParameter('status', true);
+    }
+
+    // Exécuter la requête construite et obtenir les résultats sous forme de tableau d'objets Annonce
+    return $qb->getQuery()->getResult();
+}
+
 //    /**
 //     * @return Annonce[] Returns an array of Annonce objects
 //     */

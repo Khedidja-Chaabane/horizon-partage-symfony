@@ -1,7 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
-
+{% block title %}Acceuil
+{% endblock %}
+{% block stylesheets %}
+	{# Bloc 'stylesheets' pour inclure des fichiers CSS spécifiques à cette page.
+	 Il utilise {{ parent() }} pour inclure les styles du parent (base.html.twig), 
+	 puis ajoute un fichier CSS spécifique pour cette page d'accueil. #}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/home/home.css') }}">
+{% endblock %}
 {% block body %}
-<h1>Home</h1>
+{# Hero #}
+	<div class="hero" style="background-image: url('{{ asset('images/hero.jpg') }}');">
+    <h1>Bienvenue sur le site de l'association Horizon Partagé</h1>
+    <button class="btn scroll-button" onclick="scrollToContent()"><i class="bi bi-chevron-double-down"></i></button>
+    {# Bouton qui, lorsqu'on clique dessus, déclenche la fonction JavaScript scrollToContent(). 
+    Il est stylisé pour être un indicateur visuel (ici un chevron vers le bas) incitant à scroller vers le bas. #}
+</div>
+
+<div class="container" id="main-content">
+    <h2>Dernières actualités</h2>
+    {# Section principale de la page qui affichera des contenus spécifiques, les dernières actualités par exemple. #}
+
+</div>
 {% endblock %}

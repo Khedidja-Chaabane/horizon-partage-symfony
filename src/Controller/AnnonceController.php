@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Annonce;
+use App\Form\AnnonceFilterType;
 use App\Form\AnnonceType;
 use App\Repository\AnnonceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,36 +14,59 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnnonceController extends AbstractController
 {
     #[Route('/annonce', name: 'app_annonces')]
-    public function index(AnnonceRepository $annonceRepo): Response
+    public function index(AnnonceRepository $annonceRepo, Request $request): Response
     {
-        // Récupération des annonces ayants le status activé
-        $annonces = $annonceRepo->findBy(['status' => true]);
+        // Créer une variable pour stocker la catégorie sélectionnée
+        $categorieName = null;
+        // Créer le formulaire
+        $form = $this->createForm(AnnonceFilterType::class);
+        $form->handleRequest($request);
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->get('offreEmploi')->isClicked()) {
+            $categorieName = "offre d'emploi";
+        } elseif ($form->get('partenariat')->isClicked()) {
+            $categorieName = 'partenariat';
+        } elseif ($form->get('benevolat')->isClicked()) {
+            $categorieName = 'bénévolat';
+        }
+    }
+        //Récupérer les annonces activées en fonction de la catégorie séléctionnée
+        if ($categorieName) {
+            $annonces = $annonceRepo->findByCategorieName($categorieName, true);
+        } else {
+            // Récupération de toutes les annonces ayants le status activé
+            $annonces = $annonceRepo->findBy(['status' => true]);
+        }
+
         return $this->render('annonce/index.html.twig', [
             'annonces' => $annonces,
+            'annonceFilterForm' => $form->createView(),
+            'categorieName' => $categorieName,
         ]);
     }
 
     //Création d'une nouvelle annonce
     #[Route('/admin/new-annonce', name: 'admin_new_annonce')]
-    public function newAnnonce(Request $request , AnnonceRepository $annonceRepo): Response
+    public function newAnnonce(Request $request, AnnonceRepository $annonceRepo): Response
     {
-         // Vérification pour sécuriser la tâche
-         if (!$this->getUser() || !$this->isGranted('ROLE_ADMIN')) {
+        // Vérification pour sécuriser la tâche
+        if (!$this->getUser() || !$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('app_login');
         }
 
         $annonce = new Annonce();
-        $form =$this->createForm(AnnonceType::class , $annonce);
+        $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $annonceRepo->add($annonce, true);
             $this->addFlash('success', 'l\'annonce a bien été ajoutée');
             return $this->redirectToRoute('gestion_annonces');
         }
         return $this->render('admin/newAnnonce.html.twig', [
             'newAnnonceForm' => $form->createView(),
-        ]); 
+        ]);
     }
 
     // Modification d'une annonce 
@@ -53,13 +77,13 @@ class AnnonceController extends AbstractController
         if (!$this->getUser() || !$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('app_login');
         }
-// Récupération de l'action
-$annonce = $annonceRepo->find($id);
+        // Récupération de l'action
+        $annonce = $annonceRepo->find($id);
         if (!$annonce) {
             $this->addFlash('error', 'Annonce non trouvée');
             return $this->redirectToRoute('gestion_annonces');
-        }       
-         $form = $this->createForm(AnnonceType::class, $annonce);
+        }
+        $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -70,13 +94,13 @@ $annonce = $annonceRepo->find($id);
 
         return $this->render('admin/updateAnnonce.html.twig', [
             'updateAnnonceForm' => $form->createView(),
-            'annonce'=>$annonce ,
+            'annonce' => $annonce,
         ]);
     }
 
     //Affichage d'une annonce spécifique
     #[Route('annonce/{id}', name: 'showAnnonce')]
-    public function showAnnonce(int $id, AnnonceRepository $annonceRepo):Response
+    public function showAnnonce(int $id, AnnonceRepository $annonceRepo): Response
     {
         $annonce = $annonceRepo->find($id);
         if (!$annonce) {
@@ -93,7 +117,7 @@ $annonce = $annonceRepo->find($id);
     public function deleteAnnonce(int $id, AnnonceRepository $annonceRepo, Request $request): Response
     {
         // Vérification pour sécuriser la tâche
-        if (!$this->getUser() ||!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->getUser() || !$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('app_login');
         }
         $annonce = $annonceRepo->find($id);
@@ -105,7 +129,7 @@ $annonce = $annonceRepo->find($id);
             'delete' . $annonce->getId(),
             $request->request->get('_token')
         )) {
-           
+
             $annonceRepo->remove($annonce, true);
             $this->addFlash('success', 'l\'annonce a bien été supprimée');
         } else {
