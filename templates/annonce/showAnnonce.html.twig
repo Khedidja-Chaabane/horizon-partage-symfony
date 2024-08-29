@@ -1,55 +1,68 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{annonce.titre}}
+	{{ annonce.titre }}
 {% endblock %}
-
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{ asset('styles/annonces/annonces.css') }}">
+{% endblock %}
 {% block body %}
+	<div
+		class="container my-6">
+		<!-- Bouton de retour -->
+		<div class="d-flex justify-content-end">
+			<a href="{{ path('app_annonces') }}" class="btn btn-secondary back mt-3 mb-2">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour
+			</a>
+		</div>
 
+		<!-- Contenu principal de l'annonce -->
 
-	<div class="container ">
-		{% if is_granted('ROLE_ADMIN') %}
-			<a href="{{ path('admin_new_annonce') }}" class="btn btn-success text-white">Ajouter une nouvelle annonce</a>
-		{% endif %}
-		<div class="container">
+		<div class="card card-annonce mt-3 mb-3">
+			<div class="card-body annonce-body">
+				<h6 class=" mt-3 mb-3 text-success">{{ annonce.categorie.nom | capitalize }}</h6>
 
-			<div class="mt-3 mb-3">
-				<h5 class="text-center">{{ annonce.titre |capitalize }}</h5>
-                				<h6 class="text-center">{{ annonce.categorie.nom |capitalize }}</h6>
+				<h5 class="card-title text-center mt-3 mb-3">{{ annonce.titre | capitalize }}</h5>
 
 				<p class="card-text">
-					{{ annonce.description |capitalize }}
+					{{ annonce.description | capitalize }}
 				</p>
+
 				{% if is_granted('ROLE_ADMIN') %}
-					<p class="card-text">
+					<p class="card-text text-danger">
 						{% if annonce.status %}
 							Activée
 						{% else %}
 							Désactivée
 						{% endif %}
-
-
 					</p>
 				{% endif %}
 			</div>
-			{% if is_granted('ROLE_ADMIN') %}
-				<div class="card-footer text-center border-0">
+			<!-- Section des actions pour l'utilisateur -->
+			<div class="card-footer text-center border-0">
+				<a href="#" class="btn btn-secondary">Postuler</a>
+
+				{% if is_granted('ROLE_ADMIN') %}
+					<!-- Bouton pour modifier l'annonce -->
 					<a class="btn btn-warning" href="{{ path('admin_update_annonce', {'id': annonce.id}) }}">
 						<i class="bi bi-pencil-square"></i>
 						Modifier
 					</a>
-					<div>
-						{# <form action="{{ path('admin_delete_action', {'id': action.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'action {{ action.titre|lower }} ?')">
-													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ action.id) }}">
-													<button class="btn btn-danger">
-														<i class="bi bi-trash"></i>
-														Supprimer
-													</button>
-												</form> #}
-					</div>
-				</div>
-			{% endif %}
+
+					<!-- Formulaire pour supprimer l'annonce -->
+					<form action="{{ path('admin_delete_annonce', {'id': annonce.id}) }}" method="post" class="d-inline" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'annonce {{ annonce.titre|lower }} ?')">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ annonce.id) }}">
+						<button class="btn btn-danger">
+							<i class="bi bi-trash"></i>
+							Supprimer
+						</button>
+					</form>
+				{% endif %}
+			</div>
 		</div>
+
 
 	</div>
 {% endblock %}

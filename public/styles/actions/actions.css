@@ -1,0 +1,43 @@
+.filtrage{
+    background-color: #ebf2f3;
+    padding: 20px;
+    border-radius: 10px;
+}
+.filtrage .btn{
+    width: 20%;
+}
+.clicked {
+    /* Couleur différente pour le bouton cliqué */
+    background-color: #3F4446 !important;  
+    color: white;
+    border-color: #28a745;
+}
+.card-img-top{
+   height: 300px;
+    object-fit: cover;
+}
+
+/* bouton retour */
+
+.card {
+    border: none; /* Enlève la bordure par défaut */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre douce pour un effet d'élévation */
+    border-radius: 20px;
+    padding: 10px;
+}
+.card-body {
+    padding: 20px; /* Espace autour du contenu de la carte */
+}
+.card-text {
+   color: #555; /* Couleur du texte de la carte */
+    line-height: 35px; /* Espace entre les lignes de texte */
+    text-align: justify;
+}
+.img-container{
+    padding: 20px;
+}
+.img-fluid {
+    width: 100%;
+ height: 300px; 
+    border-radius: 20px;
+ }

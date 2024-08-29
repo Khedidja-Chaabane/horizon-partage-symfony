@@ -8,7 +8,18 @@ function scrollToContent() {
     
 }
 //-------------------------------------------------------------------------------
+//Script pour le filtre des actions
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.filtrage .btn');
+    buttons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            buttons.forEach(btn => btn.classList.remove('clicked')); // Retirer la classe active de tous les boutons
+            this.classList.add('clicked'); // Ajouter la classe active au bouton cliqué
+        });
+    });
+});
 
+//---------
 // SCRIPT POUR LES DONS
 // Sélectionner tous les boutons de montant
 const montantButtons = document.querySelectorAll('.montant-btn');
