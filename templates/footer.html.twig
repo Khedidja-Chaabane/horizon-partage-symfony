@@ -1,0 +1,50 @@
+<footer class="text-white py-2">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Section du logo -->
+            <div class="col-lg-3 col-md-2 col-sm-2">
+                <img src="{{asset('images/logoDark.png')}}" alt="logo" class="img-fluid logo-footer">
+            </div>
+
+            <!-- Section des réseaux sociaux et des informations de contact -->
+            <div class="col-md-6">
+                <div class="social-icons text-center">
+                    <h6>Suivez-nous sur les réseaux sociaux</h6>
+                    <a href="https://www.facebook.com" target="_blank"><img src="{{asset('images/footer/fb.png')}}" alt="Facebook"></a>
+                    <a href="https://www.instagram.com" target="_blank"><img src="{{ asset('images/footer/insta.png') }}" alt="Instagram"></a>
+                    <a href="https://www.twitter.com" target="_blank"><img src="{{ asset('images/footer/x.png') }}" alt="X"></a>
+                    <a href="https://www.tiktok.com" target="_blank"><img src="{{ asset('images/footer/tiktok.jpg') }}" alt="Tiktok"></a>
+                </div>
+                <div class="contact-info text-center">
+                    <p>Adresse: 123 Rue de l'Association, 75000 Paris, France</p>
+                    <p>Horaires d'ouverture: Lundi - Vendredi : 9h - 17h</p>
+                    <p>Permanance : Samedi 13h - 16h</p>
+                    <p>Téléphone: +33 1 23 45 67 89</p>
+                    <p>Email: contact@horizonpartage.org</p>
+                </div>
+                <div class="legal-links text-center">
+                    <a href="#">Mentions Légales</a> | <a href="#">Politique de Confidentialité</a>
+                </div>
+            </div>
+
+            <!-- Section d'inscription à la newsletter -->
+            <div class="col-md-3 text-center text-md-right">
+                <form action="#" method="post" class="newsletter-form">
+                    <div class="form-group">
+                        <label for="newsletter-email">Inscrivez-vous à notre newsletter</label>
+                        <input type="email" class="form-control" id="newsletter-email" placeholder="Votre email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <div class="copyright">
+                    &copy; {{ "now"|date("Y") }} Khedidja CHAABANE ~ Tous droits réservés.
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
