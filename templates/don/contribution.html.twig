@@ -1,34 +1,53 @@
-{# templates/don/contribution.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Contribution{% endblock %}
-
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/don/don.css') }}">
+{% endblock %}
 {% block body %}
-<div class="container my-4">
-    <h1>Votre Contribution</h1>
+<h1 class="text-center mb-5 mt-5">Votre Contribution</h1>
+<div class="container my-4 p-5">
+    
 
     {% if contribution is not empty %}
-        <ul>
-            {% for montant in contribution %}
-                <li>{{ montant }} €</li>
-                {# Utiliser des indices basés sur zéro (loop.index0) garantit une correspondance correcte avec les éléments du tableau php, évitant ainsi des erreurs d'indexation. #}
-                {# Ici, loop.index0 est utilisé pour générer les URL des actions d'augmentation, de diminution, et de suppression. Chaque élément de la liste de contributions a un index unique basé sur zéro. En utilisant loop.index0, je fais correspondre ces actions aux indices réels des éléments dans le tableau contribution. #}
-                 <a href="{{ path('augmenter_don', {'index': loop.index0}) }}">+</a>
-                    <a href="{{ path('diminuer_don', {'index': loop.index0}) }}">-</a>
-                    <a href="{{ path('supprimer_don', {'index': loop.index0}) }}">Supprimer</a>
-            {% endfor %}
-        </ul>
-        <p>Total: {{ total }} €</p>
-                <a href="{{ path('vider_contribution') }}" class="btn btn-danger">Vider le panier</a>
+        <!-- Tableau pour afficher les contributions -->
+        <table class="table table-striped p-5">
+            <thead>
+                <tr>
+                    <th class="text-center">Montant</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for montant in contribution %}
+                <tr>
+                    <td class="text-center"><img src="{{asset('images/don/don.png')}}" alt="don" class="montant-img">{{ montant }} €</td>
+                    <td class="d-flex justify-content-evenly">
+                        <a href="{{ path('augmenter_don', {'index': loop.index0}) }}" class="btn"><i class="bi bi-plus-circle-dotted"></i></a>
+                        <a href="{{ path('diminuer_don', {'index': loop.index0}) }}" class="btn "><i class="bi bi-dash-circle-dotted"></i></a>
+                        <a href="{{ path('supprimer_don', {'index': loop.index0}) }}" class="btn"><i class="bi bi-x-circle"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-{% if app.user %}
-        <p><a href="#">Valider mon paiment</a></p>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <p><strong>Total:</strong> {{ total }} €</p>
+            <a href="{{ path('vider_contribution') }}" class="btn btn-danger">Tout annuler</a>
+        </div>
+
+        <div class="mt-3">
+            {% if app.user %}
+                <p><a href="#" class="btn btn-primary">Valider mon paiement</a></p>
             {% else %}
-            <p>Pour valider votre don, veuillez vous <a href="{{ path('app_login') }}">connecter</a>.</p>
- {% endif %}
+                <p>Pour valider votre don, veuillez vous <a href="{{ path('app_login') }}">connecter</a>.</p>
+            {% endif %}
+        </div>
     {% else %}
         <p>Votre contribution est vide.</p>
-        <a href="{{ path('dons') }}">Faire un don</a>
+        <a href="{{ path('dons') }}" class="btn btn-don">Faire un don ?</a>
     {% endif %}
 </div>
 {% endblock %}

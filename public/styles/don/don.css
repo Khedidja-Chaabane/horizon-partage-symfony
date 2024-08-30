@@ -1,35 +1,107 @@
 .card {
-    border: none; /* Enlève la bordure par défaut */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre douce pour un effet d'élévation */
+    border: none;
+    /* Enlève la bordure par défaut */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Ajoute une ombre douce pour un effet d'élévation */
     border-radius: 20px;
 }
+
 .card-body {
-    padding: 15px; /* Espace autour du contenu de la carte */
+    padding: 15px;
+    /* Espace autour du contenu de la carte */
 }
+
 .card-text {
-   color: #555; /* Couleur du texte de la carte */
-    line-height: 35px; /* Espace entre les lignes de texte */
+    color: #555;
+    /* Couleur du texte de la carte */
+    line-height: 35px;
+    /* Espace entre les lignes de texte */
     text-align: justify;
 }
-h4{
-    color:  #F17DA0;
+
+h4 {
+    color: #F17DA0;
+}
+.don-container {
+    border: none;
+    /* Enlève la bordure par défaut */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Ajoute une ombre douce pour un effet d'élévation */
+    border-radius: 20px;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    padding: 5px;
+}
+
+.montant-populaire {
+    flex-direction: column;
+    border: 2px solid #F17DA0;
+    border-style: dotted;
+    /* Crée une bordure pointillée */
+    height: 100px;
+    width: 150px;
+    padding: 5px;
+}
+.montant-populaire p {
+   color: #F17DA0;
+   font-size: 10px;
+   padding: 5px;
 }
 .btn.montant-btn {
-    background-color: white;
+    background-color: rgba(176, 196, 222, 0.163);
     color: black;
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.371);
+    width: 80px;
 }
 
 .btn.montant-btn.selected {
     background-color: #F17DA0;
     color: white;
+    font-weight: bold;
 }
-.btn-don{
+.btn.montant-btn.selected:hover {
+    background-color: #b61d4b;
+    color: white;
+    font-weight: bold;
+}
+.autre-montant{
+    padding: 10px;
+
+}
+#autre-montant-btn{
+    width: 50%;
+}
+#montant-personnalise-container{
+display: flex;
+justify-content: center;
+    align-items: center;
+}
+
+.form-control{
+    width: 60%;
+}
+/* Changer la couleur du focus shadow */
+.form-control:focus {
+    border-color:#F17DA0; /* Couleur de la bordure lors du focus */
+    box-shadow: 0 0 0 2px #f17da09a; /* Couleur du focus shadow */
+    outline: none; /* Enlève l'outline bleu par défaut */
+}
+
+.btn-don {
     background-color: #F17DA0;
-    color: white; 
+    color: white;
 }
-.btn-don img{
-    width: 30px;
-    height: 30px;
-    margin-left: 10px;
+.btn-don:hover {
+    background-color: #b61d4b;
+    color: white;
+}
+/* contribution */
+.montant-img{
+    width:40px;
+    margin-right: 10px;
 }

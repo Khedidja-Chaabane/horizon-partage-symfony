@@ -1,76 +1,105 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Nous soutenir
+	Nous soutenir
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/don/don.css') }}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/don/don.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div class="container my-4">
-        <h1 class="text-center mt-4 mb-4">Faire un don financier</h1>
-        
-        <div class="row">
-            <!-- Section Information -->
-            <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
-                <div class="card mb-3 p-2">
-                    <div class="row g-0">
-                        <div class="col-md-3">
-                            <img src="{{ asset('images/don/donner.png') }}" class="img-fluid rounded-start" alt="solidarité">
-                        </div>
-                        <div class="col-md-9">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    Votre générosité peut faire une différence. En soutenant Horizon Partagé, vous contribuez à améliorer la vie de nombreuses personnes à travers nos actions et projets. Vos dons permettent de financer des services essentiels, des cours, des ateliers, et bien plus encore. Ensemble, nous pouvons créer une communauté solidaire et offrir un avenir prometteur à ceux qui en ont besoin. Chaque don compte et nous rapproche un peu plus de nos objectifs. Merci pour votre soutien précieux.
-                                </p>
-                                <h4>Par courrier <i class="bi bi-envelope-paper-heart"></i></h4>
-                                <p class="card-text">
-                                    Il suffit d’envoyer un chèque ou un mandat libellé à l’ordre d’Horizon partagé
-                                    <br>123 Rue de l'Association,  
-                                    <br>75000 Paris, France
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+		<h1 class="text-center mt-5 mb-4">Faire un don financier</h1>
 
-            <!-- Section Formulaire de Don en Ligne -->
-            <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
-                <h4 class="text-center mt-3 mb-3">En ligne</h4>
+	<div class="container my-4">
 
-                {{ form_start(form) }}
+		<div
+			class="row">
+			<!-- Section Information -->
+			<div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+				<div class="card mb-3 p-2">
+					<div class="row g-0">
+						<div class="col-md-3">
+							<img src="{{ asset('images/don/donner.png') }}" class="img-fluid rounded-start" alt="solidarité">
+						</div>
+						<div class="col-md-9">
+							<div class="card-body">
+								<p class="card-text">
+									Votre générosité peut faire une différence. En soutenant Horizon Partagé, vous contribuez à améliorer la vie de nombreuses personnes à travers nos actions et projets. Vos dons permettent de financer des services essentiels, des cours, des ateliers, et bien plus encore. Ensemble, nous pouvons créer une communauté solidaire et offrir un avenir prometteur à ceux qui en ont besoin. Chaque don compte et nous rapproche un peu plus de nos objectifs. Merci pour votre soutien précieux.
+								</p>
+								<h4>Par courrier
+									<i class="bi bi-envelope-paper-heart"></i>
+								</h4>
+								<p class="card-text">
+									Il suffit d’envoyer un chèque ou un mandat libellé à l’ordre d’Horizon partagé
+									<br>123 Rue de l'Association,
+									<br>75000 Paris, France
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                <!-- Choix du montant de don -->
-                <h6 class="text-center">Choisissez le montant de votre don</h6>
-                <div class="d-flex justify-content-around mb-3 mt-3">
-                    <button type="button" class="btn montant-btn" onclick="setMontant(10)">10€</button>
-                    <button type="button" class="btn montant-btn selected" onclick="setMontant(20)">20€</button>
-                    <button type="button" class="btn montant-btn" onclick="setMontant(50)">50€</button>
-                    <button type="button" class="btn montant-btn" onclick="setMontant(100)">100€</button>
-                </div>
+			<!-- Section Formulaire de Don en Ligne -->
+			<div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+				<div
+					class="don-container p-3">
+					<!-- Conteneur avec classe spécifique -->
+					<h4 class="text-center mt-3 mb-3">En ligne</h4>
 
-                <!-- Montant personnalisé -->
-                <div>
-                    <h6 class="text-center">Ou saisissez le montant de votre don</h6>
-                    {{ form_row(form.montant_personnalise) }}
-                </div>
+					{{ form_start(form) }}
 
-                <!-- Champ caché pour le montant sélectionné -->
-                {{ form_widget(form.montant) }}
+					<!-- Choix du montant de don -->
+					<h6 class="text-center">Choisissez le montant de votre don</h6>
+					<div class="d-flex justify-content-around mb-3 mt-3">
+						<div class="btn-container">
+							<button type="button" class="btn montant-btn" onclick="setMontant(10)">10€</button>
+						</div>
+						<div class="btn-container">
+							<button type="button" class="btn montant-btn selected" onclick="setMontant(20)">20€</button>
+						</div>
+						<div class="montant-populaire text-center">
+							<p>
+								<i class="bi bi-star-fill"></i>
+								Montant populaire
+							</p>
+							<button type="button" class="btn montant-btn" onclick="setMontant(50)">50€</button>
+						</div>
+						<div class="btn-container">
+							<button type="button" class="btn montant-btn" onclick="setMontant(100)">100€</button>
+						</div>
+					</div>
 
-                <!-- Bouton de soumission du formulaire -->
-                <div class="text-center">
-                    <button type="submit" class="btn btn-don">
-                        Je donne <i class="bi bi-suit-heart-fill"></i>
-                    </button>
-                </div>
+					<div class="autre-montant text-center mt-3 mb-3">
+						<button type="button" id="autre-montant-btn" class="btn montant-btn">Autre montant</button>
+					</div>
 
-                {{ form_end(form) }}
-            </div>
-        </div>
-    </div>
+					<!-- Champ de saisie pour le montant personnalisé, caché par défaut -->
+					<div id="montant-personnalise-container" class="d-none">
+						{{ form_widget(form.montant_personnalise)}}
+					</div>
+
+					<!-- Champ caché pour stocker le montant sélectionné via les boutons -->
+					{{ form_widget(form.montant) }}
+
+					<!-- Message d'erreur caché par défaut -->
+					<div id="montant-error-message" class="text-danger text-center d-none">
+						Veuillez choisir ou saisir un montant .
+					</div>
+					<!-- Bouton de soumission du formulaire -->
+					<div class="text-center mt-5 mb-3">
+						<button type="submit" class="btn btn-don">
+							Je donne
+							<i class="bi bi-suit-heart-fill"></i>
+						</button>
+					</div>
+
+					{{ form_end(form) }}
+				</div>
+				<!-- Fin du conteneur spécifique -->
+			</div>
+		</div>
+	</div>
 {% endblock %}

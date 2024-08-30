@@ -22,6 +22,7 @@ class DonType extends AbstractType
                 'required' => false, // Champ optionnel pour le montant personnalisé
                 'attr' => [
                     'placeholder' => 'Saisissez votre montant ici',
+                    'class' => 'form-control' ,
                 ],
             ]);
     }
