@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link {% if app.request.get('_route') == 'app_home' %}active{% endif %}" aria-current="page" href="{{ path('app_home')}}">Acceuil</a>
+                    <a class="nav-link {% if app.request.get('_route') == 'app_home' %}active{% endif %}" aria-current="page" href="{{ path('app_home')}}"><i class="bi bi-house"></i></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.get('_route') == 'about' %}active{% endif %}" aria-current="page" href="{{ path('about')}}">Qui sommes nous ?</a>

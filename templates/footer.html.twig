@@ -1,21 +1,20 @@
-<footer class="text-white py-2">
-    <div class="container">
-        <div class="row align-items-center">
+<footer class="col-md-12">
+        <div class="row">
             <!-- Section du logo -->
-            <div class="col-lg-3 col-md-2 col-sm-2">
+            <div class="col-md-3">
                 <img src="{{asset('images/logoDark.png')}}" alt="logo" class="img-fluid logo-footer">
             </div>
 
             <!-- Section des réseaux sociaux et des informations de contact -->
-            <div class="col-md-6">
-                <div class="social-icons text-center">
-                    <h6>Suivez-nous sur les réseaux sociaux</h6>
+            <div class="col-md-6 p-2">
+                                <h6 class="text-center mb-3">Suivez-nous sur les réseaux sociaux</h6>
+                <div class="social-icons text-center mt-3 mb-3">
                     <a href="https://www.facebook.com" target="_blank"><img src="{{asset('images/footer/fb.png')}}" alt="Facebook"></a>
                     <a href="https://www.instagram.com" target="_blank"><img src="{{ asset('images/footer/insta.png') }}" alt="Instagram"></a>
                     <a href="https://www.twitter.com" target="_blank"><img src="{{ asset('images/footer/x.png') }}" alt="X"></a>
                     <a href="https://www.tiktok.com" target="_blank"><img src="{{ asset('images/footer/tiktok.jpg') }}" alt="Tiktok"></a>
                 </div>
-                <div class="contact-info text-center">
+                <div class="contact-info text-center mt-3 mb-4 ">
                     <p>Adresse: 123 Rue de l'Association, 75000 Paris, France</p>
                     <p>Horaires d'ouverture: Lundi - Vendredi : 9h - 17h</p>
                     <p>Permanance : Samedi 13h - 16h</p>
@@ -27,24 +26,30 @@
                 </div>
             </div>
 
-            <!-- Section d'inscription à la newsletter -->
-            <div class="col-md-3 text-center text-md-right">
-                <form action="#" method="post" class="newsletter-form">
-                    <div class="form-group">
-                        <label for="newsletter-email">Inscrivez-vous à notre newsletter</label>
-                        <input type="email" class="form-control" id="newsletter-email" placeholder="Votre email">
-                    </div>
-                    <button type="submit" class="btn btn-primary">S'inscrire</button>
-                </form>
-            </div>
+          <!-- Section d'inscription à la newsletter -->
+<div class="col-md-3 d-flex justify-content-center">
+    <form action="#" method="post" class="newsletter-form text-center">
+        <div class="form-group">
+            <label for="newsletter-email" class="text-center mb-3">Inscrivez-vous à notre newsletter</label>
+            <input type="email" class="form-control form-control-newsletter mb-3" id="newsletter-email" placeholder="Votre email">
+        </div>
+        <button type="submit" class="btn btn-success">S'inscrire</button>
+    </form>
+    <!-- Flèche "Back to Top" -->
+    <div class="back-to-top">
+        <a href="#top" class="back-to-top-link">
+            <img src="{{ asset('images/fleche-haut.png') }}" alt="Back to top" class="back-to-top-icon">
+        </a>
+    </div>
+</div>
+
         </div>
 
         <div class="row mt-3">
             <div class="col-12 text-center">
                 <div class="copyright">
-                    &copy; {{ "now"|date("Y") }} Khedidja CHAABANE ~ Tous droits réservés.
+                  <small>2024 &copy; Khedidja CHAABANE ~ Tous droits réservés.</small>  
                 </div>
             </div>
         </div>
-    </div>
 </footer>

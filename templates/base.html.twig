@@ -21,26 +21,30 @@
 		{% endblock %}
 
 		{# icônes Bootstrap #}
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+		<link
+		rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+		{# Font roboto #}
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 	</head>
-	<body>
+	<body style="font-family: Roboto, sans-serif; font-style: italic;font-weight:300;">
 		{# Inclure la navbar et les messages flashs #}
 		{% include "nav.html.twig" %}
 		{% include 'flashes.html.twig' %}
 
 		{# Bloc pour le contenu principal de la page #}
-		<main>
-			{% block body %}{% endblock %}
-		</main>
-		{# Inclure le footer #}
-		{% include 'footer.html.twig' %}
+		<main id="top" style="min-height:100vh ;"> {% block body %}{% endblock %}
+			</main>
+			{# Inclure le footer #}
+			{% include 'footer.html.twig' %}
 
-		{% block javascripts %}
-			{# Inclure d'abord Bootstrap JS #}
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+			{% block javascripts %}
+				{# Inclure d'abord Bootstrap JS #}
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-			{# Inclure mon fichier JS personnalisé #}
-			<script src="{{ asset('script/script.js') }}"></script>
-		{% endblock %}
-	</body>
-</html>
+				{# Inclure mon fichier JS personnalisé #}
+				<script src="{{ asset('script/script.js') }}"></script>
+			{% endblock %}
+		</body>
+	</html>
