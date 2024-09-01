@@ -28,6 +28,11 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ post.titre | capitalize }}</h5>
                         <p class="card-text">{{ post.texte | capitalize | slice(0, 200) ~ ' ...' }}</p>
+                        {% if post.auteur.photoProfile %}
+								<img src="{{asset('images/user/' ~ post.auteur.photoProfile)}}" alt="{{post.auteur.userName}}" class="auteur-profile-img rounded-circle">
+							{% else %}
+								<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="auteur-profile-img rounded-circle">
+							{% endif %}
                         <p class="card-text">
                             <small class="text-muted">Par :
                                 {{ post.auteur.userName }}</small>

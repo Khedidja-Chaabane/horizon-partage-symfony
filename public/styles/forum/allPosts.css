@@ -12,7 +12,10 @@
     font-size: 25px;
     font-weight: bold;
 }
-
+.auteur-profile-img{
+    width: 40px;
+    margin-left: 10px;
+}
 .read-post-btn{
     width: 80%;
     background-color: #3F4446;

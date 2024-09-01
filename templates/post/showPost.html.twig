@@ -1,69 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Post : {{post.titre}}
+{% block title %}Post :
+	{{post.titre}}
 {% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/forum/showPost.css') }}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/forum/showPost.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    {% if app.user %}
-    <div class="d-flex justify-content-end mb-4 mt-4">
-        <a class="btn new-post-btn" href="{{ path('new_post')}}">✏️ Écrire un post</a>
-    </div>
-    {% endif %}
-    <div class="d-flex justify-content-end mb-4 mt-4">
-        <a class="btn btn-secondary btn-retour" href="{{ path('all_posts')}}"><i class="bi bi-arrow-left-square"></i> Retour</a>
-    </div>
-                <h5 class="post-title">{{ post.titre |capitalize }}</h5>
+	<div class="container">
+		{% if app.user %}
+			<div class="d-flex justify-content-end mb-4 mt-4">
+				<a class="btn new-post-btn" href="{{ path('new_post')}}">✏️ Écrire un post</a>
+			</div>
+		{% endif %}
+		<div class="d-flex justify-content-end mb-4 mt-4">
+			<a class="btn btn-secondary btn-retour" href="{{ path('all_posts')}}">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour</a>
+		</div>
+		<h5 class="post-title">{{ post.titre |capitalize }}</h5>
 
-    <div class="row p-2 mt-2">
-	 <!-- Image du post -->
-        {% if post.image %}
-        <div class="col-md-4 img-container">
-            <img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="post-img">
-        </div>
-        <!-- Contenu du post à gauche -->
-        <div class="col-md-8 post-container">
-            <p class="card-text">{{ post.texte |capitalize}}</p>
-            <p class="card-text">
-                <small class="text-muted">Par :
-                    {{ post.auteur.prenomUser }}</small>
-            </p>
-            <p class="card-text">
-                <small class="text-muted">Publié le
-                    {{ post.datePublication|date('d/m/Y H:i') }}</small>
-            </p>
-{% else %}
-{# Si y a pas d'image le contenu s'affiche au centre de la page #}
- <div class="container post-container ">
-            <p class="card-text">{{ post.texte |capitalize}}</p>
-            <p class="card-text">
-                <small class="text-muted">Par :
-                    {{ post.auteur.prenomUser }}</small>
-            </p>
-            <p class="card-text">
-                <small class="text-muted">Publié le
-                    {{ post.datePublication|date('d/m/Y H:i') }}</small>
-            </p>
- {% endif %}
-            {% if app.user and app.user == post.auteur %}
-                <div class="text-center">
-				<a href="{{ path('update_post', {'id': post.id}) }}" class="btn btn-edit-post mt-2 mb-2">Modifier le Post</a>
-                <form action="{{ path('delete_post', {'id': post.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer le post {{ post.titre|lower }} ?')">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
-                    <button class="btn btn-delete-post mt-2 mb-2">
-                        Supprimer
-                    </button>
-                </form>
+		<div
+			class="row p-2 mt-2">
+			<!-- Image du post -->
+			{% if post.image %}
+				<div class="col-md-4 img-container">
+					<img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="post-img">
 				</div>
-            {% endif %}
-            
-        </div>
-        
-       
-    </div>
-</div>
-{% endblock %}
+				<!-- Contenu du post à gauche -->
+				<div class="col-md-8 post-container">
+					<p class="card-text">{{ post.texte |capitalize}}</p>
+					{% if post.auteur.photoProfile %}
+						<img src="{{asset('images/user/' ~ post.auteur.photoProfile)}}" alt="{{post.auteur.userName}}" class="auteur-profile-img rounded-circle">
+					{% else %}
+						<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="auteur-profile-img rounded-circle">
+					{% endif %}
+					<p class="card-text">
+						<small class="text-muted">Par :
+							{{ post.auteur.prenomUser }}</small>
+					</p>
+					<p class="card-text">
+						<small class="text-muted">Publié le
+							{{ post.datePublication|date('d/m/Y H:i') }}</small>
+					</p>
+				{% else %}
+					{# Si y a pas d'image le contenu s'affiche au centre de la page #}
+					<div class="container post-container ">
+						<p class="card-text">{{ post.texte |capitalize}}</p>
+						<p class="card-text">
+							<small class="text-muted">Par :
+								{{ post.auteur.prenomUser }}</small>
+						</p>
+						<p class="card-text">
+							<small class="text-muted">Publié le
+								{{ post.datePublication|date('d/m/Y H:i') }}</small>
+						</p>
+					{% endif %}
+					{% if app.user and app.user == post.auteur %}
+						<div class="text-center">
+							<a href="{{ path('update_post', {'id': post.id}) }}" class="btn btn-edit-post mt-2 mb-2">Modifier le Post</a>
+							<form action="{{ path('delete_post', {'id': post.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer le post {{ post.titre|lower }} ?')">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+								<button class="btn btn-delete-post mt-2 mb-2">
+									Supprimer
+								</button>
+							</form>
+						</div>
+					{% endif %}
+
+				</div>
+
+
+			</div>
+		</div>
+	{% endblock %}

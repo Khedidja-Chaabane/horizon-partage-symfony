@@ -10,24 +10,23 @@
 
 {% block body %}
 	<div class="container my-4">
+	<h1>Mon profil</h1>
 		<div class="row ">
-			<div class="col-md-2 ">
+			<div class="col-md-2">
 				<div class="profile-header text-center mb-2 ">
 					{% if user.photoProfile %}
 						<img src="{{asset('images/user/' ~ user.photoProfile)}}" alt="{{user.userName}}" class="profile-img rounded-circle">
 					{% else %}
 						<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="default-profile-img rounded-circle">
 					{% endif %}
-					<h5 class="mb-2">Bonjour
-						{{ user.userName }}</h5>
 				</div>
 			</div>
 		</div>
 
 		<div class="row mt-4">
-			<div class="col-md-6">
+			<div class="col-lg-6 col-md-12">
 				<div class="profile-infos">
-					<h4 class="infos-title text-center mt-2 mb-2">Informations du profil :</h4>
+					<h4 class="infos-title text-center mt-2 mb-2">Mes informations</h4>
 					<p>
 						<strong>Email :
 						</strong>
@@ -49,7 +48,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 text-center menu">
+			<div class="col-lg-6 col-md-12 text-center menu">
 				<div class="card menu-card">
 					<div class="card-header">
 						Mon menu

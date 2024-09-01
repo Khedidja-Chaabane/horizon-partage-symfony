@@ -1,64 +1,82 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Forum{% endblock %}
+{% block title %}Forum
+{% endblock %}
 
 {% block stylesheets %}
-{# Appel de la fonction parent() pour inclure le contenu du bloc stylesheets du parent (le fichier base.html.twig ) #}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/forum/forum.css') }}">
+	{# Appel de la fonction parent() pour inclure le contenu du bloc stylesheets du parent (le fichier base.html.twig ) #}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/forum/forum.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <!-- Titre du forum -->
-        <h1 class="forum-title">Bienvenue sur notre Forum</h1>
-        
-        <!-- Bouton pour ajouter un nouveau post -->
-        {% if app.user %}
-            <a class="btn new-post-btn" href="{{ path('new_post') }}">✏️ Écrire un post</a>
-        {% endif %}
+	<div
+		class="container">
+		<!-- Titre du forum -->
+		<h1 class="forum-title">Bienvenue sur notre Forum</h1>
 
-        <!-- Description du forum -->
-        <p class="forum-description">Partagez vos expériences, posez des questions et engagez des discussions avec la communauté.</p>
+		<!-- Bouton pour ajouter un nouveau post -->
+		{% if app.user %}
+			<div class="d-flex justify-content-end">
+				<a class="btn new-post-btn" href="{{ path('new_post') }}">✏️ Écrire un post</a>
+			</div>
+		{% endif %}
 
-        <div class="row">
-         <!-- Section des règles du forum -->
-            <div class="col-md-4">
-                <div class="forum-rules">
-                    <h4>Règles du Forum</h4>
-                    <p>🤝 <strong>Respect et Courtoisie</strong></p>
-                    <p>- Traitez tous les membres avec respect. Les insultes, le harcèlement ou tout comportement agressif ne seront pas tolérés.</p>
-                    <p>📚 <strong>Contenu Approprié</strong></p>
-                    <p>- Publiez du contenu pertinent et approprié. Les messages offensants, haineux ou illégaux sont interdits.</p>
-                    <p>🔒 <strong>Confidentialité</strong></p>
-                    <p>- Respectez la vie privée des autres membres. Ne partagez pas d'informations personnelles sans consentement.</p>
-                    <p>Pour toute question ou pour signaler un problème, veuillez contacter les administrateurs.</p>
-                </div>
-            </div>
-            <!-- Section des posts récents -->
-            <div class="col-md-8 posts-container">
-            <h4>Derniers Posts publiés par les memebres</h4>
-                {% for post in recentPosts %}
-                    <div class="card card-post">
-                        {% if post.image %}
-                            <img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ post.titre | capitalize }}</h5>
-                            <p class="card-text">{{ post.texte | capitalize | slice(0, 150) ~ ' ...' }}</p>
-                            <p class="card-text">
-                                <small class="text-muted">Par : {{ post.auteur.userName }}</small>
-                            </p>
-                            <div class="card-footer text-center border-0">
-                                <a href="{{ path('show_post', {'id': post.id}) }}" class="btn read-post-btn">Lire le Post</a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-                <a href="{{ path('all_posts') }}" class="btn see-all-posts-btn">>> Voir tous les posts</a>
-            </div>
+		<!-- Description du forum -->
+		<p class="forum-description">Partagez vos expériences, posez des questions et engagez des discussions avec la communauté.</p>
 
-           
-        </div>
-    </div>
+		<div
+			class="row">
+			<!-- Section des règles du forum -->
+			<div class="col-lg-4 col-md-6">
+				<div class="forum-rules">
+					<h4>Règles du Forum</h4>
+					<p>🤝
+						<strong>Respect et Courtoisie</strong>
+					</p>
+					<p>- Traitez tous les membres avec respect. Les insultes, le harcèlement ou tout comportement agressif ne seront pas tolérés.</p>
+					<p>📚
+						<strong>Contenu Approprié</strong>
+					</p>
+					<p>- Publiez du contenu pertinent et approprié. Les messages offensants, haineux ou illégaux sont interdits.</p>
+					<p>🔒
+						<strong>Confidentialité</strong>
+					</p>
+					<p>- Respectez la vie privée des autres membres. Ne partagez pas d'informations personnelles sans consentement.</p>
+					<p>Pour toute question ou pour signaler un problème, veuillez contacter les administrateurs.</p>
+				</div>
+			</div>
+			<!-- Section des posts récents -->
+			<div class="col-lg-8 col-md-6 posts-container">
+				<h4>Derniers Posts publiés par les memebres</h4>
+				{% for post in recentPosts %}
+					<div class="card card-post">
+						{% if post.image %}
+							<img src="{{ asset('images/post/' ~ post.image )}}" alt="{{ post.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+						{% endif %}
+						<div class="card-body">
+							<h5 class="card-title">{{ post.titre | capitalize }}</h5>
+							<p class="card-text">{{ post.texte | capitalize | slice(0, 150) ~ ' ...' }}</p>
+							{% if post.auteur.photoProfile %}
+								<img src="{{asset('images/user/' ~ post.auteur.photoProfile)}}" alt="{{post.auteur.userName}}" class="auteur-profile-img rounded-circle">
+							{% else %}
+								<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="auteur-profile-img rounded-circle">
+							{% endif %}
+							<p class="card-text">
+								<small class="text-muted">Par :
+								</small>
+								{{ post.auteur.userName }}
+							</p>
+							<div class="card-footer text-center border-0">
+								<a href="{{ path('show_post', {'id': post.id}) }}" class="btn read-post-btn">Lire le Post</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+				<a href="{{ path('all_posts') }}" class="btn see-all-posts-btn">>> Voir tous les posts</a>
+			</div>
+
+
+		</div>
+	</div>
 {% endblock %}

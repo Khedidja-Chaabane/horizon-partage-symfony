@@ -35,7 +35,10 @@ align-items: flex-start;
     box-shadow: 0 0 0 1px #3f444640; /* Couleur du focus shadow */
 
 }
-
+.auteur-profile-img{
+    width: 40px;
+    margin-left: 10px;
+}
 .btn-edit-post{
     background-color: #bcba45ce;
     color: #fff;

@@ -71,6 +71,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
+
     // Route pour afficher les posts redigés dans le profil
     #[Route('/profile/posts', name: 'app_profile_posts')]
     public function userPosts(): Response

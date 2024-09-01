@@ -18,7 +18,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('nomUser', null, [
-                'label' => 'Nom',
+                'label' => 'Nom *',
                 'required' => true,
                 'label_attr' => [
                     'class' => ' mt-2 mb-2' 
@@ -34,7 +34,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('prenomUser', null, [
-                'label' => 'Prénom',
+                'label' => 'Prénom *',
                 'required' => true,
                 'label_attr' => [
                     'class' => ' mt-2 mb-2'
@@ -50,7 +50,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('userName', null, [
-                'label' => 'Pseudo',
+                'label' => 'Pseudo *',
                 'required' => true,
                 'label_attr' => [
                     'class' => ' mt-2 mb-2'
@@ -72,7 +72,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Email',
+                'label' => 'Email *',
                 'required' => true,
                 'label_attr' => [
                     'class' => 'mt-2 mb-2'
@@ -88,7 +88,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('plainPassword', PasswordType::class, [
-                'label' => 'Mot de passe',
+                'label' => 'Mot de passe *',
                 'mapped' => false,
                 'required' => true,
                 'label_attr' => [
@@ -105,13 +105,13 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
-                        'max' => 50,
+                        'max' => 20,
                         'maxMessage' => 'Votre mot de passe ne peut pas dépasser {{ limit }} caractères',
                     ]),
                 ]
             ])
             ->add('photoProfile', FileType::class, [
-                'label' => 'Photo de profil',
+                'label' => 'Photo de profil (Facultatif)',
                 'mapped' => false, // Ne pas mapper directement sur l'entité
                 'required' => false, // Rendre le champ facultatif
                 'label_attr' => [
