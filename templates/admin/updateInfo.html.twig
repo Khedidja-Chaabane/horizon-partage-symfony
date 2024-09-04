@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'info
+	{{info.titre}}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container my-5">
+		<h1 class="text-center mt-5 mb-5">Modifier l'article "
+			{{info.titre|capitalize}}
+			"</h1>
+		<div class="d-flex justify-content-end mb-4 mt-4">
+			<a class="btn btn-secondary btn-retour" href="{{ path('gestion_infos') }}">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour</a>
+		</div>
+		<div class="col-lg-8 col-md-10">
+			{% if info.image %}
+				<div class="text-center mb-4">
+					<img src="{{ asset('images/info/' ~ info.image) }}" alt="{{ info.titre }}" class="img-fluid" style="max-height: 300px;">
+					<p class="text-muted mt-2">Image actuelle</p>
+				</div>
+			{% endif %}
+		</div>
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<button type="submit">Sauvegarder</button>
+		{{ form_end(form) }}
+
+	</div>
+	<div class="col-md-6 d-flex align-items-start justify-content-end">
+		<form action="{{ path('admin_delete_info', {'id': info.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'article  {{ info.titre|lower }} ?')">
+			<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ info.id) }}">
+			<button class="btn btn-danger">
+				<i class="bi bi-trash"></i>
+				Supprimer
+			</button>
+		</form>
+	</div>
+{% endblock %}

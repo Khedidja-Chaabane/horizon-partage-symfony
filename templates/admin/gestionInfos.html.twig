@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestions des infos 
+{% endblock %}
+
+{% block body %}
+	<div class="container my-4">
+		<h1>Gestion des Infos</h1>
+		<a href="{{ path('admin_new_info') }}" class="btn btn-success text-white">Ajouter une nouvelle info</a>
+
+		{% if infos is not empty %}
+			<table class="table table-striped mt-4">
+				<thead>
+					<tr>
+						<th>Titre</th>
+						<th>Date de publication</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for info in infos %}
+						<tr>
+							<td>{{ info.titre|capitalize }}</td>
+							<td>{{ info.createdAt|date('d/m/Y H:i')}}</td>
+							
+							<td>
+
+								<a href="{{ path('show_info', {'id': info.id}) }}" class="btn btn-secondary">
+																	<i class="bi bi-eye-fill"></i>
+																	Afficher</a>
+
+							</td>
+							<td>
+								<a class="btn btn-warning" href="{{ path('admin_update_info', {'id': info.id}) }}">
+									<i class="bi bi-pencil-square"></i>
+									Modifier
+								</a>
+							</td>
+							<td>
+								<form action="{{ path('admin_delete_info', {'id': info.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'article  {{ info.titre|lower }} ?')">
+																	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ info.id) }}">
+																	<button class="btn btn-danger">
+																		<i class="bi bi-trash"></i>
+																		Supprimer
+																	</button>
+																</form>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+
+	{% endblock %}

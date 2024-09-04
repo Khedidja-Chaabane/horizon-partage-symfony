@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualité{% endblock %}
+
+{% block body %}
+
+<div class="container">
+   
+	<div class="d-flex justify-content-end mb-4 mt-4">
+            <a class="btn btn-secondary btn-retour"href="{{ path('app_infos')}}"><i class="bi bi-arrow-left-square"></i> Retour</a>
+        </div>
+	<h1 class="mt-5 mb-3"> Toute l'actualité </h1>
+    <div class="row">
+        {% for info in infos %}
+            <div class="col-lg-3 col-md-12 col-sm-12 mb-4"> <!-- Chaque article occupe 1/4 de la ligne sur grands écrans et 1 ligne sur moyens et petits écrans-->
+                <div class="card h-100">
+                    {% if info.image %}
+                        <img src="{{ asset('images/info/' ~ info.image )}}" alt="{{ info.titre }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ info.titre | capitalize }}</h5>
+                        <p class="card-text">{{ info.texte | capitalize | slice(0, 200) ~ ' ...' }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">Publié le
+                                {{ info.createdAt|date('d/m/Y H:i') }}</small>
+                        </p>
+                    </div>
+                    <div class="card-footer text-center border-0">
+                        <a href="{{ path('show_info', {'id': info.id}) }}" class="btn read-post-btn">Lire l'article</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

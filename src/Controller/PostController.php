@@ -17,7 +17,7 @@ class PostController extends AbstractController
     #[Route('/forum', name: 'app_forum')]
     public function index(PostRepository $postRepository): Response
     {
-        $recentPosts = $postRepository->findRecentPosts(5); // Récupère les 5 posts les plus récents 
+        $recentPosts = $postRepository->findRecentPosts(3); // Récupère les 3 posts les plus récents 
 
         return $this->render('post/index.html.twig', [
             'recentPosts' => $recentPosts,

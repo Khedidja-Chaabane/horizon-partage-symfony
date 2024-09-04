@@ -24,6 +24,9 @@
                     <a class="nav-link {% if app.request.get('_route') == 'dons' %}active{% endif %}" href="{{ path('dons')}}">Nous soutenir</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {% if app.request.get('_route') == 'app_infos' %}active{% endif %}" href="{{ path('app_infos')}}">Infos</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {% if app.request.get('_route') == 'app_forum' %}active{% endif %}" href="{{ path('app_forum')}}">Forum</a>
                 </li>
                  <li class="nav-item">

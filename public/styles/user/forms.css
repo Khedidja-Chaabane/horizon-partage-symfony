@@ -21,3 +21,7 @@ h1 {
     object-fit: cover;
 }
 
+.forgot-password{
+    text-decoration: none;
+    font-size: 12px;
+}

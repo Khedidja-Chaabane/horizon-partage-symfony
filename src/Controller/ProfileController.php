@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\UpdateProfileType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
@@ -71,6 +73,47 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    // Méthode pour changer le mot de passe
+    #[Route('/profile/change-password', name: 'user_change_password', methods: ['GET', 'POST'])]
+    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository, SessionInterface $session): Response
+    {
+        // Vérification que l'utilisateur est connecté
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Création du formulaire de changement de mot de passe
+        $form = $this->createForm(ChangePasswordType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupération des données du formulaire
+            $currentPassword = $form->get('password')->getData();
+            $newPassword = $form->get('newPassword')->getData();
+
+            // Vérification du mot de passe actuel
+            if (!$passwordHasher->isPasswordValid($user, $currentPassword)) {
+                // Si le mot de passe actuel est incorrect, on ajoute un message flash d'erreur
+                $this->addFlash('error', 'Le mot de passe actuel est incorrect.');
+                return $this->redirectToRoute('user_change_password');
+            }
+
+            // Hachage et mise à jour du nouveau mot de passe
+            $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
+            $user->setPassword($hashedPassword);
+            $userRepository->save($user, true);
+
+            // Ajout d'un message flash de succès et redirection
+            $this->addFlash('success', 'Votre mot de passe a été changé avec succès.');
+            return $this->redirectToRoute('app_profile');
+        }
+
+        // Affichage du formulaire
+        return $this->render('profile/changePassword.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
     // Route pour afficher les posts redigés dans le profil
     #[Route('/profile/posts', name: 'app_profile_posts')]

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AnnonceController extends AbstractController
 {
-    #[Route('/annonce', name: 'app_annonces')]
+    #[Route('/annonces', name: 'app_annonces')]
     public function index(AnnonceRepository $annonceRepo, Request $request): Response
     {
         // Créer une variable pour stocker la catégorie sélectionnée

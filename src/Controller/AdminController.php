@@ -6,6 +6,7 @@ use App\Form\UserRoleType;
 use App\Repository\ActionRepository;
 use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\InfoRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,6 +122,21 @@ class AdminController extends AbstractController
             
             return $this->render('admin/gestionAnnonces.html.twig', [
                'annonces'=>$annonces,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
+    } 
+
+    //Gestion des infos
+    #[Route('/admin/gestionInfos' , name: 'gestion_infos')]
+    public function manageInfos(InfoRepository $infoRepo): Response
+    {
+        if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+            $infos = $infoRepo->findAll();
+            
+            return $this->render('admin/gestionInfos.html.twig', [
+               'infos'=>$infos,
             ]);
         } else {
             return $this->redirectToRoute('app_login');

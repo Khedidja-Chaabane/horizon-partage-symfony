@@ -14,16 +14,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Positive;
 
 class ActionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('titre', null, [
+            ->add('titre', null, [
                 'label' => 'titre de l\'action',
                 'required' => true,
                 'label_attr' => [
@@ -62,7 +62,8 @@ class ActionType extends AbstractType
                 ],
                 'attr' => [
                     'placeholder' => 'saisir un descriptif',
-                    'class' => 'border border-success', "rows" => 8
+                    'class' => 'border border-success',
+                    "rows" => 8
                 ],
                 'required' => true,
                 'row_attr' => [
@@ -72,20 +73,23 @@ class ActionType extends AbstractType
             ])
             ->add('tarif', MoneyType::class, [
                 'currency' => 'EUR',
-                'required' => false, 
+                'required' => false,  // Permet au champ d'être facultatif
                 'label' => 'Tarif',
                 'label_attr' => ['class' => 'text-success'],
                 'attr' => [
                     'placeholder' => 'Saisir un prix',
                     'class' => 'border border-success'
                 ],
-                'help' => 'Le prix doit être supérieur à 0',
+                'help' => 'Le prix doit être supérieur ou égal à 0, ou peut être laissé vide pour indiquer la gratuité',
                 'help_attr' => ['class' => 'text-danger text-center'],
                 'constraints' => [
-                    new Positive(['message' => 'Le prix doit être supérieur à 0']),
+                    new GreaterThanOrEqual([
+                        'value' => 0,
+                        'message' => 'Le prix doit être supérieur ou égal à 0.',
+                    ]),
                 ]
             ])
-            
+
             // Ajout d'un champ pour téléverser une nouvelle image
             ->add('image', FileType::class, [
                 'required' => false, // Non requis, car l'utilisateur peut garder l'image actuelle
@@ -95,18 +99,18 @@ class ActionType extends AbstractType
             ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
-                'required' => false, 
+                'required' => false,
                 'label' => 'Date',
                 'label_attr' => ['class' => 'text-success']
             ])
             ->add('horaire', TimeType::class, [
                 'widget' => 'single_text',
-                'required' => false, 
+                'required' => false,
                 'label' => 'Horaire',
                 'label_attr' => ['class' => 'text-success']
             ])
             ->add('lieu', TextType::class, [
-                'required' => false, 
+                'required' => false,
                 'label' => 'Lieu',
                 'label_attr' => ['class' => 'text-success'],
                 'attr' => [

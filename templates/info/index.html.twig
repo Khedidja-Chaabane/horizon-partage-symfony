@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Infos
+{% endblock %}
+
+
+
+{% block body %}
+	<div
+		class="container my-2">
+{# Ici des boutons de liens vers actualité , transparence, galerie multémedia #}
+		
+		<div class="row">
+			<!-- Section des règles du forum -->
+			<div class="col-lg-6 col-md-12">
+				<div class="recent-infos">
+					<h4>Nos dernières actualités</h4>
+					{% for info in recentInfos %}
+                    {# faire en sorte que 2 cards s'affichent sur une ligne #}
+					<div class="card card-info">
+						{% if info.image %}
+							<img src="{{ asset('images/info/' ~ info.image )}}" alt="{{ info.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+						{% endif %}
+						<div class="card-body">
+							<h5 class="card-title">{{ info.titre | capitalize }}</h5>
+							<p class="card-text">{{ info.texte | capitalize | slice(0, 150) ~ ' ...' }}</p>
+							
+							<div class="card-footer text-center border-0">
+								<a href="{{ path('show_info', {'id': info.id}) }}" class="btn read-post-btn">Lire la suite</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+                {# >> Voir toute l'actualité #}
+                <a href="{{ path('all_infos') }}" class="btn see-all-infos-btn">>> Voir toute l'actualité</a>
+				</div>
+			</div>
+			<!-- Section des posts récents -->
+			<div class="col-lg-6 col-md-12 bilan">
+				<h4>Transparence</h4>
+				{# ici un carousel pour le bilan #}
+				
+			</div>
+
+
+		</div>
+        <div class="row">
+            <!-- Section des photos de la galerie -->
+            <div class="galerie col-12">
+            
+            </div>
+        </div>
+	</div>
+{% endblock %}

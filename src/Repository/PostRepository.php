@@ -61,7 +61,7 @@ class PostRepository extends ServiceEntityRepository
  * Récupère les posts récents depuis la base de données.
  *
  * @param int $limit Le nombre maximal de posts à récupérer
- * @return Produit[] Retourne un tableau d'objets Post
+ * @return Post[] Retourne un tableau d'objets Post
  */
 public function findRecentPosts($limit)
 {
