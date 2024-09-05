@@ -6,6 +6,7 @@ use App\Form\UserRoleType;
 use App\Repository\ActionRepository;
 use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\ContactRepository;
 use App\Repository\InfoRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -137,6 +138,20 @@ class AdminController extends AbstractController
             
             return $this->render('admin/gestionInfos.html.twig', [
                'infos'=>$infos,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
+    } 
+    //Gestion des messages
+    #[Route('/admin/gestionMessages' , name: 'gestion_messages')]
+    public function manageContacts(ContactRepository $contactRepo): Response
+    {
+        if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+            $contacts = $contactRepo->findAllOrderedByNewest();
+            
+            return $this->render('admin/gestionContacts.html.twig', [
+               'contacts'=>$contacts,
             ]);
         } else {
             return $this->redirectToRoute('app_login');

@@ -24,10 +24,14 @@ class Categorie
     #[ORM\OneToMany(targetEntity: Annonce::class, mappedBy: 'categorie')]
     private Collection $annonces;
 
+    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'objet')]
+    private Collection $contacts;
+
     public function __construct()
     {
         $this->actions = new ArrayCollection();
         $this->annonces = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +105,36 @@ class Categorie
             // set the owning side to null (unless already changed)
             if ($annonce->getCategorie() === $this) {
                 $annonce->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): static
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts->add($contact);
+            $contact->setObjet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): static
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getObjet() === $this) {
+                $contact->setObjet(null);
             }
         }
 

@@ -86,3 +86,7 @@ document.querySelector('form').addEventListener('submit', function (event) {
 });
 // Initialiser le montant par défaut (50€)
 setMontant(50);
+
+//----------------------------------------------------------------
+
+

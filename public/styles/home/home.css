@@ -56,3 +56,25 @@ Elle déplace légèrement le bouton vers le haut et vers le bas pour attirer l'
     padding: 20px; /* Espacement intérieur pour rendre le contenu plus aéré */
    
 }
+#recentInfosCarousel , #actionsCarousel{
+    width: 80%;
+    margin: 10px auto;
+    box-shadow: 3px 5px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 15px; 
+    overflow: hidden; /* Pour que les coins arrondis soient appliqués correctement */
+}
+.carousel-item img {
+    height: 300px; 
+    object-fit: cover; /* Pour que l'image couvre toute la surface sans déformer */
+}
+.carousel-caption{
+    background-color: rgba(0, 0, 0, 0.226); 
+    padding: 10px; 
+    color: white;
+    font-size: 20px; 
+    border-radius: 5px; /* Bords arrondis */
+    text-shadow: 3px 5px 8px rgba(0, 0, 0, 0.5);
+}
+.carousel-caption a{
+    text-decoration:none ;
+}

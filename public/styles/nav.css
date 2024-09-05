@@ -1,18 +1,63 @@
 /* Style pour les liens */
 .nav-link {
     color: #3F4446;
+    font-size: 18px;
 }
-
+.nav-link:hover {
+    color:#67BC45;
+}
 /* Couleur verte pour le lien actif */
 .nav-link.active {
+    border-bottom:2px solid #67BC45 ;
     color:#67BC45 !important;
     font-weight: bold;
+    color: white ;
 }
 
 /* Style pour le logo image */
 .navbar-brand img {
    height: 80px;
    width: 100px;
+  
+}
+.user-space{
+    background-color:#3F4446 ;
+    color: white;
+}
+.user-img{
+    width: 40px;
+     height: 40px;
+     border: 2px solid #67BC45;
+}
+.bonjour{
+    color: white;
+    font-size: 16px;
+    font-weight: 200;
+}
+.dropdown-menu{
+    z-index: 1050;
+    color: white;
+    font-weight: bold;
+}
+.dropdown-toggle::after {
+    color: #67BC45; /* Couleur pour la flèche */
 }
 
+/* Couleur de fond des éléments du dropdown au survol */
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: #67BC45;
+    color: #ffffff; 
+}
 
+/* Couleur de fond des éléments du dropdown lors du clic */
+.dropdown-item:active {
+    background-color: #67BC45;
+    color: #ffffff;
+}
+.top-link{
+    color: white;
+    font-size: 16px;
+margin-left: 10px;
+margin-right: 10px;
+}

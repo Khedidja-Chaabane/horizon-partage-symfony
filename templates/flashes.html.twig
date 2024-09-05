@@ -3,6 +3,11 @@
 {{ notification }}
 </div>
 {% endfor %}
+{% for notification in app.flashes('error') %}
+<div class="col-md-6 mx-auto text-center alert alert-danger p-2 flash-message">
+{{ notification }}
+</div>
+{% endfor %}
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         // Sélectionnez tous les messages flash avec la classe flash-message
