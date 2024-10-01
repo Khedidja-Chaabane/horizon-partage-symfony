@@ -3,6 +3,8 @@
 namespace App\Form;
 
 //use App\Entity\Don;
+
+use App\Entity\Don;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -30,8 +32,8 @@ class DonType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Pas de 'data_class' car ce formulaire ne lie pas directement à une entité
-            // 'data_class' => Don::class,
+            // Pas de 'data_class' si ce formulaire ne lie pas directement à une entité
+            //'data_class' => Don::class,
         ]);
     }
 }

@@ -31,10 +31,11 @@
 	<body style="font-family: Roboto, sans-serif; font-style: italic;font-weight:300;">
 		{# Inclure la navbar et les messages flashs #}
 		{% include "nav.html.twig" %}
-		{% include 'flashes.html.twig' %}
-
+		
 		{# Bloc pour le contenu principal de la page #}
-		<main id="top" style="min-height:100vh ;"> {% block body %}{% endblock %}
+		<main id="top" style="min-height:100vh ;">
+		{% include 'flashes.html.twig' %}
+		 {% block body %}{% endblock %}
 			</main>
 			{# Inclure le footer #}
 			{% include 'footer.html.twig' %}
