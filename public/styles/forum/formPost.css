@@ -1,5 +1,6 @@
 h1 {
     color: #3F4446;
+    font-size: 35px;
     font-weight: bold;
 }
 
@@ -13,10 +14,12 @@ h1 {
 .btn-submit{
     background-color: #67BC45;
     color: #fff;
+    font-size: 18px;
     font-weight: bold;
 }
 
 .btn-delete-post{
     background-color: rgba(255, 0, 0, 0.637);
     color: #fff;
+    font-size: 18px;
 }

@@ -1,41 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier l'action {{ action.titre }}{% endblock %}
-
+{% block title %}Modifier l'action
+	{{ action.titre }}
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/actions/forms.css') }}">
+{% endblock %}
 {% block body %}
-<div class="container mt-4">
-    <h1 class="mb-4">Modifier l'action : {{ action.titre }}</h1>
-    
-    <div class="row">
-        <div class="col-md-6">
-            {{ form_start(formUpdateAction) }}
+	<div class="container">
+		<div class="d-flex justify-content-end mt-2 mb-4">
+			<a class="btn btn-secondary" href="{{ path('gestion_actions') }}">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour</a>
+		</div>
+		<h1 class="text-center mb-4 mt-5">Modifier l'action :  "
+			{{ action.titre |capitalize }}
+			"
+		</h1>
 
-            {# Affichage de l'image actuelle #}
-            {% if action.image %}
-                <div class="form-group mb-3">
-                    <label class="form-label">Image actuelle :</label>
-                    <div class="mb-3">
-                        <img src="{{ asset('images/action/' ~ action.image) }}" alt="Image actuelle" class="img-thumbnail" style="max-width: 100%;">
-                    </div>
-                </div>
-            {% endif %}
+		<div class="row">
+			<div class="col-lg-6 col-md-12">
+				{{ form_start(formUpdateAction) }}
 
-            {# Affichage du formulaire #}
-            <div class="form-group mb-3">
-                {{ form_widget(formUpdateAction) }}
-            </div>
-            <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
-            {{ form_end(formUpdateAction) }}
-        </div>
-        
-        <div class="col-md-6 d-flex align-items-start justify-content-end">
-            <form action="{{ path('admin_delete_action', {'id': action.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'action {{ action.titre|lower }} ?')">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ action.id) }}">
-                <button class="btn btn-danger">
-                    <i class="bi bi-trash"></i> Supprimer l'action
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
+
+				{# Affichage du formulaire #}
+				<div class="form-group mb-3">
+					{{ form_widget(formUpdateAction) }}
+				</div>
+				<button type="submit" class="btn btn-submit w-100 mt-5">Enregistrer les modifications</button>
+				{{ form_end(formUpdateAction) }}
+			</div>
+
+			<div
+				class="col-lg-6 col-md-12">
+				{# Affichage de l'image actuelle #}
+				{% if action.image %}
+					<div class="text-center mt-5 mb-5">
+						<h6>Image actuelle :</h6>
+						<div class=" mt-2 mb-3">
+							<img src="{{ asset('images/action/' ~ action.image) }}" alt="Image actuelle" class="img-thumbnail" style="max-width: 50%;">
+						</div>
+					</div>
+				{% endif %}
+				<div class="text-center mt-5">
+					<form action="{{ path('admin_delete_action', {'id': action.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'action  {{ action.titre|lower }} ?')">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ action.id) }}">
+						<button class="btn btn-danger">
+							<i class="bi bi-trash"></i>
+							Supprimer l'action
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

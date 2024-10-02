@@ -24,98 +24,102 @@ class ActionType extends AbstractType
     {
         $builder
             ->add('titre', null, [
-                'label' => 'titre de l\'action',
-                'required' => true,
+                'label' => 'Titre de l\'action',
                 'label_attr' => [
-                    "class" => "text-success"
+                    "class" => 'mt-3 mb-3' // Espacement du label
                 ],
                 'attr' => [
                     'placeholder' => 'saisir un titre',
-                    'class' => 'border border-success'
+                    'class' => 'form-control w-100' // Champ occupe toute la largeur
                 ],
-                'row_attr' => [
-                    "class" => "shadow p-3 col-md-6"
-                ],
+                'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'veuillez saisir un titre'
+                        'message' => 'Veuillez saisir un titre',
                     ]),
                     new Length([
                         'min' => 5,
-                        'minMessage' => 'veuillez saisir au minimum 5 caracters',
-                        'max' => 50,
-                        'maxMessage' => 'veuillez saisir au max 100 caracters',
-
+                        'minMessage' => 'Veuillez saisir au minimum 5 caractères',
+                        'max' => 255,
+                        'maxMessage' => 'Veuillez saisir au maximum 255 caractères',
                     ])
+                    
                 ]
+               
             ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
                 'label' => 'Catégorie',
+                'row_attr' => [
+                    "class" => ' mt-3 mb-3', // Espacement du label
+                    
+                ],
                 'placeholder' => 'Sélectionnez une catégorie',
+               'required' => true,
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'description de l\'action',
+                'label' => 'Description de l\'action',
                 'label_attr' => [
-                    "class" => "text-success"
+                    'class' => 'mt-3 mb-3'
                 ],
                 'attr' => [
-                    'placeholder' => 'saisir un descriptif',
-                    'class' => 'border border-success',
-                    "rows" => 8
+                    'placeholder' => 'Saisir un descriptif',
+                    'class' => 'form-control w-100',
+                    "rows" => 20
                 ],
                 'required' => true,
-                'row_attr' => [
-                    "class" => "shadow p-3 col-md-12"
-                ]
-
             ])
             ->add('tarif', MoneyType::class, [
                 'currency' => 'EUR',
                 'required' => false,  // Permet au champ d'être facultatif
-                'label' => 'Tarif',
-                'label_attr' => ['class' => 'text-success'],
+                'label' => 'Tarif en ',
+                'label_attr' => ['class' => 'mt-3 mb-3'],
                 'attr' => [
                     'placeholder' => 'Saisir un prix',
-                    'class' => 'border border-success'
+                    'class' => 'form-control w-25'
                 ],
                 'help' => 'Le prix doit être supérieur ou égal à 0, ou peut être laissé vide pour indiquer la gratuité',
-                'help_attr' => ['class' => 'text-danger text-center'],
+                'help_attr' => ['class' => 'text-danger mt-2 mb-3'],
                 'constraints' => [
                     new GreaterThanOrEqual([
                         'value' => 0,
                         'message' => 'Le prix doit être supérieur ou égal à 0.',
                     ]),
-                ]
+                ],
             ])
 
             // Ajout d'un champ pour téléverser une nouvelle image
             ->add('image', FileType::class, [
-                'required' => false, // Non requis, car l'utilisateur peut garder l'image actuelle
                 'mapped' => false,
                 'label' => 'Nouvelle image ',
-                'attr' => ['readonly' => true],
+                'label_attr' => [
+                    'class' => 'mt-3 mb-3' // Espacement du label
+                ],
+                'attr' => [
+                    'class' => 'form-control-file w-50' 
+                ],
+                 
             ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
                 'required' => false,
                 'label' => 'Date',
-                'label_attr' => ['class' => 'text-success']
+                'label_attr' => ['class' => 'mt-3 mb-3']
             ])
             ->add('horaire', TimeType::class, [
                 'widget' => 'single_text',
                 'required' => false,
                 'label' => 'Horaire',
-                'label_attr' => ['class' => 'text-success']
+                'label_attr' => ['class' => 'mt-3 mb-3']
             ])
             ->add('lieu', TextType::class, [
                 'required' => false,
                 'label' => 'Lieu',
-                'label_attr' => ['class' => 'text-success'],
+                'label_attr' => ['class' => 'mt-3 mb-3'],
                 'attr' => [
                     'placeholder' => 'Saisir le lieu',
-                    'class' => 'border border-success'
+                    'class' => 'form-control w-100'
                 ]
             ]);
     }

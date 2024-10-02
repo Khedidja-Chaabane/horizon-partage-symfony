@@ -20,7 +20,7 @@ class PostType extends AbstractType
                 'label' => 'Titre du post',
                 'required' => true,
                 'label_attr' => [
-                    'class' => 'mt-2 mb-2' // Espacement du label
+                    'class' => 'mt-3 mb-3' // Espacement du label
                 ],
                 'attr' => [
                     'placeholder' => 'Saisir un titre',
@@ -41,12 +41,12 @@ class PostType extends AbstractType
             ->add('texte', TextareaType::class, [
                 'label' => 'Contenu',
                 'label_attr' => [
-                    'class' => 'mt-2 mb-2' // Espacement du label
+                    'class' => 'mt-3 mb-3' // Espacement du label
                 ],
                 'attr' => [
                     'placeholder' => 'Saisir un contenu',
                     'class' => 'form-control w-100', // Champ occupe toute la largeur
-                    'rows' => 10 // Hauteur du champ de texte
+                    'rows' => 20 // Hauteur du champ de texte
                 ],
                 'required' => true
             ])
@@ -55,10 +55,10 @@ class PostType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'label_attr' => [
-                    'class' => 'mt-2 mb-2' // Espacement du label
+                    'class' => 'mt-3 mb-3' // Espacement du label
                 ],
                 'attr' => [
-                    'class' => 'form-control-file w-100' // Champ occupe toute la largeur
+                    'class' => 'form-control-file w-50' 
                 ]
             ]);
     }

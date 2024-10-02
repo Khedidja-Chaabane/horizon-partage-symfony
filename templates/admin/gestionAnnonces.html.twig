@@ -6,6 +6,10 @@
 {% block body %}
 	<div class="container my-4">
 		<h1>Gestion des annonces</h1>
+		<div>
+		{# include messages flash #}
+		{% include 'flashes.html.twig' %}
+		</div>
 		<a href="{{ path('admin_new_annonce') }}" class="btn btn-success text-white">Ajouter une nouvelle annonce</a>
 
 		{% if annonces is not empty %}
