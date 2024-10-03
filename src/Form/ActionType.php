@@ -51,8 +51,8 @@ class ActionType extends AbstractType
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
                 'label' => 'Catégorie',
-                'row_attr' => [
-                    "class" => ' mt-3 mb-3', // Espacement du label
+                'label_attr' => [
+                    "class" => ' mt-3 mb-3 w-100', // Espacement du label
                     
                 ],
                 'placeholder' => 'Sélectionnez une catégorie',
@@ -92,12 +92,13 @@ class ActionType extends AbstractType
             // Ajout d'un champ pour téléverser une nouvelle image
             ->add('image', FileType::class, [
                 'mapped' => false,
+                'required' => false,
                 'label' => 'Nouvelle image ',
                 'label_attr' => [
-                    'class' => 'mt-3 mb-3' // Espacement du label
+                    'class' => 'mt-3 mb-3 w-100' // Espacement du label
                 ],
                 'attr' => [
-                    'class' => 'form-control-file w-50' 
+                    'class' => 'w-50' 
                 ],
                  
             ])
@@ -105,18 +106,18 @@ class ActionType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
                 'label' => 'Date',
-                'label_attr' => ['class' => 'mt-3 mb-3']
+                'label_attr' => ['class' => 'mt-3 mb-3 w-100']
             ])
             ->add('horaire', TimeType::class, [
                 'widget' => 'single_text',
                 'required' => false,
                 'label' => 'Horaire',
-                'label_attr' => ['class' => 'mt-3 mb-3']
+                'label_attr' => ['class' => 'mt-3 mb-3 w-100']
             ])
             ->add('lieu', TextType::class, [
                 'required' => false,
                 'label' => 'Lieu',
-                'label_attr' => ['class' => 'mt-3 mb-3'],
+                'label_attr' => ['class' => 'mt-3 mb-3 w-100'],
                 'attr' => [
                     'placeholder' => 'Saisir le lieu',
                     'class' => 'form-control w-100'

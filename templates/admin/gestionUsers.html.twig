@@ -1,15 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion Users
+{% block title %}Gestion des utilisateurs
 {% endblock %}
 
 {% block body %}
-	<div class="container my-4">
-		<h1>Gestion des utilisateurs</h1>
-		{# {% include "_flashes.html.twig" %} #}
+	<div class="container my-4 mt-5">
+	<div class="d-flex justify-content-end mt-2 mb-4">
+			<a class="btn btn-secondary" href="{{ path('app_admin') }}">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour</a>
+		</div>
+		<h1 class="mt-3 mb-3 text-center">Gestion des utilisateurs</h1>
 
 		{% if users is not empty %}
-			<table class="table table-striped mt-4">
+			<table class="table table-striped mt-5">
 				<thead>
 					<tr>
 						<th>Nom</th>
@@ -34,7 +38,16 @@
 								{% endfor %}
 							</td>
 							<td>
-								<a href="{{ path('gestion_users_role', {'id': user.id}) }}">modifier le rôle</a>
+								<a class="btn btn-warning" href="{{ path('gestion_users_role', {'id': user.id}) }}"><i class="bi bi-pencil-square"></i> Modifier le rôle</a>
+							</td>
+							<td>
+							<form action="{{ path('admin_delete_user', {'id': user.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer ce compte ?')">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+				<button class="btn btn-danger">
+					<i class="bi bi-trash"></i>
+					Supprimer
+				</button>
+			</form>
 							</td>
 						</tr>
 					{% endfor %}

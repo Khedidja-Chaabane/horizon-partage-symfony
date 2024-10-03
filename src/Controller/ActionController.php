@@ -148,9 +148,12 @@ class ActionController extends AbstractController
 
                 // Mise à jour de l'image dans l'entité
                 $action->setImage($nomImage);
-            } else {
-                // Si aucune nouvelle image n'est soumise, conserver l'image actuelle
-                $action->setImage($action->getImage());
+            } else
+            
+            if ($action->getImage())
+            {
+                // Si aucune nouvelle image n'est soumise,et si l'action a déja une image , conserver l'image actuelle
+                $action->setImage(true);
             }
             // Enregistrement de l'action
             $actionRepo->add($action, true);

@@ -18,9 +18,18 @@ class UserRoleType extends AbstractType
                     'User' => 'ROLE_USER',
                     'Admin' => 'ROLE_ADMIN',
                 ],
+                
                 'multiple' => true,
-                'expanded' => true, // Use checkboxes for roles
-                'label' => 'Roles',
+                'expanded' => true, // Checkboxes pour les roles
+                
+               'label' => 'Roles',
+                'label_attr' => [
+                    'class' => 'mt-3 mb-3 ' // Espacement du label
+                ],
+                'attr' => [
+                    'class' => 'mt-2 mb-5 '
+                ],
+                
             ]);
     }
 

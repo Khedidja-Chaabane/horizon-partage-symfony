@@ -29,6 +29,17 @@ public function add(Categorie $entity, bool $flush = false): void
             $this->getEntityManager()->flush();
         }
     }
+
+    // DELETE
+    public function remove(Categorie $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
 //    /**
 //     * @return Categorie[] Returns an array of Categorie objects
 //     */

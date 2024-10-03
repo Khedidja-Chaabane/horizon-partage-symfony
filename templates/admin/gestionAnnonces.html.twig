@@ -4,22 +4,26 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container my-4">
-		<h1>Gestion des annonces</h1>
-		<div>
-		{# include messages flash #}
-		{% include 'flashes.html.twig' %}
+	<div class="container my-4 mt-5">
+	<div class="d-flex justify-content-end mt-2 mb-4">
+			<a class="btn btn-secondary" href="{{ path('app_admin') }}">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour</a>
 		</div>
-		<a href="{{ path('admin_new_annonce') }}" class="btn btn-success text-white">Ajouter une nouvelle annonce</a>
+		<h1 class="mt-3 mb-3 text-center">Gestion des annonces</h1>
+		
+		<a href="{{ path('admin_new_annonce') }}" class="btn btn-success text-white mt-5 mb-5">Ajouter une nouvelle annonce</a>
 
 		{% if annonces is not empty %}
-			<table class="table table-striped mt-4">
+			<table class="table table-striped mt-4 text-center">
 				<thead>
 					<tr>
 						<th>Titre</th>
 						<th>Catégorie</th>
 						<th>Status</th>
-						<th>Actions</th>
+						<th></th>
+						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -40,8 +44,8 @@
 							<td>
 
 								<a href="{{ path('showAnnonce', {'id': annonce.id}) }}" class="btn btn-secondary">
-																	<i class="bi bi-eye-fill"></i>
-																	Afficher</a>
+									<i class="bi bi-eye-fill"></i>
+									Afficher</a>
 
 							</td>
 							<td>
@@ -52,12 +56,12 @@
 							</td>
 							<td>
 								<form action="{{ path('admin_delete_annonce', {'id': annonce.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'annonce {{ annonce.titre|lower }} ?')">
-																	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ annonce.id) }}">
-																	<button class="btn btn-danger">
-																		<i class="bi bi-trash"></i>
-																		Supprimer
-																	</button>
-																</form>
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ annonce.id) }}">
+									<button class="btn btn-danger">
+										<i class="bi bi-trash"></i>
+										Supprimer
+									</button>
+								</form>
 							</td>
 						</tr>
 					{% endfor %}

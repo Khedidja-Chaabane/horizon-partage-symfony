@@ -1,16 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvelle annonce{% endblock %}
-
+{% block title %}Nouvelle annonce
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+{% endblock %}
 {% block body %}
+	<div class="container">
+		<div class="d-flex justify-content-end mt-2 mb-4">
+			<a class="btn btn-secondary" href="{{ path('gestion_annonces') }}">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour</a>
+		</div>
+		<h1 class="text-center mb-4 mt-5">Nouvelle annonce</h1>
 
-<div class="example-wrapper">
-    <h1>Nouvelle annonce</h1>
 
-    {{ form_start(newAnnonceForm) }}
-    {{ form_widget(newAnnonceForm) }}
-    <button type="submit">Register</button>
-{{ form_end(newAnnonceForm) }}
+		<div
+			class="d-flex justify-content-center mt-2 mb-2 p-2">
+			{# Conteneur pour centrer le formulaire #}
+			<div class="col-12">
+				{{ form_start(newAnnonceForm) }}
+				{{ form_widget(newAnnonceForm) }}
+					<button type="submit" class="btn btn-submit w-100 mt-5">Enregistrer</button>
+				{{ form_end(newAnnonceForm) }}
+			</div>
+		</div>
 
-</div>
+	</div>
+
 {% endblock %}

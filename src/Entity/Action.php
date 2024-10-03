@@ -24,7 +24,7 @@ class Action
     #[ORM\Column(type: Types::FLOAT, nullable: true)]
     private ?float $tarif = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
    #[ORM\Column(type: Types::INTEGER, nullable: true)]

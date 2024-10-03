@@ -78,7 +78,31 @@ class AdminController extends AbstractController
             'updateUserRoleForm' => $form->createView(),
         ]);
     }
-
+// Supprimer un utilisateur
+#[Route('/admin/deleteUser/{id}', name: 'admin_delete_user')]
+    public function deleteUser(Request $request,int $id, UserRepository $userRepository): Response
+    {
+        // Vérification pour sécuriser la tâche
+        if (!$this->getUser() || !$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+        // Récupérer l'utilisateur par ID
+        $user = $userRepository->find($id);
+        if ($this->isCsrfTokenValid(
+        'delete' . $user->getId(), //s'assurer que le token est spécifique à l'action de suppression de cet utilisateur en particulier
+        $request->request->get('_token')
+    )) {
+        if($user->getPhotoProfile())
+        {
+            unlink($this->getParameter('user') . '/' . $user->getPhotoProfile());
+        }
+        $userRepository->remove($user, true);
+        $this->addFlash('success', 'Utilisateur supprimé avec succés');
+    } else {
+        $this->addFlash('error', 'L\'utilisateur n\'a pas pu etre supprimé');
+    }
+    return $this->redirectToRoute('gestion_users');
+    }
     // Gestion des actions
 
     //affichage des actions coté admin

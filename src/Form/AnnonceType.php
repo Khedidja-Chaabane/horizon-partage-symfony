@@ -21,14 +21,11 @@ class AnnonceType extends AbstractType
                 'label' => 'titre de l\'annonce',
                 'required' => true,
                 'label_attr' => [
-                    "class" => "text-success"
+                    "class" => "mt-3 mb-3"
                 ],
                 'attr' => [
                     'placeholder' => 'saisir un titre',
-                    'class' => 'border border-success'
-                ],
-                'row_attr' => [
-                    "class" => "shadow p-3 col-md-6"
+                    'class' => 'form-control w-100'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -40,32 +37,34 @@ class AnnonceType extends AbstractType
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
                 'label' => 'Catégorie',
+                'label_attr' => [
+                    "class" => ' mt-3 mb-3 w-100', // Espacement du label
+                ],
                 'placeholder' => 'Sélectionnez une catégorie',
+                
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'description de l\'annonce',
+                'label' => 'Description de l\'annonce',
                 'label_attr' => [
-                    "class" => "text-success"
+                    "class" => "mt-3 mb-3"
                 ],
                 'attr' => [
                     'placeholder' => 'saisir un descriptif',
-                    'class' => 'border border-success', "rows" => 8
+                    'class' => 'form-control w-100',
+                    "rows" => 20
                 ],
                 'required' => true,
-                'row_attr' => [
-                    "class" => "shadow p-3 col-md-12"
-                ]
-
             ])
             ->add('status', CheckboxType::class, [
-                'label' => 'Cochez pour activer l\'annonce / Décochez pour désactiver',
+                'label' => 'Cochez pour activer l\'annonce / Décochez pour désactiver ',
                 'required' => false,
-                'attr' => [
-                    'class' => 'form-check-input'
+                'label_attr' => [
+                    'class' => 'mt-3 mb-3 w-100' // Espacement du label
                 ],
-                'row_attr' => [
-                    "class" => "form-check shadow p-3 col-md-6"
-                ]
+                'attr' => [
+                    'class' => 'form-check-input '
+                ],
+                
             ])
         ;
     }

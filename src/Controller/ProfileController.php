@@ -115,6 +115,33 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    // Méthode pour supprimer son profil
+    #[Route('/profile/delete/{id}', name: 'delete_profile')]
+    public function deleteProfile(Request $request, UserRepository $userRepository, SessionInterface $session): Response
+    {
+        // Vérification que l'utilisateur est connecté
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        if ($this->isCsrfTokenValid(
+        'delete' . $user->getId(), //s'assurer que le token est spécifique à l'action de suppression de cet utilisateur en particulier
+        $request->request->get('_token')
+    )) {
+        if($user->getPhotoProfile())
+        {
+            unlink($this->getParameter('user') . '/' . $user->getPhotoProfile());
+        }
+        $userRepository->remove($user, true);
+        $this->addFlash('success', 'Utilisateur supprimé avec succés');
+    } else {
+        $this->addFlash('error', 'L\'utilisateur n\'a pas pu etre supprimé');
+    }
+    return $this->redirectToRoute('app_home');
+}
+    
+
+
     // Route pour afficher les posts redigés dans le profil
     #[Route('/profile/posts', name: 'app_profile_posts')]
     public function userPosts(): Response

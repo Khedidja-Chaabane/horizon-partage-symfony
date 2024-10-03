@@ -5,7 +5,7 @@
 {% endblock %}
 {% block stylesheets %}
 	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('styles/actions/forms.css') }}">
+	<link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
 {% endblock %}
 {% block body %}
 	<div class="container">
@@ -20,14 +20,11 @@
 		</h1>
 
 		<div class="row">
-			<div class="col-lg-6 col-md-12">
-				{{ form_start(formUpdateAction) }}
-
-
+			<div
+				class="col-lg-6 col-md-12">
 				{# Affichage du formulaire #}
-				<div class="form-group mb-3">
-					{{ form_widget(formUpdateAction) }}
-				</div>
+				{{ form_start(formUpdateAction) }}
+				{{ form_widget(formUpdateAction) }}
 				<button type="submit" class="btn btn-submit w-100 mt-5">Enregistrer les modifications</button>
 				{{ form_end(formUpdateAction) }}
 			</div>

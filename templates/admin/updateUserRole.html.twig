@@ -2,19 +2,32 @@
 
 {% block title %}Modification du role
 {% endblock %}
-
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+{% endblock %}
 {% block body %}
 	<div class="container my-4">
-		<h1>Modification du role</h1>
-		{# {% include "_flashes.html.twig" %} #}
+    <div class="d-flex justify-content-end mt-2 mb-4">
+			<a class="btn btn-secondary" href="{{ path('gestion_users') }}">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour</a>
+		</div>
+		<h1 class="text-center mb-4 mt-5">Modification du role</h1>
 
-		<h1>Update Role for {{ user.userName }}</h1>
-
-    {{ form_start(updateUserRoleForm) }}
+		<h6 class="mb-4 mt-5">Utilisateur " {{ user.nomUser }} {{user.prenomUser}} "</h6>
+<div
+			class="d-flex justify-content-center mt-2 mb-2 p-2">
+			{# Conteneur pour centrer le formulaire #}
+			<div class="col-12">
+				{{ form_start(updateUserRoleForm) }}
         {{ form_widget(updateUserRoleForm) }}
-        <button type="submit">Update Role</button>
+        <button type="submit" class="btn btn-submit w-25 mt-5">Mettre à jour</button>
     {{ form_end(updateUserRoleForm) }}
 
-    <a href="{{ path('gestion_users') }}">Back to user management</a>
+			</div>
+		</div>
+    
+    
 	</div>
 {% endblock %}
