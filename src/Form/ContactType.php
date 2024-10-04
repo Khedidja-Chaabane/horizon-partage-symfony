@@ -75,7 +75,7 @@ class ContactType extends AbstractType
                     'class' => 'mt-2 mb-2'
                 ],
                 'attr' => [
-                    'class' => 'form-control w-100' // Champ caché par défaut
+                    'class' => 'form-control w-100' 
                 ]
             ])
             ->add('message', TextareaType::class, [
@@ -86,7 +86,7 @@ class ContactType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Saisir votre message',
                     'class' => 'form-control w-100', // Champ occupe toute la largeur
-                    'rows' => 10 // Hauteur du champ de texte
+                    'rows' => 20 // Hauteur du champ de texte
                 ],
                 'required' => true
             ])

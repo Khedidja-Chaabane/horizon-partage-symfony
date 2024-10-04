@@ -30,7 +30,7 @@ class InfoController extends AbstractController
             'infos' => $infos,
         ]);
     }
-    //Création d'une nouvelle info
+    //Création d'une nouvelle info uniquement par l'admin
     #[Route('/admin/new-info', name: 'admin_new_info')]
     public function newInfo(Request $request, InfoRepository $infoRepo): Response
     {
@@ -53,15 +53,15 @@ class InfoController extends AbstractController
             }
             $info->setCreatedAt(new \DateTimeImmutable('now'));
             $infoRepo->save($info, true);
-            $this->addFlash('success', 'Article ajouté avec succés');
+            $this->addFlash('success', 'Actualité ajoutée avec succés');
             return $this->redirectToRoute('gestion_infos');
         }
-        return $this->render('admin/newInfo.html.twig', [
+        return $this->render('admin/infos/newInfo.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    // Affichage d'une info spécifique
+    // Affichage d'une info spécifique coté client
 
     #[Route('/info/{id}', name: 'show_info')]
     public function showInfo(int $id, InfoRepository $infoRepo): Response
@@ -74,9 +74,23 @@ class InfoController extends AbstractController
             'info' => $info
         ]);
     }
+///---------------------------------------------------------------------
+// Affichage d'une info spécifique coté admin
+
+#[Route('admin/info/{id}', name: 'admin_show_info')]
+    public function adminShowInfo(int $id, InfoRepository $infoRepo): Response
+    {
+        $info = $infoRepo->find($id);
+        if (!$info) {
+            return  $this->redirectToRoute('all_infos');
+        }
+        return $this->render('admin/infos/showInfo.html.twig', [
+            'info' => $info
+        ]);
+    }
 
     //---------------------------------------------------------------------------------------------------------------------------------
-    // Modifier une info
+    // Modifier une info uniquement par l'admin
     #[Route('admin/info/{id}/update', name: 'admin_update_info')]
     public function updateInfo(int $id, Request $request, InfoRepository $infoRepo): Response
     {
@@ -85,14 +99,14 @@ class InfoController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // Récupération de l'action
+        // Récupération de l'info
         $info = $infoRepo->find($id);
         if (!$info) {
-            $this->addFlash('error', 'Article non trouvé');
+            $this->addFlash('error', 'Actualité non trouvée');
             return $this->redirectToRoute('gestion_infos');
         }
 
-        // Création du formulaire lié à l'objet $action
+        // Création du formulaire lié à l'objet $info
         $form = $this->createForm(InfoType::class, $info);
         $form->handleRequest($request);
 
@@ -119,19 +133,19 @@ class InfoController extends AbstractController
             }
             // Enregistrement de l'action
             $infoRepo->save($info, true);
-            $this->addFlash('success', 'L\'article a bien été modifié');
+            $this->addFlash('success', 'L\'actualité a bien été modifiée');
 
             return $this->redirectToRoute('gestion_infos');
         }
 
-        return $this->render('admin/updateInfo.html.twig', [
+        return $this->render('admin/infos/updateInfo.html.twig', [
             'form' => $form->createView(),
             'info' => $info,
             'imagePath' => $this->getParameter('info') . '/' . $info->getImage(), // Chemin de l'image actuelle pour l'affichage
         ]);
     }
 
-    //supprimer une info
+    //supprimer une info uniquement par l'admin
     #[Route('admin/info/{id}/delete', name: 'admin_delete_info', methods: ['POST'])]
     public function deleteInfo(int $id, InfoRepository $infoRepo, Request $request): Response
     {

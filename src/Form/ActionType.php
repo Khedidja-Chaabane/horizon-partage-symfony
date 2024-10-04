@@ -51,12 +51,16 @@ class ActionType extends AbstractType
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
                 'label' => 'Catégorie',
+                'placeholder' => 'Sélectionnez une catégorie',
+                'required' => true,
                 'label_attr' => [
-                    "class" => ' mt-3 mb-3 w-100', // Espacement du label
+                    "class" => ' mt-3 mb-3', // Espacement du label
                     
                 ],
-                'placeholder' => 'Sélectionnez une catégorie',
-               'required' => true,
+                'attr' => [
+                    'class' => 'form-control w-100' 
+                ]
+              
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description de l\'action',

@@ -12,14 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategorieController extends AbstractController
 {
-    #[Route('/categorie', name: 'app_categorie')]
-    public function index(): Response
-    {
-        return $this->render('categorie/index.html.twig', [
-            'controller_name' => 'CategorieController',
-        ]);
-    }
-
     // Créer une nouvelle catégorie
  #[Route ('/admin/new-category', name:'admin_new_category')]
  public function newCategory(Request $request , CategorieRepository $catRepo) : Response
@@ -35,7 +27,7 @@ class CategorieController extends AbstractController
             $this->addFlash('success', 'Catégorie ajoutée avec succes');
             return $this->redirectToRoute('gestion_categories');
         }
-        return $this->render('admin/newCategory.html.twig', [
+        return $this->render('admin/categories/newCategory.html.twig', [
             'newCategoryForm'=>$form->createView()
             ]);
  }
@@ -60,7 +52,7 @@ class CategorieController extends AbstractController
             $this->addFlash('success', 'Catégorie modifiée avec succes');
             return $this->redirectToRoute('gestion_categories');
         }
-        return $this->render('admin/updateCategory.html.twig', [
+        return $this->render('admin/categories/updateCategory.html.twig', [
             'updateCategoryForm'=>$form->createView(),
             'category'=>$category
             ]);

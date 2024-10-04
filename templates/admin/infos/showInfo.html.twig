@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ info.titre | capitalize }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/info/info.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div
+		class="container my-2">
+		<!-- Bouton de retour -->
+		<div class="d-flex justify-content-end">
+			<a href="{{ path('gestion_infos') }}" class="btn btn-secondary back mt-3 mb-2">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour
+			</a>
+		</div>
+
+		<!-- Détails de l'info -->
+		<div class="row mt-3 mb-3">
+			<div class="col-12">
+				<h4 class="text-center mt-3 mb-3 ">{{ info.titre | capitalize }}</h4>
+				<div class="card mb-3">
+					<div
+						class="row g-0">
+						<!-- Image -->
+						<div class="col-md-4 img-container">
+							{% if info.image %}
+								<img src="{{ asset('images/info/' ~ info.image) }}" alt="{{ info.titre }}" class="img-fluid">
+							{% else %}
+								<img src="{{ asset('images/logoWhite.png') }}" alt="logo" class="img-fluid">
+
+							{% endif %}
+						</div>
+
+						<!-- Texte -->
+						<div class="col-md-8">
+							<div class="card-body">
+								<p class="card-text">{{ info.texte | capitalize }}</p>
+								<p class="card-text">
+									<small class="text-muted">Publié le :
+										<strong>{{ info.createdAt|date('d/m/Y H:i') }}</strong>
+									</small>
+								</p>
+							</div>
+
+							<!-- Footer de la carte avec les boutons -->
+							<div class="card-footer text-center border-0 p-2">
+								<div class="mt-3">
+									<a class="btn btn-warning" href="{{ path('admin_update_info', {'id': info.id}) }}">
+										<i class="bi bi-pencil-square"></i>
+										Modifier
+									</a>
+									<form action="{{ path('admin_delete_info', {'id': info.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'actualité {{ info.titre | lower }} ?')">
+										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ info.id) }}">
+										<button class="btn btn-danger mt-2">
+											<i class="bi bi-trash"></i>
+											Supprimer ?
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

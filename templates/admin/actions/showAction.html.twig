@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ action.titre | capitalize }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/actions/actions.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div
+		class="container my-2">
+		<!-- Bouton de retour -->
+		<div class="d-flex justify-content-end">
+			<a href="{{ path('gestion_actions') }}" class="btn btn-secondary back mt-3 mb-2">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour
+			</a>
+		</div>
+
+		<!-- Détails de l'action -->
+		<div class="row mt-3 mb-3">
+			<div class="col-12">
+				<h4 class="text-center mt-3 mb-3 ">{{ action.titre | capitalize }}</h4>
+				<div class="card mb-3">
+					<div
+						class="row g-0">
+						<!-- Image de l'action -->
+						<div class="col-lg-4 col-md-12 img-container">
+						{% if action.image %}
+						
+							<img src="{{ asset('images/action/' ~ action.image) }}" alt="{{ action.titre }}" class="img-fluid">
+							{% endif %}
+						</div>
+
+						<!-- Détails de l'action -->
+						<div class="col-lg-8 col-md-12">
+							<div class="card-body">
+								<p class="card-text">
+									<small class="text-muted">Catégorie :
+										{{ action.categorie.nom | capitalize }}</small>
+								</p>
+								{% if action.tarif %}
+									<small class="text-muted">{{ action.tarif }}
+										€</small>
+								{% else %}
+									<strong class="text-muted">Gratuit</strong>
+								{% endif %}
+								<p class="card-text">{{ action.description | capitalize }}</p>
+
+
+								<p class="card-text">
+									<small class="text-muted">Date :
+										{% if action.date %}
+											{{ action.date | date('d/m/Y') }}
+										{% else %}
+											<strong class="text-muted">
+												/
+											</strong>
+										{% endif %}
+									</small>
+								</p>
+
+								<p class="card-text">
+									<small class="text-muted">Horaire :
+										{% if action.horaire %}
+											{{ action.horaire | date('H:i') }}
+										{% else %}
+											<strong class="text-muted">
+												/
+											</strong>
+										</small>
+									</p>
+								{% endif %}
+
+								<p class="card-text">
+									<small class="text-muted">Nombre de places :
+										{% if action.nombrePlaces %}
+											{{ action.nombrePlaces }}
+										{% else %}
+											<strong class="text-muted">
+												/
+											</strong>
+										</small>
+									</p>
+								{% endif %}
+
+
+								<p class="card-text">
+									<small class="text-muted">Lieu :
+										{% if action.lieu %}
+											{{ action.lieu | capitalize }}
+										{% else %}
+											<strong class="text-muted">
+												/
+											</strong>
+
+										</small>
+									</p>
+								{% endif %}
+							</div>
+
+							<!-- Footer de la carte avec les boutons -->
+							<div class="card-footer text-center border-0 p-2">
+
+								<div class="mt-3">
+									<a class="btn btn-warning" href="{{ path('admin_update_action', {'id': action.id}) }}">
+										<i class="bi bi-pencil-square"></i>
+										Modifier
+									</a>
+									<form action="{{ path('admin_delete_action', {'id': action.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer l\'action {{ action.titre | lower }} ?')">
+										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ action.id) }}">
+										<button class="btn btn-danger mt-2">
+											<i class="bi bi-trash"></i>
+											Supprimer
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+	</div>
+{% endblock %}

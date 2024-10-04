@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+    // Dashboard ADMIN
     #[Route('/admin', name: 'app_admin')]
     public function index(): Response
     {
@@ -37,7 +38,7 @@ class AdminController extends AbstractController
         if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
             // récupérer la liste des utilisateurs depuis la base de données
             $users = $userRepository->findAll();
-            return $this->render('admin/gestionUsers.html.twig', [
+            return $this->render('admin/users/gestionUsers.html.twig', [
                 'users' => $users,
             ]);
         } else {
@@ -73,7 +74,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('gestion_users');
         }
 
-        return $this->render('admin/updateUserRole.html.twig', [
+        return $this->render('admin/users/updateUserRole.html.twig', [
             'user' => $user,
             'updateUserRoleForm' => $form->createView(),
         ]);
@@ -103,6 +104,7 @@ class AdminController extends AbstractController
     }
     return $this->redirectToRoute('gestion_users');
     }
+
     // Gestion des actions
 
     //affichage des actions coté admin
@@ -112,7 +114,7 @@ class AdminController extends AbstractController
         if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
             // récupérer la liste des utilisateurs depuis la base de données
             $actions = $actionsRepo->findAll();
-            return $this->render('admin/gestionActions.html.twig', [
+            return $this->render('admin/actions/gestionActions.html.twig', [
                 'actions' => $actions,
             ]);
         } else {
@@ -129,7 +131,7 @@ class AdminController extends AbstractController
     {
         if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
             $categories = $catRepo->findAll();
-            return $this->render('admin/gestionCategories.html.twig', [
+            return $this->render('admin/categories/gestionCategories.html.twig', [
                 'categories' => $categories,
             ]);
         } else {
@@ -145,7 +147,7 @@ class AdminController extends AbstractController
         if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
             $annonces = $annonceRepo->findAll();
             
-            return $this->render('admin/gestionAnnonces.html.twig', [
+            return $this->render('admin/annonces/gestionAnnonces.html.twig', [
                'annonces'=>$annonces,
             ]);
         } else {
@@ -160,7 +162,7 @@ class AdminController extends AbstractController
         if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
             $infos = $infoRepo->findAll();
             
-            return $this->render('admin/gestionInfos.html.twig', [
+            return $this->render('admin/infos/gestionInfos.html.twig', [
                'infos'=>$infos,
             ]);
         } else {

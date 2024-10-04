@@ -46,7 +46,7 @@ class AnnonceController extends AbstractController
         ]);
     }
 
-    //Création d'une nouvelle annonce
+    //Création d'une nouvelle annonce uniquement par l'admin
     #[Route('/admin/new-annonce', name: 'admin_new_annonce')]
     public function newAnnonce(Request $request, AnnonceRepository $annonceRepo): Response
     {
@@ -54,7 +54,6 @@ class AnnonceController extends AbstractController
         if (!$this->getUser() || !$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('app_login');
         }
-
         $annonce = new Annonce();
         $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
@@ -64,12 +63,12 @@ class AnnonceController extends AbstractController
             $this->addFlash('success', 'l\'annonce a bien été ajoutée');
             return $this->redirectToRoute('gestion_annonces');
         }
-        return $this->render('admin/newAnnonce.html.twig', [
+        return $this->render('admin/annonces/newAnnonce.html.twig', [
             'newAnnonceForm' => $form->createView(),
         ]);
     }
 
-    // Modification d'une annonce 
+    // Modification d'une annonce uniquement par l'admin
     #[Route('/admin/updateAnnonce/{id}', name: 'admin_update_annonce')]
     public function updateAnnonce(int $id, Request $request, AnnonceRepository $annonceRepo): Response
     {
@@ -92,13 +91,13 @@ class AnnonceController extends AbstractController
             return $this->redirectToRoute('gestion_annonces');
         }
 
-        return $this->render('admin/updateAnnonce.html.twig', [
+        return $this->render('admin/annonces/updateAnnonce.html.twig', [
             'updateAnnonceForm' => $form->createView(),
             'annonce' => $annonce,
         ]);
     }
 
-    //Affichage d'une annonce spécifique
+    //Affichage d'une annonce spécifique coté client
     #[Route('annonce/{id}', name: 'showAnnonce')]
     public function showAnnonce(int $id, AnnonceRepository $annonceRepo): Response
     {
@@ -112,6 +111,19 @@ class AnnonceController extends AbstractController
         ]);
     }
 
+ //Affichage d'une annonce spécifique coté admin
+ #[Route('admin/annonce/{id}', name: 'admin_showAnnonce')]
+    public function adminShowAnnonce(int $id, AnnonceRepository $annonceRepo): Response
+    {
+        $annonce = $annonceRepo->find($id);
+        if (!$annonce) {
+            $this->addFlash('error', 'Annonce non trouvée');
+            return $this->redirectToRoute('gestion_annonces');
+        }
+        return $this->render('admin/annonces/showAnnonce.html.twig', [
+            'annonce' => $annonce,
+        ]);
+    }
     //Suppression d'une annonce
     #[Route('/admin/deleteAnnonce/{id}', name: 'admin_delete_annonce', methods: ['POST'])]
     public function deleteAnnonce(int $id, AnnonceRepository $annonceRepo, Request $request): Response

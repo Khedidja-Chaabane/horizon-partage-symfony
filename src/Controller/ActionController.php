@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ActionController extends AbstractController
 {
-    // Page actions 
+    // Page actions coté client
     #[Route('/actions', name: 'app_actions')]
     public function index(ActionRepository $actionRepo, Request $request): Response
     {
@@ -50,7 +50,7 @@ class ActionController extends AbstractController
 
     //----------------------------------------------------------------------------------
 
-    // creation d'une nouvelle action
+    // creation d'une nouvelle action uniquement par l'admin
 
     #[Route('/admin/new-action', name: 'admin_new_action')]
     public function newAction(Request $request, ActionRepository $actionRepo): Response
@@ -91,12 +91,12 @@ class ActionController extends AbstractController
             }
         }
 
-        return $this->render('admin/newAction.html.twig', [
+        return $this->render('admin/actions/newAction.html.twig', [
             'newActionForm' => $form->createView(),
         ]);
     }
     //-----------------------------------------------------------------------------------------------------------------------------------------
-    // Affichage d'une action spécifique
+    // Affichage d'une action spécifique coté client
 
     #[Route('/action/{id}', name: 'show_action')]
     public function showAction(int $id, ActionRepository $actionRepo): Response
@@ -106,6 +106,21 @@ class ActionController extends AbstractController
             return  $this->redirectToRoute('app_actions');
         }
         return $this->render('action/showAction.html.twig', [
+            'action' => $action
+        ]);
+    }
+//---------------------------------------------------------------------------
+
+ // Affichage d'une action spécifique coté admin
+
+ #[Route('admin/action/{id}', name: 'admin_show_action')]
+    public function AdminShowAction(int $id, ActionRepository $actionRepo): Response
+    {
+        $action = $actionRepo->find($id);
+        if (!$action) {
+            return  $this->redirectToRoute('gestion_actions');
+        }
+        return $this->render('admin/actions/showAction.html.twig', [
             'action' => $action
         ]);
     }
@@ -149,11 +164,9 @@ class ActionController extends AbstractController
                 // Mise à jour de l'image dans l'entité
                 $action->setImage($nomImage);
             } else
-            
-            if ($action->getImage())
             {
                 // Si aucune nouvelle image n'est soumise,et si l'action a déja une image , conserver l'image actuelle
-                $action->setImage(true);
+                $action->setImage($action->getImage());
             }
             // Enregistrement de l'action
             $actionRepo->add($action, true);
@@ -162,7 +175,7 @@ class ActionController extends AbstractController
             return $this->redirectToRoute('gestion_actions');
         }
 
-        return $this->render('admin/updateAction.html.twig', [
+        return $this->render('admin/actions/updateAction.html.twig', [
             'formUpdateAction' => $form->createView(),
             'action' => $action,
             'imagePath' => $this->getParameter('action') . '/' . $action->getImage(), // Chemin de l'image actuelle pour l'affichage
