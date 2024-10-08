@@ -176,7 +176,7 @@ class AdminController extends AbstractController
         if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
             $contacts = $contactRepo->findAllOrderedByNewest();
             
-            return $this->render('admin/gestionContacts.html.twig', [
+            return $this->render('admin/contacts/gestionContacts.html.twig', [
                'contacts'=>$contacts,
             ]);
         } else {

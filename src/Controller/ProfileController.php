@@ -159,4 +159,23 @@ class ProfileController extends AbstractController
         'posts' => $posts,
         ]);
     }
+
+     // Route pour afficher les messages dans le profil
+     #[Route('/profile/messages', name: 'app_profile_messages')]
+    public function userMessages(): Response
+    {
+          // Vérification que l'utilisateur est connecté
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+  // Récupérer les messages de l'utilisateur 
+  $posts = $user->getPosts();
+        // Affichage de la page et Passage de l'utilisateur à la vue Twig sous la variable user
+        return $this->render('profile/userPosts.html.twig', [
+            'user' => $user,
+        'posts' => $posts,
+        ]);
+    }
+
 }

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Message{% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="d-flex justify-content-end mt-2 mb-4">
+			<a class="btn btn-secondary" href="{{ path('gestion_messages') }}">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour</a>
+		</div>
+		<h1 class="mt-3 mb-3 text-center">Message</h1>       
+</div>
+		<p>Email: {{ contact.email}}</p>
+   		<p>Nom: {{ contact.nom}}</p>
+        		<p>Prénom: {{ contact.prenom}}</p>
+                <p>Objet: {{ contact.objet.nom}}</p>
+                <p>Message: {{contact.message}}</p>
+                <p>Date d'envoi: {{ contact.createdAt | date('d/m/Y') }}</p>
+
+
+{% endblock %}

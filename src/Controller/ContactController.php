@@ -48,4 +48,31 @@ public function contact(Request $request, ContactRepository $contactRepo, Securi
     ]);
 }
 
+// Affichage d'un message coté admin
+
+#[Route('admin/message/{id}', name: 'admin_show_message')]
+    public function AdminShowMessage(int $id, ContactRepository $contactRepo): Response
+    {
+        $contact = $contactRepo->find($id);
+        if (!$contact) {
+            return  $this->redirectToRoute('gestion_messages');
+        }
+        return $this->render('admin/contacts/showMessage.html.twig', [
+            'contact' => $contact
+        ]);
+    }
+
+    // Affichage d'un message coté user
+    #[Route('/message/{id}', name:'show_message')]
+    public function showMessage(int $id, ContactRepository $contactRepo): Response
+    {
+        $contact = $contactRepo->find($id);
+        if (!$contact) {
+            return  $this->redirectToRoute('all_messages');
+        }
+        return $this->render('contact/showMessage.html.twig', [
+            'contact' => $contact
+        ]);
+    }
+
 }
