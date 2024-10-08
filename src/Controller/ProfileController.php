@@ -160,6 +160,24 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    // Récupérer les dons de l'utilisateur sur son profil
+    #[Route('/profile/donations', name: 'profile_donations')]
+    public function userDonations(): Response
+    {
+        // Vérification que l'utilisateur est connecté
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        // Récupérer les dons de l'utilisateur via la méthode getDonations()
+        $dons = $user->getDons();
+        // Affichage de la page et Passage de l'utilisateur à la vue Twig sous la variable user
+        return $this->render('profile/userDonations.html.twig', [
+            'user' => $user,
+            'dons' => $dons,
+        ]);
+    }
+
      // Route pour afficher les messages dans le profil
      #[Route('/profile/messages', name: 'app_profile_messages')]
     public function userMessages(): Response

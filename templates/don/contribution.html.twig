@@ -39,11 +39,7 @@
         </div>
 
         <div class="mt-3">
-            {% if app.user %}
-                <p><a href="#" class="btn btn-primary">Valider mon paiement</a></p>
-            {% else %}
-                <p>Pour valider votre don, veuillez vous <a href="{{ path('app_login') }}">connecter</a>.</p>
-            {% endif %}
+            <p><a href="{{ path('valider_paiement')}}" class="btn btn-success">Valider mon paiement</a></p>
         </div>
     {% else %}
         <p>Votre contribution est vide.</p>

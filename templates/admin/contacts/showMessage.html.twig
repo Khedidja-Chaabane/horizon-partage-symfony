@@ -3,20 +3,24 @@
 {% block title %}Message{% endblock %}
 
 {% block body %}
-<div class="container">
-<div class="d-flex justify-content-end mt-2 mb-4">
-			<a class="btn btn-secondary" href="{{ path('gestion_messages') }}">
+<div class="container mt-5">
+   <div class="d-flex justify-content-end mt-2 mb-4">
+			<a class="btn btn-secondary" href="{{ path('app_admin') }}">
 				<i class="bi bi-arrow-left-square"></i>
 				Retour</a>
 		</div>
-		<h1 class="mt-3 mb-3 text-center">Message</h1>       
+
+    <!-- Titre centré -->
+    <h1 class="text-center mb-4">Détails du Message</h1>
+
+    <!-- Liste des détails du message -->
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Email: </strong>{{ contact.email }}</li>
+        <li class="list-group-item"><strong>Nom: </strong>{{ contact.nom }}</li>
+        <li class="list-group-item"><strong>Prénom: </strong>{{ contact.prenom }}</li>
+        <li class="list-group-item"><strong>Objet: </strong>{{ contact.objet.nom }}</li>
+        <li class="list-group-item"><strong>Message: </strong>{{ contact.message }}</li>
+        <li class="list-group-item"><strong>Date d'envoi: </strong>{{ contact.createdAt | date('d/m/Y') }}</li>
+    </ul>
 </div>
-		<p>Email: {{ contact.email}}</p>
-   		<p>Nom: {{ contact.nom}}</p>
-        		<p>Prénom: {{ contact.prenom}}</p>
-                <p>Objet: {{ contact.objet.nom}}</p>
-                <p>Message: {{contact.message}}</p>
-                <p>Date d'envoi: {{ contact.createdAt | date('d/m/Y') }}</p>
-
-
 {% endblock %}

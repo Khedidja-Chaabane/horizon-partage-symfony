@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts de {{user.userName}}{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/user/profile.css') }}">
+{% endblock %}{% block body %}
+<div class="container my-4">
+<div class="d-flex justify-content-end mb-4 mt-4">
+            <a class="btn btn-secondary btn-retour"href="{{ path('app_profile', {'id': user.id}) }}"><i class="bi bi-arrow-left-square"></i> Retour</a>
+        </div>
+
+		
+
+<h2>Historique des Dons</h2>
+
+{% if dons is not empty %}
+    <ul>
+        {% for don in dons %}
+            <li>
+                <strong>Date du don :</strong> {{ don.dateDon|date('d/m/Y') }}<br>
+                <strong>Montant :</strong> {{ don.montant }} €
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Vous n'avez effectué aucun don pour le moment.</p>
+{% endif %}
+
+  
+   
+{% endblock %}

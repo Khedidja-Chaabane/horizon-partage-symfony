@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
@@ -21,7 +22,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Nom *',
                 'required' => true,
                 'label_attr' => [
-                    'class' => ' mt-2 mb-2' 
+                    'class' => ' mt-2 mb-2'
                 ],
                 'attr' => [
                     'placeholder' => 'Saisir votre nom',
@@ -102,14 +103,15 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez saisir un mot de passe',
                     ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
-                        'max' => 20,
-                        'maxMessage' => 'Votre mot de passe ne peut pas dépasser {{ limit }} caractères',
+                    new Regex([
+                        'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{12,}$/',
+                        'message' => 'Votre mot de passe doit contenir au moins 12 caractères, incluant au moins une majuscule, une minuscule, un chiffre et un caractère spécial.',
                     ]),
-                ]
+                ],
             ])
+            //(?=.*[\W_]) : Vérifie qu'il y a au moins un caractère spécial ou un underscore (\W_ = non-lettre/chiffre ou underscore).
+            //\W est pratique pour les caractères spéciaux, car il couvre tout ce qui n'est ni une lettre, ni un chiffre, ni un underscore, ce qui correspond bien à ce qu'on entend par "caractère spécial" dans un mot de passe.
+
             ->add('photoProfile', FileType::class, [
                 'label' => 'Photo de profil (Facultatif)',
                 'mapped' => false, // Ne pas mapper directement sur l'entité
@@ -120,9 +122,8 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control-file w-100' // Champ occupe toute la largeur
                 ]
-            ]);    
-        
-        }
+            ]);
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

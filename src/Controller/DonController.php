@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\DonType;
+use App\Repository\DonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -108,6 +109,40 @@ class DonController extends AbstractController
     {
         $session->set('contribution', []); // Vide tout le panier contribution
         $this->addFlash('success', 'Suppression réussie');
+        return $this->redirectToRoute('contribution');
+    }
+
+    #[Route('/valider-paiement', name: 'valider_paiement')]
+    public function validerPaiement(SessionInterface $session, DonRepository $donRepository): Response
+    {
+        // Récupérer la contribution stockée dans la session
+        $contribution = $session->get('contribution', []);
+
+        // Vérifier s'il y a des contributions
+        if (empty($contribution)) {
+            $this->addFlash('error', 'Votre panier est vide.');
+            return $this->redirectToRoute('contribution');
+        }
+
+        // Calculer le montant total de la contribution
+        $total = array_sum($contribution);
+
+        // Si l'utilisateur n'est pas connecté, on le redirige vers la page de login
+        if (!$this->getUser()) {
+            $this->addFlash('error', 'Vous devez être connecté pour valider votre paiement.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Appel à la méthode du repository pour enregistrer le don total
+        $donRepository->save($total, $this->getUser());
+
+        // Vider le panier (contribution) après validation du paiement
+        $session->set('contribution', []);
+
+        // Ajouter un message flash pour informer l'utilisateur du succès
+        $this->addFlash('success', 'Paiement validé et don enregistré. Merci pour votre générosité !');
+
+        // Rediriger vers une page de remerciement ou de confirmation
         return $this->redirectToRoute('contribution');
     }
 }
