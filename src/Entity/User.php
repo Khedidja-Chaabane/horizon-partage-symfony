@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $prenomUser = null;
 
-    #[ORM\Column(length: 255 , unique: true)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -35,10 +36,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = []; // Rôles sous forme de tableau JSON
 
-    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'auteur', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'auteur')]
     private Collection $posts;
 
-    #[ORM\Column(length: 255 , unique: true)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $userName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -52,7 +53,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->posts = new ArrayCollection();
         $this->dons = new ArrayCollection();
-    
     }
 
     public function getId(): ?int
@@ -108,22 +108,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    
-    public function getRoles(): array
-{
-    // Commencer par le rôle de base pour tous les utilisateurs
-    $roles = $this->roles;
 
-    // Assurer que 'ROLE_USER' est toujours inclus
-    if (!in_array('ROLE_USER', $roles, true)) {
-        $roles[] = 'ROLE_USER';
+    public function getRoles(): array
+    {
+        // Commencer par le rôle de base pour tous les utilisateurs
+        $roles = $this->roles;
+
+        // Assurer que 'ROLE_USER' est toujours inclus
+        if (!in_array('ROLE_USER', $roles, true)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return array_unique($roles);
     }
 
-    return array_unique($roles);
-}
 
-
-public function setRoles(array $roles): self
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
@@ -147,7 +147,7 @@ public function setRoles(array $roles): self
     }
 
     /**
-    * Récupère la collection de posts associés à cet utilisateur.
+     * Récupère la collection de posts associés à cet utilisateur.
      * @return Collection<int, Post>
      */
     public function getPosts(): Collection
@@ -157,9 +157,9 @@ public function setRoles(array $roles): self
 
     public function addPost(Post $post): static
     {
-        if (!$this->posts->contains($post)) {// Vérifie si le post n'est pas déjà dans la collection
-            $this->posts->add($post);// Ajoute le post à la collection de l'utilisateur
-            $post->setAuteur($this);// Définit cet utilisateur comme l'auteur du post
+        if (!$this->posts->contains($post)) { // Vérifie si le post n'est pas déjà dans la collection
+            $this->posts->add($post); // Ajoute le post à la collection de l'utilisateur
+            $post->setAuteur($this); // Définit cet utilisateur comme l'auteur du post
         }
 
         return $this;
@@ -168,9 +168,9 @@ public function setRoles(array $roles): self
     public function removePost(Post $post): static
     {
         if ($this->posts->removeElement($post)) { // Supprime le post de la collection de l'utilisateur
-        // Si le post appartient encore à cet utilisateur, on le désassocie
-        if ($post->getAuteur() === $this) {
-                $post->setAuteur(null);// Définit l'auteur du post à null (désassocie l'utilisateur du post)
+            // Si le post appartient encore à cet utilisateur, on le désassocie
+            if ($post->getAuteur() === $this) {
+                $post->setAuteur(null); // Définit l'auteur du post à null (désassocie l'utilisateur du post)
             }
         }
 
@@ -230,6 +230,4 @@ public function setRoles(array $roles): self
 
         return $this;
     }
-
-    
 }

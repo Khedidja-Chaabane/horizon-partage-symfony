@@ -59,7 +59,20 @@ class DonRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult(); // On récupère les résultats sous forme d'un tableau d'objets Don
     }
-    
+
+    //méthode pour récupérer tous les dons à commencer par le plus récent
+   /**
+     * @return Don[] Returns an array of Don objects
+     */
+    public function findAllOrderedByNewest(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.dateDon', 'DESC') // Tri par date de don, du plus récent au plus ancien
+            ->getQuery()
+            ->getResult();
+    }
+
+
     //    /**
     //     * @return Don[] Returns an array of Don objects
     //     */

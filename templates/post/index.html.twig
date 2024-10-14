@@ -57,15 +57,22 @@
 						<div class="card-body">
 							<h5 class="card-title">{{ post.titre | capitalize }}</h5>
 							<p class="card-text">{{ post.texte | capitalize | slice(0, 150) ~ ' ...' }}</p>
+							{% if post.auteur %}
 							{% if post.auteur.photoProfile %}
 								<img src="{{asset('images/user/' ~ post.auteur.photoProfile)}}" alt="{{post.auteur.userName}}" class="auteur-profile-img rounded-circle">
 							{% else %}
 								<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="auteur-profile-img rounded-circle">
 							{% endif %}
+							{% endif %}
 							<p class="card-text">
 								<small class="text-muted">Par :
 								</small>
+								{% if post.auteur %}
+								
 								{{ post.auteur.userName }}
+								{% else %}
+									Utilisateur introuvable
+								{% endif %}
 							</p>
 							<div class="card-footer text-center border-0">
 								<a href="{{ path('show_post', {'id': post.id}) }}" class="btn read-post-btn">Lire le Post</a>

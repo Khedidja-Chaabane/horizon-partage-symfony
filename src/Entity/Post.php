@@ -27,7 +27,7 @@ class Post
     private ?\DateTimeImmutable $date_publication = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?User $auteur = null;
 
     public function getId(): ?int

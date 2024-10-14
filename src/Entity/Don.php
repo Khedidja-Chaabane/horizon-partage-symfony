@@ -17,8 +17,9 @@ class Don
     private ?int $montant = null;
 
     #[ORM\ManyToOne(inversedBy: 'dons')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?User $donateur = null;
+
 
     #[ORM\Column]
     private ?\DateTimeImmutable $dateDon = null;

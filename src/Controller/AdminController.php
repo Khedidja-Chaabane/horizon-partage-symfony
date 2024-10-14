@@ -7,6 +7,7 @@ use App\Repository\ActionRepository;
 use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\ContactRepository;
+use App\Repository\DonRepository;
 use App\Repository\InfoRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -183,5 +184,25 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
     } 
+
+    //Gestion des dons
+    #[Route('/admin/gestionDons' , name: 'gestion_dons')]
+    public function manageDonations(DonRepository $donRepo): Response
+    {
+        if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+            $dons = $donRepo->findAllOrderedByNewest();
+            // Extraire les montants des dons
+            //fn fonction fléchée
+            //dit simplement : "Crée un nouveau tableau où chaque élément est le montant extrait des objets Don contenus dans $dons."
+            $montants = array_map(fn($don)=>$don->getMontant(), $dons);
+            $total = array_sum($montants);
+            return $this->render('admin/dons/gestionDons.html.twig', [
+               'dons'=>$dons,
+               'total'=>$total,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
+    }
     }
 

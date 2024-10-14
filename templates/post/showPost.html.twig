@@ -32,15 +32,23 @@
 				<!-- Contenu du post à gauche -->
 				<div class="col-md-8 post-container">
 					<p class="card-text">{{ post.texte |capitalize}}</p>
-					{% if post.auteur.photoProfile %}
-						<img src="{{asset('images/user/' ~ post.auteur.photoProfile)}}" alt="{{post.auteur.userName}}" class="auteur-profile-img rounded-circle">
-					{% else %}
-						<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="auteur-profile-img rounded-circle">
-					{% endif %}
-					<p class="card-text">
-						<small class="text-muted">Par :
-							{{ post.auteur.prenomUser }}</small>
-					</p>
+					{% if post.auteur %}
+							{% if post.auteur.photoProfile %}
+								<img src="{{asset('images/user/' ~ post.auteur.photoProfile)}}" alt="{{post.auteur.userName}}" class="auteur-profile-img rounded-circle">
+							{% else %}
+								<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="auteur-profile-img rounded-circle">
+							{% endif %}
+							{% endif %}
+							<p class="card-text">
+								<small class="text-muted">Par :
+								</small>
+								{% if post.auteur %}
+								
+								{{ post.auteur.userName }}
+								{% else %}
+									Utilisateur introuvable
+								{% endif %}
+							</p>
 					<p class="card-text">
 						<small class="text-muted">Publié le
 							{{ post.datePublication|date('d/m/Y H:i') }}</small>
@@ -50,9 +58,24 @@
 					<div class="container post-container ">
 						<p class="card-text">{{ post.texte |capitalize}}</p>
 						<p class="card-text">
-							<small class="text-muted">Par :
-								{{ post.auteur.prenomUser }}</small>
-						</p>
+							<small class="text-muted">
+								{% if post.auteur %}
+							{% if post.auteur.photoProfile %}
+								<img src="{{asset('images/user/' ~ post.auteur.photoProfile)}}" alt="{{post.auteur.userName}}" class="auteur-profile-img rounded-circle">
+							{% else %}
+								<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="auteur-profile-img rounded-circle">
+							{% endif %}
+							{% endif %}
+							<p class="card-text">
+								<small class="text-muted"> Par :
+								</small>
+								{% if post.auteur %}
+								
+								{{ post.auteur.userName }}
+								{% else %}
+									Utilisateur introuvable
+								{% endif %}
+							</p>
 						<p class="card-text">
 							<small class="text-muted">Publié le
 								{{ post.datePublication|date('d/m/Y H:i') }}</small>

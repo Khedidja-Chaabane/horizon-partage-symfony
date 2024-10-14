@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ProfileController extends AbstractController
 {
@@ -115,30 +116,47 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    // Méthode pour supprimer son profil
     #[Route('/profile/delete/{id}', name: 'delete_profile')]
-    public function deleteProfile(Request $request, UserRepository $userRepository, SessionInterface $session): Response
-    {
-        // Vérification que l'utilisateur est connecté
-        $user = $this->getUser();
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
-        }
-        if ($this->isCsrfTokenValid(
-        'delete' . $user->getId(), //s'assurer que le token est spécifique à l'action de suppression de cet utilisateur en particulier
-        $request->request->get('_token')
-    )) {
-        if($user->getPhotoProfile())
-        {
-            unlink($this->getParameter('user') . '/' . $user->getPhotoProfile());
-        }
-        $userRepository->remove($user, true);
-        $this->addFlash('success', 'Utilisateur supprimé avec succés');
-    } else {
-        $this->addFlash('error', 'L\'utilisateur n\'a pas pu etre supprimé');
+public function deleteProfile(
+    Request $request, 
+    UserRepository $userRepository, 
+    SessionInterface $session, 
+    TokenStorageInterface $tokenStorage
+): Response {
+    // Vérification que l'utilisateur est connecté
+    $user = $this->getUser();
+    if (!$user) {
+        return $this->redirectToRoute('app_login');
     }
-    return $this->redirectToRoute('app_home');
+
+    // Vérification du token CSRF
+    if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+        
+        // Suppression de la photo de profil si elle existe
+        if ($user->getPhotoProfile()) {
+            $photoPath = $this->getParameter('user') . '/' . $user->getPhotoProfile();
+            if (file_exists($photoPath)) {
+                unlink($photoPath);
+            }
+        }
+
+        // Suppression de l'utilisateur
+        $userRepository->remove($user, true);
+
+        // Déconnexion de l'utilisateur après suppression
+        $tokenStorage->setToken(null); // Déconnecte l'utilisateur
+        $session->invalidate(); // Invalide la session
+
+        // Ajout du message de succès
+        $this->addFlash('success', 'Utilisateur supprimé avec succès');
+        return $this->redirectToRoute('app_home');
+    }
+
+    // Si le token CSRF est invalide
+    $this->addFlash('error', 'L\'utilisateur n\'a pas pu être supprimé');
+    return $this->redirectToRoute('app_profile'); // Redirection vers le profil en cas d'erreur
 }
+
     
 
 
