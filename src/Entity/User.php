@@ -48,11 +48,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Don::class, mappedBy: 'donateur')]
     private Collection $dons;
 
+    #[ORM\ManyToMany(targetEntity: Action::class, mappedBy: 'inscrit')]
+    private Collection $actions;
+
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->dons = new ArrayCollection();
+        $this->actions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -226,6 +230,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($don->getDonateur() === $this) {
                 $don->setDonateur(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Action>
+     */
+    public function getActions(): Collection
+    {
+        return $this->actions;
+    }
+
+    public function addAction(Action $action): static
+    {
+        if (!$this->actions->contains($action)) {
+            $this->actions->add($action);
+            $action->addInscrit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAction(Action $action): static
+    {
+        if ($this->actions->removeElement($action)) {
+            $action->removeInscrit($this);
         }
 
         return $this;

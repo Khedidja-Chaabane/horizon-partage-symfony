@@ -80,6 +80,7 @@ class AdminController extends AbstractController
             'updateUserRoleForm' => $form->createView(),
         ]);
     }
+    
 // Supprimer un utilisateur
 #[Route('/admin/deleteUser/{id}', name: 'admin_delete_user')]
     public function deleteUser(Request $request,int $id, UserRepository $userRepository): Response

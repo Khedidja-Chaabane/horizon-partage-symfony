@@ -6,6 +6,7 @@ use App\Entity\Action;
 use App\Form\ActionType;
 use App\Form\CategorieFilterType;
 use App\Repository\ActionRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -208,4 +209,7 @@ class ActionController extends AbstractController
         }
         return $this->redirectToRoute('gestion_actions');
     }
+
+    //Inscription à une action
+   
 }

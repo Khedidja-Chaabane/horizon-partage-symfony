@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ActionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Categorie;
@@ -41,6 +43,14 @@ class Action
 
     #[ORM\ManyToOne(inversedBy: 'actions')]
     private ?categorie $categorie = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'actions')]
+    private Collection $inscrit;
+
+    public function __construct()
+    {
+        $this->inscrit = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +160,30 @@ class Action
     public function setCategorie(?categorie $categorie): static
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getInscrit(): Collection
+    {
+        return $this->inscrit;
+    }
+
+    public function addInscrit(User $inscrit): static
+    {
+        if (!$this->inscrit->contains($inscrit)) {
+            $this->inscrit->add($inscrit);
+        }
+
+        return $this;
+    }
+
+    public function removeInscrit(User $inscrit): static
+    {
+        $this->inscrit->removeElement($inscrit);
 
         return $this;
     }
