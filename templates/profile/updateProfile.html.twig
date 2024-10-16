@@ -18,11 +18,7 @@
   <div class="col-lg-8 col-md-10">
   
 						<div class="text-center mb-4">
-                        {% if user.photoProfile %}
 						<img src="{{asset('images/user/' ~ user.photoProfile)}}" alt="{{user.userName}}" class="profile-img rounded-circle">
-                        {% else %}
-						<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="default-profile-img rounded-circle">
-                        {% endif %}
 							<p class="text-muted mt-2">Photo de Profil actuelle </p>
 						</div>
    {{ form_start(formProfile) }}

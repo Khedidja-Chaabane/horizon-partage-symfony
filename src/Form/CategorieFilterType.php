@@ -23,6 +23,10 @@ class CategorieFilterType extends AbstractType
             ->add('service', SubmitType::class, [
                 'label' => 'Service',
                 'attr' => ['class' => 'btn btn-success'],
+            ])
+            ->add('aide', SubmitType::class, [
+                'label' => 'Aide',
+                'attr' => ['class' => 'btn btn-success'],
             ]);
     }
 

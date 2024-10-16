@@ -23,8 +23,8 @@ class ActionController extends AbstractController
         // Créer le formulaire
         $form = $this->createForm(CategorieFilterType::class);
         $form->handleRequest($request);
-         // Si le formulaire est soumis et valide
-         if ($form->isSubmitted() && $form->isValid()) {
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
             // Vérifier quel bouton a été cliqué et définir la catégorie en conséquence
             if ($form->get('cours')->isClicked()) {
                 $categorieName = 'cours';
@@ -32,10 +32,12 @@ class ActionController extends AbstractController
                 $categorieName = 'atelier';
             } elseif ($form->get('service')->isClicked()) {
                 $categorieName = 'service';
+            } elseif ($form->get('aide')->isClicked()) {
+                $categorieName = 'aide';
             }
         }
-         // Récupérer les actions en fonction de la catégorie sélectionnée
-         if ($categorieName) {
+        // Récupérer les actions en fonction de la catégorie sélectionnée
+        if ($categorieName) {
             // Récupérer les actions pour la catégorie sélectionnée
             $actions = $actionRepo->findByCategorieName($categorieName);
         } else {
@@ -70,18 +72,15 @@ class ActionController extends AbstractController
                 $imageFile = $form->get('image')->getData();
 
                 if ($imageFile) {
-                    // 1ere étape: définir le nom du fichier
+                    // Si une image est téléchargée, on la traite normalement
                     $nomImage = date('YmdHis') . '-' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
-
-                    // 2eme étape : enregistrer le fichier dans le projet
-                    $imageFile->move(
-                        $this->getParameter('action'), //l'emplacement->dans config/services.yaml à l'option parametres
-                        $nomImage
-                    );
-
-                    // 3eme étape: faut enregistrer le nom du fichier dans l'objet
+                    $imageFile->move($this->getParameter('action'), $nomImage);
                     $action->setImage($nomImage);
+                } else {
+                    // Si aucune image n'est téléchargée, on définit l'image par défaut
+                    $action->setImage('default.png'); // Image par défaut
                 }
+
                 // Enregistrer l'action dans la base de données
                 $actionRepo->add($action, true);
                 //ajouter une notification
@@ -110,11 +109,11 @@ class ActionController extends AbstractController
             'action' => $action
         ]);
     }
-//---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
 
- // Affichage d'une action spécifique coté admin
+    // Affichage d'une action spécifique coté admin
 
- #[Route('admin/action/{id}', name: 'admin_show_action')]
+    #[Route('admin/action/{id}', name: 'admin_show_action')]
     public function AdminShowAction(int $id, ActionRepository $actionRepo): Response
     {
         $action = $actionRepo->find($id);
@@ -164,8 +163,7 @@ class ActionController extends AbstractController
 
                 // Mise à jour de l'image dans l'entité
                 $action->setImage($nomImage);
-            } else
-            {
+            } else {
                 // Si aucune nouvelle image n'est soumise,et si l'action a déja une image , conserver l'image actuelle
                 $action->setImage($action->getImage());
             }
@@ -210,6 +208,29 @@ class ActionController extends AbstractController
         return $this->redirectToRoute('gestion_actions');
     }
 
+
     //Inscription à une action
-   
+    #[Route('action/{id}/user-inscription', name: 'action_user_inscription')]
+    public function actionUserInscription(int $id, ActionRepository $actionRepo, UserRepository $userRepo): Response
+    {
+        //verifier si l'utilisateur est connecté
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        //verifier si l'action existe
+        $action = $actionRepo->find($id);
+        if (!$action) {
+            return $this->redirectToRoute('app_actions');
+        }
+        //verifier si l'utilisateur n'est pas déja inscrit à l'action
+        if ($action->getInscrit()->contains($this->getUser())) {
+            $this->addFlash('error', 'Vous êtes déjà inscrit(e) à cette action');
+            return $this->redirectToRoute('app_actions');
+        }
+        //inscrire l'utilisateur à l'action
+        $action->addInscrit($this->getUser());
+        $actionRepo->add($action, true);
+        $this->addFlash('success', 'Vous avez bien été inscrit(e) à cette action');
+        return $this->redirectToRoute('app_actions');
+    }
 }

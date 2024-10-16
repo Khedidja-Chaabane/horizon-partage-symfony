@@ -23,9 +23,6 @@ class Action
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::FLOAT, nullable: true)]
-    private ?float $tarif = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
@@ -33,10 +30,19 @@ class Action
     private ?int $nombrePlaces = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date = null;
+    private ?\DateTimeInterface $dateDebut = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateFin = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $jour = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $horaire = null;
+    private ?\DateTimeInterface $horaireDebut = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $horaireFin = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lieu = null;
@@ -81,18 +87,6 @@ class Action
         return $this;
     }
 
-    public function getTarif(): ?float
-    {
-        return $this->tarif;
-    }
-
-    public function setTarif(float $tarif): static
-    {
-        $this->tarif = $tarif;
-
-        return $this;
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
@@ -117,25 +111,59 @@ class Action
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDateDebut(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->dateDebut;
     }
 
-    public function setDate(?\DateTimeInterface $date): static
+    public function setDateDebut(?\DateTimeInterface $dateDebut): static
     {
-        $this->date = $date;
+        $this->dateDebut = $dateDebut;
         return $this;
     }
 
-    public function getHoraire(): ?\DateTimeInterface
+    public function getDateFin(): ?\DateTimeInterface
     {
-        return $this->horaire;
+        return $this->dateFin;
     }
 
-    public function setHoraire(?\DateTimeInterface $horaire): static
+    public function setDateFin(?\DateTimeInterface $dateFin): static
     {
-        $this->horaire = $horaire;
+        $this->dateFin = $dateFin;
+        return $this;
+    }
+
+    public function getJour(): ?string
+    {
+        return $this->jour;
+    }
+
+    public function setJour(string $jour): static
+    {
+        $this->jour = $jour;
+
+        return $this;
+    }
+
+    public function getHoraireDebut(): ?\DateTimeInterface
+    {
+        return $this->horaireDebut;
+    }
+
+    public function setHoraireDebut(?\DateTimeInterface $horaireDebut): static
+    {
+        $this->horaireDebut = $horaireDebut;
+        return $this;
+    }
+
+    public function getHoraireFin(): ?\DateTimeInterface
+    {
+        return $this->horaireFin;
+    }
+
+    public function setHoraireFin(?\DateTimeInterface $horaireFin): static
+    {
+        $this->horaireFin = $horaireFin;
         return $this;
     }
 

@@ -1,0 +1,24 @@
+/* styles.css */
+
+/* Couleur de fond de la carte */
+.card {
+    background-color:  #ebf2f3 ;
+    border: 1px solid #ced4da; /* Bordure légère */
+}
+
+/* Changer la couleur de la carte au survol */
+.card:hover {
+    background-color: #e2e6ea; /* Couleur de fond au survol */
+    transition: background-color 0.3s; /* Transition douce */
+}
+
+/* Couleur du texte dans la carte */
+.card h6 {
+    color: #343a40; /* Couleur du texte du titre */
+}
+
+/* Couleur de l'icône */
+.card i {
+    color: #67BC45; /* Couleur de l'icône */
+}
+

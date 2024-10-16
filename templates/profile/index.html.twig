@@ -14,11 +14,7 @@
 		<div class="row ">
 			<div class="col-md-2">
 				<div class="profile-header text-center mb-2 ">
-					{% if user.photoProfile %}
 						<img src="{{asset('images/user/' ~ user.photoProfile)}}" alt="{{user.userName}}" class="profile-img rounded-circle">
-					{% else %}
-						<img src="{{asset('images/default-profile-img.png')}}" alt="default-profile-img" class="default-profile-img rounded-circle">
-					{% endif %}
 				</div>
 			</div>
 		</div>

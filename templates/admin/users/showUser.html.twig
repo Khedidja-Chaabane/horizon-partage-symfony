@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Informations du membre
+{% endblock %}
+
+{% block body %}
+	<div class="container my-4">
+		<div class="d-flex justify-content-end mt-2 mb-4">
+			<a class="btn btn-secondary" href="{{ path('gestion_users') }}">
+				<i class="bi bi-arrow-left-square"></i>
+				Retour
+			</a>
+		</div>
+
+		<h1 class="text-center mb-4 mt-5">Informations du membre</h1>
+
+		<div class="card mb-4">
+			<div class="card-header">
+				<h6 class="mb-0">Informations générales</h6>
+			</div>
+			<div class="card-body">
+				<p>
+					<strong>Photo de profil :</strong>
+				</p>
+				<img src="{{ asset('images/user/' ~ user.photoProfile) }}" alt="Photo de profil" class="img-thumbnail" style="max-width: 150px;">
+				<p>
+					<strong>Nom :</strong>
+					{{ user.nomUser |capitalize }}
+				</p>
+				<p>
+					<strong>Prénom :</strong>
+					{{ user.prenomUser |capitalize }}</p>
+				<p></p>
+				<p>
+					<strong>Pseudo :</strong>
+					{{ user.userName }}</p>
+
+				<p>
+					<strong>Email :</strong>
+					{{ user.email }}</p>
+				<p></p>
+				<p>
+					<strong>Role :</strong>
+					{% for role in user.roles %}
+						{{ role }}
+					{% endfor %}
+				</p>
+				<a class="btn btn-warning" href="{{ path('gestion_users_role', {'id': user.id}) }}">
+					<i class="bi bi-pencil-square"></i>
+					Modifier le rôle</a>
+
+			</div>
+		</div>
+
+		<!-- Section pour les dons -->
+		<div class="card mb-4">
+			<div class="card-header">
+				<h6 class="mb-0">Dons effectués</h6>
+			</div>
+			<div class="card-body">
+				{% if user.dons|length > 0 %}
+					<ul>
+						{% for don in user.dons %}
+							<li>
+								{{ don.montant }}
+								€
+								<i class="bi bi-arrow-right"></i>
+								le :
+								{{ don.dateDon|date('d/m/Y') }}</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p>Aucun don effectué pour le moment.</p>
+				{% endif %}
+			</div>
+		</div>
+
+		<!-- Section pour les actions -->
+		<div class="card mb-4">
+			<div class="card-header">
+				<h6 class="mb-0">Actions auxquelles l'utilisateur est inscrit</h6>
+			</div>
+			<div class="card-body">
+				{% if user.actions|length > 0 %}
+					<ul>
+						{% for action in user.actions %}
+							<li>
+								<a href="{{ path('admin_show_action', {'id': action.id}) }}">
+
+									{{ action.titre |capitalize }}</a>
+
+							</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p>Aucune inscription à des actions pour le moment.</p>
+				{% endif %}
+			</div>
+		</div>
+
+		<!-- Section pour les posts -->
+		<div class="card mb-4">
+			<div class="card-header">
+				<h6 class="mb-0">Posts rédigés</h6>
+			</div>
+			<div class="card-body">
+				{% if user.posts|length > 0 %}
+					<ul>
+						{% for post in user.posts %}
+							<li>
+								<a href="{{path('show_post', {'id': post.id})}}">{{ post.titre|capitalize }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p>Aucun post rédigé pour le moment.</p>
+				{% endif %}
+			</div>
+		</div>
+		<form action="{{ path('admin_delete_user', {'id': user.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer ce compte ?')">
+			<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+			<button class="btn btn-danger">
+				<i class="bi bi-trash"></i>
+				Supprimer ce membre ?
+			</button>
+		</form>
+	</div>
+
+{% endblock %}

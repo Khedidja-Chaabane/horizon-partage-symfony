@@ -46,7 +46,20 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
     }
-
+//afficher un utilisateur coté admin
+    #[Route('/admin/user/{id}', name: 'admin_show_user')]
+    public function adminShowUser(int $id, UserRepository $userRepository): Response
+    {
+        if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
+            // Récupérer l'utilisateur par ID
+            $user = $userRepository->find($id);
+            return $this->render('admin/users/showUser.html.twig', [
+                'user' => $user,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
+    }
     // Modifier le rôle d'un utilisateur
     #[Route('/admin/gestionUser/{id}/role', name: 'gestion_users_role', methods: ['GET', 'POST'])]
     public function updateUserRole(Request $request, int $id, UserRepository $userRepository): Response
@@ -80,7 +93,7 @@ class AdminController extends AbstractController
             'updateUserRoleForm' => $form->createView(),
         ]);
     }
-    
+
 // Supprimer un utilisateur
 #[Route('/admin/deleteUser/{id}', name: 'admin_delete_user')]
     public function deleteUser(Request $request,int $id, UserRepository $userRepository): Response

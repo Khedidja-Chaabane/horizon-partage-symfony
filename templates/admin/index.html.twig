@@ -1,41 +1,85 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Dashboard{% endblock %}
-
+{% block stylesheets %}
+{{parent()}}
+    <link rel="stylesheet" href="{{ asset('styles/admin/admin.css') }}">
+{% endblock %}
 {% block body %}
 
-
-    <h1>Bonjour Admin {{ app.user.userName }} ✅</h1>
-    <div class="container-fluid mt-3">
-  <h2 class="mb-3">Menu</h2>
-  <div class="row">
-    <div class="col-md-3">
-     <div class="list-group">
-        <a href="{{ path('gestion_dons') }}" class="list-group-item list-group-item-action bg-success text-white">Gestion des dons</a>
-      </div>
-    <div class="list-group">
-        <a href="{{ path('gestion_messages') }}" class="list-group-item list-group-item-action bg-success text-white">Gestion des Messages</a>
-      </div>
-      <div class="list-group">
-        <a href="{{ path('gestion_users') }}" class="list-group-item list-group-item-action bg-success text-white">Gestion des utilisateurs</a>
-      </div>
-      <div class="list-group">
-        <a href="{{ path('gestion_actions') }}" class="list-group-item list-group-item-action bg-success text-white">Gestion des actions</a>
-      </div>
-      <div class="list-group">
-        <a href="{{ path('gestion_categories') }}" class="list-group-item list-group-item-action bg-success text-white">Gestion des catégories</a>
-      </div>
-      <div class="list-group">
-        <a href="{{ path('gestion_annonces') }}" class="list-group-item list-group-item-action bg-success text-white">Gestion des annonces</a>
-      </div>
-      <div class="list-group">
-        <a href="{{ path('gestion_infos') }}" class="list-group-item list-group-item-action bg-success text-white">Gestion des infos</a>
-      </div>
+<div class="container my-5 mt-3 p-5">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="{{ path('gestion_dons') }}" class="text-decoration-none">
+                        <i class="bi bi-heart-fill fa-3x"></i>
+                        <h6>Gestion des dons</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="{{ path('gestion_messages') }}" class="text-decoration-none">
+                        <i class="bi bi-envelope-fill fa-3x"></i>
+                        <h6>Gestion des Messages</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="{{ path('gestion_users') }}" class="text-decoration-none">
+                        <i class="bi bi-person-fill fa-3x"></i>
+                        <h6>Gestion des utilisateurs</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="{{ path('gestion_actions') }}" class="text-decoration-none">
+                        <i class="bi bi-flag-fill fa-3x"></i>
+                        <h6>Gestion des actions</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="{{ path('gestion_categories') }}" class="text-decoration-none">
+                        <i class="bi bi-tags-fill fa-3x"></i>
+                        <h6>Gestion des catégories</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="{{ path('gestion_annonces') }}" class="text-decoration-none">
+                        <i class="bi bi-megaphone-fill fa-3x"></i>
+                        <h6>Gestion des annonces</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="{{ path('gestion_infos') }}" class="text-decoration-none">
+                        <i class="bi bi-info-circle-fill fa-3x"></i>
+                        <h6>Gestion des infos</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-9">
-      {% block content %}{% endblock %}
-    </div>
-  </div>
 </div>
 
 {% endblock %}

@@ -5,7 +5,7 @@
 
 {% block body %}
 	<div class="container my-4 mt-5">
-	<div class="d-flex justify-content-end mt-2 mb-4">
+		<div class="d-flex justify-content-end mt-2 mb-4">
 			<a class="btn btn-secondary" href="{{ path('app_admin') }}">
 				<i class="bi bi-arrow-left-square"></i>
 				Retour</a>
@@ -19,31 +19,18 @@
 				<thead>
 					<tr>
 						<th>Titre</th>
-						<th>Tarif</th>
-						<th>Date</th>
-						<th>Horaire</th>
+						<th>Jours</th>
 						<th>Nombre de places</th>
 						<th>Lieu</th>
-						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for action in actions %}
 						<tr>
 							<td>{{ action.titre|capitalize }}</td>
-							{% if action.tarif %}
-								<td>{{ action.tarif}}
-									€</td>
-							{% else %}
-								<td>Gratuit</td>
-							{% endif %}
-							{% if action.date %}
-								<td>{{ action.date | date('d/m/Y') }}</td>
-							{% else %}
-								<td>/</td>
-							{% endif %}
-							{% if action.horaire %}
-								<td>{{ action.horaire | date('H:i') }}</td>
+
+							{% if action.jour %}
+								<td>{{action.jour}}</td>
 							{% else %}
 								<td>/</td>
 							{% endif %}
@@ -82,6 +69,9 @@
 					{% endfor %}
 				</tbody>
 			</table>
+		{% else %}
+			<p>Aucune action pour le moment .
+			</p>
 		{% endif %}
 
 	{% endblock %}

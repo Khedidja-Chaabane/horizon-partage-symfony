@@ -5,7 +5,7 @@
 
 {% block body %}
 	<div class="container my-4 mt-5">
-	<div class="d-flex justify-content-end mt-2 mb-4">
+		<div class="d-flex justify-content-end mt-2 mb-4">
 			<a class="btn btn-secondary" href="{{ path('app_admin') }}">
 				<i class="bi bi-arrow-left-square"></i>
 				Retour</a>
@@ -38,16 +38,24 @@
 								{% endfor %}
 							</td>
 							<td>
-								<a class="btn btn-warning" href="{{ path('gestion_users_role', {'id': user.id}) }}"><i class="bi bi-pencil-square"></i> Modifier le rôle</a>
+								<a class="btn btn-secondary" href="{{ path('admin_show_user', {'id': user.id}) }}">
+									<i class="bi bi-eye-fill"></i>
+									Afficher</a>
+
 							</td>
 							<td>
-							<form action="{{ path('admin_delete_user', {'id': user.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer ce compte ?')">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-				<button class="btn btn-danger">
-					<i class="bi bi-trash"></i>
-					Supprimer
-				</button>
-			</form>
+								<a class="btn btn-warning" href="{{ path('gestion_users_role', {'id': user.id}) }}">
+									<i class="bi bi-pencil-square"></i>
+									Modifier le rôle</a>
+							</td>
+							<td>
+								<form action="{{ path('admin_delete_user', {'id': user.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer ce compte ?')">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+									<button class="btn btn-danger">
+										<i class="bi bi-trash"></i>
+										Supprimer
+									</button>
+								</form>
 							</td>
 						</tr>
 					{% endfor %}

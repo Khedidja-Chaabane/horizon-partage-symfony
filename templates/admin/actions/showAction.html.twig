@@ -29,9 +29,9 @@
 						class="row g-0">
 						<!-- Image de l'action -->
 						<div class="col-lg-4 col-md-12 img-container">
-						{% if action.image %}
-						
-							<img src="{{ asset('images/action/' ~ action.image) }}" alt="{{ action.titre }}" class="img-fluid">
+							{% if action.image %}
+
+								<img src="{{ asset('images/action/' ~ action.image) }}" alt="{{ action.titre }}" class="img-fluid">
 							{% endif %}
 						</div>
 
@@ -40,64 +40,63 @@
 							<div class="card-body">
 								<p class="card-text">
 									<small class="text-muted">Catégorie :
-										{{ action.categorie.nom | capitalize }}</small>
-								</p>
-								{% if action.tarif %}
-									<small class="text-muted">{{ action.tarif }}
-										€</small>
-								{% else %}
-									<strong class="text-muted">Gratuit</strong>
-								{% endif %}
-								<p class="card-text">{{ action.description | capitalize }}</p>
-
-
-								<p class="card-text">
-									<small class="text-muted">Date :
-										{% if action.date %}
-											{{ action.date | date('d/m/Y') }}
-										{% else %}
-											<strong class="text-muted">
-												/
-											</strong>
-										{% endif %}
 									</small>
+									<strong>{{ action.categorie.nom | capitalize }}</strong>
 								</p>
 
-								<p class="card-text">
-									<small class="text-muted">Horaire :
-										{% if action.horaire %}
-											{{ action.horaire | date('H:i') }}
-										{% else %}
-											<strong class="text-muted">
-												/
-											</strong>
+								<p class="card-text">{{ action.description | capitalize }}</p>
+								{% if action.jour %}
+								<p class="card-text"> Quand ? <strong>{{ action.jour | capitalize }}</strong></p>
+								{% endif %}
+								
+
+								{% if action.dateDebut or action.dateFin %}
+									<p class="card-text">
+										<small class="text-muted">Dates :
 										</small>
+										{% if action.dateDebut %}
+											{{ action.dateDebut | date('d/m/Y') }}
+										{% endif %}
+										{% if action.dateFin %}
+											{% if action.dateDebut %}
+												à
+											{% endif %}
+											{{ action.dateFin | date('d/m/Y') }}
+										{% endif %}
 									</p>
 								{% endif %}
 
-								<p class="card-text">
-									<small class="text-muted">Nombre de places :
-										{% if action.nombrePlaces %}
-											{{ action.nombrePlaces }}
-										{% else %}
-											<strong class="text-muted">
-												/
-											</strong>
+								{% if action.horaireDebut or action.horaireFin %}
+									<p class="card-text">
+										<small class="text-muted">Horaires :
 										</small>
+										{% if action.horaireDebut %}
+											{{ action.horaireDebut | date('H:i') }}
+											h
+										{% endif %}
+										{% if action.horaireFin %}
+											à
+											{{ action.horaireFin | date('H:i') }}
+											h
+										{% endif %}
 									</p>
 								{% endif %}
 
-
-								<p class="card-text">
-									<small class="text-muted">Lieu :
-										{% if action.lieu %}
-											{{ action.lieu | capitalize }}
-										{% else %}
-											<strong class="text-muted">
-												/
-											</strong>
+								{% if action.nombrePlaces %}
+									<p class="card-text">
+										<small class="text-muted">Nombre de places :
 
 										</small>
+										{{ action.nombrePlaces }}
+									</p>
+								{% endif %}
+
+								{% if action.lieu %}
+									<p class="card-text">
+										<small class="text-muted">Lieu :
+
+										</small>
+										{{ action.lieu | capitalize }}
 									</p>
 								{% endif %}
 							</div>
@@ -125,6 +124,6 @@
 			</div>
 		</div>
 
-		
+
 	</div>
 {% endblock %}

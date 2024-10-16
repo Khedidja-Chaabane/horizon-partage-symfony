@@ -8,7 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -43,9 +43,9 @@ class ActionType extends AbstractType
                         'max' => 255,
                         'maxMessage' => 'Veuillez saisir au maximum 255 caractères',
                     ])
-                    
+
                 ]
-               
+
             ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
@@ -55,12 +55,12 @@ class ActionType extends AbstractType
                 'required' => true,
                 'label_attr' => [
                     "class" => ' mt-3 mb-3', // Espacement du label
-                    
+
                 ],
                 'attr' => [
-                    'class' => 'form-control w-100' 
+                    'class' => 'form-control w-100'
                 ]
-              
+
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description de l\'action',
@@ -74,24 +74,24 @@ class ActionType extends AbstractType
                 ],
                 'required' => true,
             ])
-            ->add('tarif', MoneyType::class, [
-                'currency' => 'EUR',
-                'required' => false,  // Permet au champ d'être facultatif
-                'label' => 'Tarif en ',
-                'label_attr' => ['class' => 'mt-3 mb-3'],
-                'attr' => [
-                    'placeholder' => 'Saisir un prix',
-                    'class' => 'form-control w-25'
+            ->add('nombrePlaces', IntegerType::class, [
+                'label' => 'Nombre de places',
+                'label_attr' => [
+                    'class' => 'mt-3 mb-3' // Espacement du label
                 ],
-                'help' => 'Le prix doit être supérieur ou égal à 0, ou peut être laissé vide pour indiquer la gratuité',
-                'help_attr' => ['class' => 'text-danger mt-2 mb-3'],
+                'attr' => [
+                    'placeholder' => 'Saisir le nombre de places',
+                    'class' => 'form-control w-100' // Champ occupe toute la largeur
+                ],
+                'required' => false, // Champ non obligatoire
                 'constraints' => [
                     new GreaterThanOrEqual([
                         'value' => 0,
-                        'message' => 'Le prix doit être supérieur ou égal à 0.',
+                        'message' => 'Le nombre de places doit être supérieur ou égal à 0.',
                     ]),
-                ],
+                ]
             ])
+
 
             // Ajout d'un champ pour téléverser une nouvelle image
             ->add('image', FileType::class, [
@@ -102,21 +102,59 @@ class ActionType extends AbstractType
                     'class' => 'mt-3 mb-3 w-100' // Espacement du label
                 ],
                 'attr' => [
-                    'class' => 'w-50' 
+                    'class' => 'w-50'
                 ],
-                 
+
             ])
-            ->add('date', DateType::class, [
+            // Ajouter la date de début
+            ->add('dateDebut', DateType::class, [
                 'widget' => 'single_text',
                 'required' => false,
-                'label' => 'Date',
-                'label_attr' => ['class' => 'mt-3 mb-3 w-100']
+                'label' => 'Date de début',
+                'label_attr' => ['class' => 'mt-3 mb-3 w-100'],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
-            ->add('horaire', TimeType::class, [
+            // Ajouter la date de fin
+            ->add('dateFin', DateType::class, [
                 'widget' => 'single_text',
                 'required' => false,
-                'label' => 'Horaire',
-                'label_attr' => ['class' => 'mt-3 mb-3 w-100']
+                'label' => 'Date de fin',
+                'label_attr' => ['class' => 'mt-3 mb-3 w-100'],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            //les jours
+            ->add('jour', TextType::class, [
+                'required' => false,
+                'label' => 'Jours',
+                'label_attr' => ['class' => 'mt-3 mb-3 w-100'],
+                'attr' => [
+                    'placeholder' => 'Exemple: Tous les lundis et jeudis',
+                    'class' => 'form-control w-100'
+                ]
+            ])
+            // Ajouter l'horaire de début
+            ->add('horaireDebut', TimeType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+                'label' => 'Horaire de début',
+                'label_attr' => ['class' => 'mt-3 mb-3 w-100'],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            // Ajouter l'horaire de fin
+            ->add('horaireFin', TimeType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+                'label' => 'Horaire de fin',
+                'label_attr' => ['class' => 'mt-3 mb-3 w-100'],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('lieu', TextType::class, [
                 'required' => false,

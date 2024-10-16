@@ -5,11 +5,7 @@
 			<!-- Dropdown pour le profil utilisateur -->
 			<div class="dropdown">
 				<a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-					{% if app.user.photoProfile %}
 						<img src="{{ asset('images/user/' ~ app.user.photoProfile) }}" alt="Photo de profil" class="rounded-circle me-2 user-img">
-					{% else %}
-						<img src="{{ asset('images/default-profile-img.png') }}" alt="default-profile-img" class="rounded-circle me-2 user-img">
-					{% endif %}
 					<span class="bonjour">Bonjour
 						{{ app.user.userName|capitalize }}</span>
 				</a>
