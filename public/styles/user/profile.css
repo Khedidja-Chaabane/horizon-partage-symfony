@@ -1,18 +1,8 @@
-/* Partie profil */
-.profile-header h5 {
-    font-size:15px;
+.profile-img {
+    width:200px;
+    height: 200px;
 }
 
-.profile-img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-.default-profile-img{
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-}
 .profile-infos{
     padding: 20px;
     background-color: #ebf2f3;

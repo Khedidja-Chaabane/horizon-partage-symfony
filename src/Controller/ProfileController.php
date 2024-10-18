@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\UpdateProfileType;
@@ -18,19 +19,27 @@ class ProfileController extends AbstractController
     #[Route('/profile', name: 'app_profile')]
     public function index(): Response
     {
-          // Vérification que l'utilisateur est connecté
+        // Vérification que l'utilisateur est connecté
         $user = $this->getUser();
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
+        // Récupérer les posts , dons et actions de l'utilisateur 
+        $posts = $user->getPosts();
+        $dons = $user->getDons();
+        $actions = $user->getActions();
+
         // Affichage de la page de profil et Passage de l'utilisateur à la vue Twig sous la variable user
-        return $this->render('profile/index.html.twig', [
-            'user' => $user,       
+        return $this->render('profile/profile.html.twig', [
+            'user' => $user,
+            'posts'=>$posts,
+            'dons'=>$dons,
+            'actions'=>$actions,
         ]);
     }
 
- // Méthode pour modifier les données de profil
- #[Route('/profile/update/{id}', name: 'update_profile')]
+    // Méthode pour modifier les données de profil
+    #[Route('/profile/update/{id}', name: 'update_profile')]
     public function updateProfile(Request $request, UserRepository $userRepository, SessionInterface $session): Response
     {
         $user = $this->getUser();
@@ -61,7 +70,7 @@ class ProfileController extends AbstractController
             $userRepository->save($user, true);
 
             // Ajout d'une notification
-        $this->addFlash('success', 'Les modifications ont bien été prises en compte.');
+            $this->addFlash('success', 'Les modifications ont bien été prises en compte.');
 
             // Redirection vers la page d'affichage du profil
             return $this->redirectToRoute('app_profile');
@@ -117,85 +126,40 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/profile/delete/{id}', name: 'delete_profile')]
-public function deleteProfile(
-    Request $request, 
-    UserRepository $userRepository, 
-    SessionInterface $session, 
-    TokenStorageInterface $tokenStorage
-): Response {
-    // Vérification que l'utilisateur est connecté
-    $user = $this->getUser();
-    if (!$user) {
-        return $this->redirectToRoute('app_login');
-    }
-
-    // Vérification du token CSRF
-    if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-        
-        // Suppression de la photo de profil si elle existe
-        if ($user->getPhotoProfile()) {
-            $photoPath = $this->getParameter('user') . '/' . $user->getPhotoProfile();
-            if (file_exists($photoPath)) {
-                unlink($photoPath);
-            }
-        }
-
-        // Suppression de l'utilisateur
-        $userRepository->remove($user, true);
-
-        // Déconnexion de l'utilisateur après suppression
-        $tokenStorage->setToken(null); // Déconnecte l'utilisateur
-        $session->invalidate(); // Invalide la session
-
-        // Ajout du message de succès
-        $this->addFlash('success', 'Utilisateur supprimé avec succès');
-        return $this->redirectToRoute('app_home');
-    }
-
-    // Si le token CSRF est invalide
-    $this->addFlash('error', 'L\'utilisateur n\'a pas pu être supprimé');
-    return $this->redirectToRoute('app_profile'); // Redirection vers le profil en cas d'erreur
-}
-
-    
-
-
-    // Route pour afficher les posts redigés dans le profil
-    #[Route('/profile/posts', name: 'app_profile_posts')]
-    public function userPosts(): Response
-    {
-          // Vérification que l'utilisateur est connecté
-        $user = $this->getUser();
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
-        }
-  // Récupérer les posts de l'utilisateur via la méthode getPosts()
-  $posts = $user->getPosts();
-        // Affichage de la page et Passage de l'utilisateur à la vue Twig sous la variable user
-        return $this->render('profile/userPosts.html.twig', [
-            'user' => $user,
-        'posts' => $posts,
-        ]);
-    }
-
-    // Récupérer les dons de l'utilisateur sur son profil
-    #[Route('/profile/donations', name: 'profile_donations')]
-    public function userDonations(): Response
+    public function deleteProfile(Request $request,UserRepository $userRepository,SessionInterface $session,TokenStorageInterface $tokenStorage): Response 
     {
         // Vérification que l'utilisateur est connecté
         $user = $this->getUser();
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
-        // Récupérer les dons de l'utilisateur via la méthode getDonations()
-        $dons = $user->getDons();
-        // Affichage de la page et Passage de l'utilisateur à la vue Twig sous la variable user
-        return $this->render('profile/userDonations.html.twig', [
-            'user' => $user,
-            'dons' => $dons,
-        ]);
-    }
 
-    
+        // Vérification du token CSRF
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+
+            // Suppression de la photo de profil si elle existe
+            if ($user->getPhotoProfile()) {
+                $photoPath = $this->getParameter('user') . '/' . $user->getPhotoProfile();
+                if (file_exists($photoPath)) {
+                    unlink($photoPath);
+                }
+            }
+
+            // Suppression de l'utilisateur
+            $userRepository->remove($user, true);
+
+            // Déconnexion de l'utilisateur après suppression
+            $tokenStorage->setToken(null); // Déconnecte l'utilisateur
+            $session->invalidate(); // Invalide la session
+
+            // Ajout du message de succès
+            $this->addFlash('success', 'Utilisateur supprimé avec succès');
+            return $this->redirectToRoute('app_home');
+        }
+
+        // Si le token CSRF est invalide
+        $this->addFlash('error', 'L\'utilisateur n\'a pas pu être supprimé');
+        return $this->redirectToRoute('app_profile'); // Redirection vers le profil en cas d'erreur
+    }
 
 }

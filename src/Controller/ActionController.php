@@ -233,4 +233,25 @@ class ActionController extends AbstractController
         $this->addFlash('success', 'Vous avez bien été inscrit(e) à cette action');
         return $this->redirectToRoute('app_actions');
     }
+
+    //Désinscription d'une action
+    #[Route('action/{id}/user-desinscription', name: 'action_user_desinscription')]
+    public function actionUserDesinscription(int $id, ActionRepository $actionRepo, UserRepository $userRepo): Response
+    {
+        //verifier si l'utilisateur est connecté
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        //verifier que l'action existe et que l'utilisateur est vraiment inscrit à cette action
+        $action = $actionRepo->find($id);
+        if (!$action ||!$action->getInscrit()->contains($this->getUser())) {
+            return $this->redirectToRoute('app_actions');
+        }
+        //désinscrire l'utilisateur à l'action
+        $action->removeInscrit($this->getUser());
+        $actionRepo->add($action, true);
+        $this->addFlash('success', 'Vous avez bien été désinscrit(e) de cette action');
+        return $this->redirectToRoute('app_actions');
+
+    }
 }
