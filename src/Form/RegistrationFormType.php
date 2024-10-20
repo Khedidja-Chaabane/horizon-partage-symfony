@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -122,6 +123,18 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control-file w-100' // Champ occupe toute la largeur
                 ]
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Vérification * ', //Vérification anti-robot
+                'required' => true,
+                'mapped' => false,
+                'label_attr' => [
+                    'class' => 'mt-3 mb-2'
+                ],
+                'attr' => [
+                    'placeholder' => 'Entrez le texte de l’image',
+                    'class' => 'form-control w-100 mt-3 mb-2'
+                ],
             ]);
     }
 

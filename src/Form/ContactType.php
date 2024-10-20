@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Categorie;
 use App\Entity\Contact;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -91,7 +92,18 @@ class ContactType extends AbstractType
                 'required' => true
             ])
 
-        ;
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Vérification * ', //Vérification anti-robot
+                'required' => true,
+                'mapped' => false,
+                'label_attr' => [
+                    'class' => 'mt-3 mb-2'
+                ],
+                'attr' => [
+                    'placeholder' => 'Entrez le texte de l’image',
+                    'class' => 'form-control w-100 mt-3 mb-2'
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

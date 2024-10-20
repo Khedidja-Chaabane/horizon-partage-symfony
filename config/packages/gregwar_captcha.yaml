@@ -1,0 +1,7 @@
+gregwar_captcha:
+    width: 150       # Largeur de l'image du captcha
+    height: 50       # Hauteur de l'image
+    length: 5        # Nombre de caractères du captcha
+    charset: "abcdefghijklmnpqrstuvwxyz123456789"  # Ensemble de caractères utilisés
+    quality: 90      # Qualité de l'image
+    session_key: 'captcha'  # Clé de session où le code captcha est stocké
