@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function index(): Response
+    public function profile(): Response
     {
         // Vérification que l'utilisateur est connecté
         $user = $this->getUser();
@@ -32,9 +32,9 @@ class ProfileController extends AbstractController
         // Affichage de la page de profil et Passage de l'utilisateur à la vue Twig sous la variable user
         return $this->render('profile/profile.html.twig', [
             'user' => $user,
-            'posts'=>$posts,
-            'dons'=>$dons,
-            'actions'=>$actions,
+            'posts' => $posts,
+            'dons' => $dons,
+            'actions' => $actions,
         ]);
     }
 
@@ -126,7 +126,7 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/profile/delete/{id}', name: 'delete_profile')]
-    public function deleteProfile(Request $request,UserRepository $userRepository,SessionInterface $session,TokenStorageInterface $tokenStorage): Response 
+    public function deleteProfile(Request $request, UserRepository $userRepository, SessionInterface $session, TokenStorageInterface $tokenStorage): Response
     {
         // Vérification que l'utilisateur est connecté
         $user = $this->getUser();
@@ -161,5 +161,4 @@ class ProfileController extends AbstractController
         $this->addFlash('error', 'L\'utilisateur n\'a pas pu être supprimé');
         return $this->redirectToRoute('app_profile'); // Redirection vers le profil en cas d'erreur
     }
-
 }

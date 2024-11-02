@@ -1,28 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription
+{% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/user/forms.css') }}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/user/forms.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="container my-5">
-    <h1 class="text-center mb-4 mt-4"> Formulaire d'inscription </h1>
+	<div class="container my-5">
+		<h1 class="text-center mb-4 mt-4">
+			Formulaire d'inscription
+		</h1>
 
- <div class="d-flex justify-content-center">
-  <div class="col-lg-8 col-md-10">
-  <p class="text-muted mt-3 mb-3">Les champs marqués d'un * sont obligatoires.</p>
+		<div class="d-flex justify-content-center">
+			<div class="col-lg-8 col-md-10">
+				<p class="text-muted mt-3 mb-3">Les champs marqués d'un * sont obligatoires.</p>
 
-   {{ form_start(registrationForm) }}
-    {{ form_widget(registrationForm) }}
-    <button type="submit" class="btn btn-submit w-100 mt-4">S'inscrire</button>
-{{ form_end(registrationForm) }}
-<div class="text-center mt-3">
-       Déja inscrit(e) ? <a href="{{ path('app_login') }}">Se connecter</a> 
-    </div>
-  </div>
- </div>
+				{{ form_start(registrationForm) }}
+				{{ form_widget(registrationForm) }}
+				<button type="submit" class="btn btn-submit w-100 mt-4">S'inscrire</button>
+				{{ form_end(registrationForm) }}
+				<div class="text-center mt-3">
+					Déja inscrit(e) ?
+					<a href="{{ path('app_login') }}">Se connecter</a>
+				</div>
+			</div>
+		</div>
 
-</div>
+	</div>
 {% endblock %}

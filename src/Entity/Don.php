@@ -20,7 +20,6 @@ class Don
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?User $donateur = null;
 
-
     #[ORM\Column]
     private ?\DateTimeImmutable $dateDon = null;
 

@@ -1,49 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Connexion
+{% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/user/forms.css') }}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/user/forms.css') }}">
 {% endblock %}
 {% block body %}
-<div class="container my-5">
-<form method="post">
-    {% if error %}
-        {# <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div> #}
-        {# J'ai remplacé le message d'erreur ci-dessus généré par symfony en Anglais, pour le remplacer par un message personnalisé en Français #}
-    <div class="alert alert-danger">
-    {{ 'Identifiants incorrects , veuillez réessayer'}}
-</div>
+	<div class="container my-5">
+		<form method="post">
+			{% if error %}
+				{# <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div> #}
+				{# J'ai remplacé le message d'erreur ci-dessus généré par symfony en Anglais, pour le remplacer par un message personnalisé en Français #}
+					<div class="alert alert-danger"> {{ 'Identifiants incorrects , veuillez réessayer'}}
+				</div>
 
-    {% endif %}
+			{% endif %}
 
-    {% if app.user %}
-        <div class="mb-3 mt-3">
-            Vous etes connecté(e) avec cette adresse mail : {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
-        </div>
-    {% endif %}
+			{% if app.user %}
+				<div class="mb-3 mt-3">
+					Vous etes connecté(e) avec cette adresse mail :
+					{{ app.user.userIdentifier }},
+					<a href="{{ path('app_logout') }}">Déconnexion</a>
+				</div>
+			{% endif %}
 
-    <h1 class="text-center mb-4 mt-4">Connexion</h1>
-    <div class="d-flex justify-content-center">
-    <div class="col-lg-8 col-md-10">
-    <label class="mt-3" for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label class="mt-3" for="inputPassword">Mot de passe</label>
-    <input  type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+			<h1 class="text-center mb-4 mt-4">Connexion</h1>
+			<div class="d-flex justify-content-center">
+				<div class="col-lg-8 col-md-10">
+					<label class="mt-3" for="inputEmail">Email</label>
+					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+					<label class="mt-3" for="inputPassword">Mot de passe</label>
+					<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-<a href="{{path('app_forgot_password_request')}}" class="forgot-password mt-3 mb-2">Mot de passe oublié ?</a>
-    <button class="btn btn-submit w-100 mt-4" type="submit">
-        Me connecter
-    </button>
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<a href="{{path('app_forgot_password_request')}}" class="forgot-password mt-3 mb-2">Mot de passe oublié ?</a>
+					<button class="btn btn-submit w-100 mt-4" type="submit">
+						Me connecter
+					</button>
 
-    <div class="text-center mt-3">
-       Pas encore inscrit(e) ? <a href="{{ path('app_register') }}">S'inscrire</a> 
-    </div>
-    </div>
-</form>
+					<div class="text-center mt-3">
+						Pas encore inscrit(e) ?
+						<a href="{{ path('app_register') }}">S'inscrire</a>
+					</div>
+				</div>
+			</form>
 
-</div>
-{% endblock %}
+		</div>
+	{% endblock %}

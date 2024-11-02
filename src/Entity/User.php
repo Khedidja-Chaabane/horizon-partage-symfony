@@ -51,6 +51,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Action::class, mappedBy: 'inscrit')]
     private Collection $actions;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $adress = null;
+
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $zipCode = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $telephone = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $sexe = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $nationality = null;
+
 
     public function __construct()
     {
@@ -258,6 +276,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->actions->removeElement($action)) {
             $action->removeInscrit($this);
         }
+
+        return $this;
+    }
+
+    public function getAdress(): ?string
+    {
+        return $this->adress;
+    }
+
+    public function setAdress(?string $adress): static
+    {
+        $this->adress = $adress;
+
+        return $this;
+    }
+
+    public function getZipCode(): ?string
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode(?string $zipCode): static
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(?string $sexe): static
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    public function getNationality(): ?string
+    {
+        return $this->nationality;
+    }
+
+    public function setNationality(?string $nationality): static
+    {
+        $this->nationality = $nationality;
 
         return $this;
     }
