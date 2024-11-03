@@ -1,126 +1,146 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil de
-	{{ user.userName }}
-{% endblock %}
+{% block title %}Profil de {{ user.userName }}{% endblock %}
 
 {% block stylesheets %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('styles/user/profile.css') }}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/user/profile.css') }}">
 {% endblock %}
 
 {% block body %}
-	<div class="container my-4 mt-5">
-		<h1 class="text-center mb-4 mt-3">Mon profil</h1>
+    <div class="container my-4 mt-5">
+        <h1 class="text-center mb-4 mt-3">Mon profil</h1>
 
-		<!-- Section Profil et Infos de l'utilisateur -->
-		<div
-			class="row">
-			<!-- Photo de profil -->
-			<div class="col-md-3 text-center mt-3 mb-4">
-				<img src="{{ asset('images/user/' ~ user.photoProfile) }}" alt="{{ user.userName }}" class="profile-img img-thumbnail">
-			</div>
-			<!-- Infos de l'utilisateur -->
-			<div class="col-md-9">
-				<div class="card">
-					<div class="card-header text-center">
-						<h4>Mes informations</h4>
-					</div>
-					<div class="card-body">
-						<p>
-							<strong>Email :</strong>
-							{{ user.email }}</p>
-						<p>
-							<strong>Prénom :</strong>
-							{{ user.prenomUser }}</p>
-						<p>
-							<strong>Nom :</strong>
-							{{ user.nomUser }}</p>
-						<p>
-							<strong>Pseudo :</strong>
-							{{ user.userName }}</p>
-						<div class="d-grid gap-2">
-							<a href="{{ path('update_profile', {'id': user.id}) }}" class="btn btn-primary">Modifier mon profil</a>
-							<a href="{{ path('user_change_password') }}" class="btn btn-secondary">Changer mon mot de passe</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+        <!-- Section Profil et Infos de l'utilisateur -->
+        <div class="row">
+            <!-- Photo de profil -->
+            <div class="col-md-3 text-center mt-3 mb-4">
+                <img src="{{ asset('images/user/' ~ user.photoProfile) }}" alt="{{ user.userName }}" class="profile-img img-thumbnail">
+            </div>
+            
+            <!-- Infos de l'utilisateur -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>Mes informations</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Email :</strong> {{ user.email }}</p>
+                        <p><strong>Prénom :</strong> {{ user.prenomUser }}</p>
+                        <p><strong>Nom :</strong> {{ user.nomUser }}</p>
+                        <p><strong>Pseudo :</strong> {{ user.userName }}</p>
+                        
+                        {% if user.adress %}
+                            <p><strong>Adresse :</strong> {{ user.adress }}</p>
+                        {% endif %}
+                        
+                        {% if user.zipCode %}
+                            <p><strong>Code postal :</strong> {{ user.zipCode }}</p>
+                        {% endif %}
+                        
+                        {% if user.city %}
+                            <p><strong>Ville :</strong> {{ user.city }}</p>
+                        {% endif %}
+                        
+                        {% if user.telephone %}
+                            <p><strong>Téléphone :</strong> {{ user.telephone }}</p>
+                        {% endif %}
+                        
+                        {% if user.sexe %}
+                            <p><strong>Sexe :</strong> {{ user.sexe }}</p>
+                        {% endif %}
+                        
+                        {% if user.nationality %}
+                            <p><strong>Nationalité :</strong> {{ user.nationality }}</p>
+                        {% endif %}
+                        
+                        <div class="d-grid gap-2">
+                            <a href="{{ path('update_profile', {'id': user.id}) }}" class="btn btn-success mt-5 mb-3">Modifier / Compléter mon profil</a>
+                            <a href="{{ path('user_change_password') }}" class="btn btn-secondary mt-3 mb-3">Changer mon mot de passe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Fin de la section Profil et Infos de l'utilisateur -->
 
-		<!-- Inscriptions aux actions -->
-		<div class="row mt-4">
-			<div class="col-lg-6 col-md-12">
-				<div class="card mb-4">
-					<div class="card-header">
-						<h5>Mes inscriptions</h5>
-					</div>
-					<div class="card-body">
-						{% if user.actions|length > 0 %}
-							<ul class="list-group">
-								{% for action in user.actions %}
-									<li class="list-group-item d-flex justify-content-between align-items-center">
-										<a href="{{ path('show_action', {'id': action.id}) }}">{{ action.titre|capitalize }}</a>
-										<a href="{{ path('action_user_desinscription', {'id': action.id}) }}" class="btn btn-danger btn-sm">Me désinscrire</a>
-									</li>
-								{% endfor %}
-							</ul>
-						{% else %}
-							<p>Aucune inscription à des actions pour le moment.</p>
-						{% endif %}
-					</div>
-				</div>
-			</div>
+        <!-- Inscriptions aux actions et Historique des dons -->
+        <div class="row mt-4">
+            <div class="col-lg-6 col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Mes inscriptions</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if user.actions|length > 0 %}
+                            <ul class="list-group">
+                                {% for action in user.actions %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <a href="{{ path('show_action', {'id': action.id}) }}">{{ action.titre|capitalize }}</a>
+                                        <a href="{{ path('action_user_desinscription', {'id': action.id}) }}" class="btn btn-danger btn-sm">Me désinscrire</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Aucune inscription à des actions pour le moment.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
 
-			<!-- Historique des dons -->
-			<div class="col-lg-6 col-md-12">
-				<div class="card mb-4">
-					<div class="card-header">
-						<h5>Mes dons</h5>
-					</div>
-					<div class="card-body">
-						{% if dons is not empty %}
-							<ul class="list-group">
-								{% for don in dons %}
-									<li class="list-group-item">
-										{{ don.montant }}
-										€
-										<i class="bi bi-arrow-right"></i>
-										le :
-										{{ don.dateDon|date('d/m/Y') }}
-									</li>
-								{% endfor %}
-							</ul>
-						{% else %}
-							<p>Vous n'avez effectué aucun don pour le moment.</p>
-						{% endif %}
-					</div>
-				</div>
-			</div>
-		</div>
+            <div class="col-lg-6 col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Mes dons</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if dons is not empty %}
+                            <ul class="list-group">
+                                {% for don in dons %}
+                                    <li class="list-group-item">
+                                        {{ don.montant }} €
+                                        <i class="bi bi-arrow-right"></i>
+                                        le : {{ don.dateDon|date('d/m/Y') }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Vous n'avez effectué aucun don pour le moment.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Fin de la section Inscriptions aux actions et Historique des dons -->
 
-		<!-- Posts rédigés -->
-		<div class="row">
-			<div class="col-12">
-				<div class="card mb-4">
-					<div class="card-header">
-						<h5>Mes posts </h5>
-					</div>
-					<div class="card-body">
-						{% if user.posts|length > 0 %}
-							<ul class="list-group">
-								{% for post in user.posts %}
-									<li class="list-group-item">
-										<a href="{{ path('show_post', {'id': post.id}) }}">{{ post.titre|capitalize }}</a>
-									</li>
-								{% endfor %}
-							</ul>
-						{% else %}
-							<p>Aucun post rédigé pour le moment.</p>
-						{% endif %}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <!-- Posts rédigés -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Mes posts</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if user.posts|length > 0 %}
+                            <ul class="list-group">
+                                {% for post in user.posts %}
+                                    <li class="list-group-item">
+                                        <a href="{{ path('show_post', {'id': post.id}) }}">{{ post.titre|capitalize }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Aucun post rédigé pour le moment.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Fin de la section Posts rédigés -->
+
+        <!-- Formulaire de suppression de compte -->
+        <form action="{{ path('delete_profile', {'id': user.id}) }}" method="post" onsubmit="return confirm('Souhaitez-vous vraiment supprimer ce compte ?')">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+            <button class="btn btn-danger">
+                <i class="bi bi-trash"></i> Supprimer mon compte
+            </button>
+        </form>
+    </div> <!-- Fin du container principal -->
 {% endblock %}
