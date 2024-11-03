@@ -85,14 +85,17 @@ class ProfileController extends AbstractController
 
     // Méthode pour changer le mot de passe
     #[Route('/profile/change-password', name: 'user_change_password', methods: ['GET', 'POST'])]
-    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository, SessionInterface $session): Response
-    {
+    public function changePassword(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
+        UserRepository $userRepository,
+        SessionInterface $session
+    ): Response {
         // Vérification que l'utilisateur est connecté
         $user = $this->getUser();
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
-
         // Création du formulaire de changement de mot de passe
         $form = $this->createForm(ChangePasswordType::class, $user);
         $form->handleRequest($request);
