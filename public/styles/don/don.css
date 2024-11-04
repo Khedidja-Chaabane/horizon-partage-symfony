@@ -105,3 +105,17 @@ justify-content: center;
     width:40px;
     margin-right: 10px;
 }
+
+.merci {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    text-align: center;
+   
+}
+

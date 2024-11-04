@@ -4,9 +4,9 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container my-4 mt-5">
-		<div class="d-flex justify-content-end mt-2 mb-4">
-			<a class="btn btn-secondary" href="{{ path('app_admin') }}">
+	<div class="container my-4 mt-5 bg-white">
+		<div class="d-flex justify-content-end mt-5 mb-4">
+			<a class="btn btn-secondary mt-3" href="{{ path('app_admin') }}">
 				<i class="bi bi-arrow-left-square"></i>
 				Retour</a>
 		</div>
@@ -23,27 +23,24 @@
 				<tbody>
 					{% for don in dons %}
 						<tr>
-							<td>{{ don.montant}} €</td>
-
-
+							<td>{{ don.montant}}
+								€</td>
 							<td>
 								{% if don.donateur %}
-
 									{{ don.donateur.nomUser}}
 									{{ don.donateur.prenomUser}}
 								{% else %}
 									Utilisateur introuvable
 								{% endif %}
 							</td>
-
 							<td>{{ don.dateDon | date('d/m/Y') }}</td>
-                           
 						</tr>
-					 {% endfor %}
-                           
+					{% endfor %}
 				</tbody>
 			</table>
-            <p>Total : {{total}} €</p>
+			<p>Total :
+				{{total}}
+				€</p>
 		{% else %}
 			<p>Aucun don trouvé</p>
 		{% endif %}

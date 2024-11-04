@@ -12,8 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DonController extends AbstractController
 {
-    #[Route('/don', name: 'dons')]
-    public function index(Request $request, SessionInterface $session): Response
+    #[Route('/dons', name: 'dons')]
+    public function don(Request $request, SessionInterface $session): Response
     {
         $form = $this->createForm(DonType::class);
         $form->handleRequest($request);
@@ -26,21 +26,20 @@ class DonController extends AbstractController
             $montant = $data['montant_personnalise'] ?: $data['montant'];
 
             if ($montant > 0) {
-                                // Récupère la contribution actuelle de la session ou initialise un tableau vide
+                // Récupère la contribution actuelle de la session ou initialise un tableau vide
 
-            $contribution = $session->get('contribution', []);
-                            // Ajoute le montant du don à la liste des contributions
+                $contribution = $session->get('contribution', []);
+                // Ajoute le montant du don à la liste des contributions
 
-            $contribution[] = $montant;
-                            // Met à jour la session avec la nouvelle liste de contributions
+                $contribution[] = $montant;
+                // Met à jour la session avec la nouvelle liste de contributions
 
-            $session->set('contribution', $contribution);
+                $session->set('contribution', $contribution);
 
-            return $this->redirectToRoute('contribution');
+                return $this->redirectToRoute('contribution');
+            }
         }
-        }
-
-        return $this->render('don/index.html.twig', [
+        return $this->render('don/dons.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -140,9 +139,15 @@ class DonController extends AbstractController
         $session->set('contribution', []);
 
         // Ajouter un message flash pour informer l'utilisateur du succès
-        $this->addFlash('success', 'Paiement validé et don enregistré. Merci pour votre générosité !');
+        $this->addFlash('success', 'Paiement validé avec succes');
 
         // Rediriger vers une page de remerciement ou de confirmation
-        return $this->redirectToRoute('contribution');
+        return $this->redirectToRoute('merci');
+    }
+
+    #[Route('/merci', name: 'merci')]
+    public function merci(): Response
+    {
+        return $this->render('don/merci.html.twig');
     }
 }

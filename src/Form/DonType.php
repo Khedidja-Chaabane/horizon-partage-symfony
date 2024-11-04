@@ -32,7 +32,7 @@ class DonType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Pas de 'data_class' si ce formulaire ne lie pas directement à une entité
+            // Pas de 'data_class' car ce formulaire ne lie pas directement à une entité
             //'data_class' => Don::class,
         ]);
     }

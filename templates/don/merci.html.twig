@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Merci pour votre don{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/don/don.css') }}">
+    <style>
+        .merci {
+           display: flex;
+    align-items: center;
+    justify-content: center;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            text-align: center;
+        }
+        .bloc-merci{
+    
+    padding: 30px; /* Espacement autour du texte */
+    font-size: 35px; /* Taille du texte */
+    border-radius: 10px; /* Bords arrondis */
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+}
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container merci mt-5 text-center" style="background-image: url('{{ asset('images/merci.png') }}');">
+   <div class="bloc-merci"> <h1>Merci pour votre générosité !</h1>
+    <p class="lead">Votre don a bien été reçu et nous vous en remercions chaleureusement.</p>
+    <p>Grâce à votre contribution, nous pourrons continuer à soutenir notre mission et à aider ceux qui en ont besoin.</p>
+
+    <a href="{{ path('app_profile') }}" class="btn btn-success mt-4">Voir l'historique de mes dons</a></div>
+</div>
+{% endblock %}

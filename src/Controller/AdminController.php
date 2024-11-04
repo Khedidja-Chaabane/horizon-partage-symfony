@@ -19,13 +19,11 @@ class AdminController extends AbstractController
 {
     // Dashboard ADMIN
     #[Route('/admin', name: 'app_admin')]
-    public function index(): Response
+    public function admin(): Response
     {
         // Vérification que l'utilisateur est connecté et qu'il a le rôle admin
         if ($this->getUser() && $this->isGranted('ROLE_ADMIN')) {
-            return $this->render('admin/index.html.twig', [
-                'controller_name' => 'AdminController',
-            ]);
+            return $this->render('admin/admin.html.twig');
         } else {
             return $this->redirectToRoute('app_login');
         }
@@ -60,8 +58,9 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
     }
+
     // Modifier le rôle d'un utilisateur
-    #[Route('/admin/gestionUser/{id}/role', name: 'gestion_users_role', methods: ['GET', 'POST'])]
+    #[Route('/admin/user/{id}/role', name: 'gestion_users_role', methods: ['GET', 'POST'])]
     public function updateUserRole(Request $request, int $id, UserRepository $userRepository): Response
     {
         // Vérification pour sécuriser la tâche
@@ -72,9 +71,7 @@ class AdminController extends AbstractController
         $user = $userRepository->find($id);
         // Création du formulaire
         $form = $this->createForm(UserRoleType::class, $user);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             // Mettre à jour les rôles de l'utilisateur à partir des données du formulaire
             $roles = $form->get('roles')->getData();
@@ -87,7 +84,6 @@ class AdminController extends AbstractController
             // Redirection après la mise à jour des rôles
             return $this->redirectToRoute('gestion_users');
         }
-
         return $this->render('admin/users/updateUserRole.html.twig', [
             'user' => $user,
             'updateUserRoleForm' => $form->createView(),
