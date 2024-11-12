@@ -1,6 +1,4 @@
 .hero {
-    /* background-image: url("{{ asset('/images/hero.jpg') }}"); */
-    /* Jai opté pour la définiton de l'image du fond en ligne dans twig car je n'arrivais pas à l'afficher depuis le css */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,7 +7,6 @@
     background-position: center;
     position: relative;
     text-align: center;
-   
 }
 
 h1 {
@@ -34,7 +31,6 @@ h1 {
     cursor: pointer; /* Change le curseur à pointer lorsqu'on survole le bouton */
     animation: bounce 2s infinite; /* Animation de rebond pour attirer l'attention de l'utilisateur */
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-
 }
 
 /* Animation 'bounce' définie pour le bouton de défilement. 
@@ -56,6 +52,7 @@ Elle déplace légèrement le bouton vers le haut et vers le bas pour attirer l'
     padding: 20px; /* Espacement intérieur pour rendre le contenu plus aéré */
    
 }
+
 #recentInfosCarousel , #actionsCarousel{
     width: 80%;
     margin: 10px auto;

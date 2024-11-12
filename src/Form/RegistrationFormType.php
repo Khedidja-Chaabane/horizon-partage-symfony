@@ -13,58 +13,60 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class RegistrationFormType extends AbstractType
 {
+    private ParameterBagInterface $params;
+
+    // Injection du conteneur de paramètres pour accéder aux paramètres de configuration
+    public function __construct(ParameterBagInterface $params)
+    {
+        $this->params = $params;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // Champ Nom
         $builder
             ->add('nomUser', null, [
                 'label' => 'Nom *',
                 'required' => true,
-                'label_attr' => [
-                    'class' => ' mt-2 mb-2'
-                ],
+                'label_attr' => ['class' => 'mt-2 mb-2'],
                 'attr' => [
                     'placeholder' => 'Saisir votre nom',
-                    'class' => 'form-control w-100' // Champ occupe toute la largeur
+                    'class' => 'form-control w-100',
                 ],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir votre nom',
-                    ]),
+                    new NotBlank(['message' => 'Veuillez saisir votre nom']),
                 ]
             ])
+
+            // Champ Prénom
             ->add('prenomUser', null, [
                 'label' => 'Prénom *',
                 'required' => true,
-                'label_attr' => [
-                    'class' => ' mt-2 mb-2'
-                ],
+                'label_attr' => ['class' => 'mt-2 mb-2'],
                 'attr' => [
                     'placeholder' => 'Saisir votre prénom',
-                    'class' => 'form-control w-100'
+                    'class' => 'form-control w-100',
                 ],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir votre prénom',
-                    ]),
+                    new NotBlank(['message' => 'Veuillez saisir votre prénom']),
                 ]
             ])
+
+            // Champ Pseudo
             ->add('userName', null, [
                 'label' => 'Pseudo *',
                 'required' => true,
-                'label_attr' => [
-                    'class' => ' mt-2 mb-2'
-                ],
+                'label_attr' => ['class' => 'mt-2 mb-2'],
                 'attr' => [
                     'placeholder' => 'Saisir un Pseudo',
-                    'class' => 'form-control w-100'
+                    'class' => 'form-control w-100',
                 ],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir un Pseudo',
-                    ]),
+                    new NotBlank(['message' => 'Veuillez saisir un Pseudo']),
                     new Length([
                         'min' => 4,
                         'minMessage' => 'Le Pseudo doit comporter au moins {{ limit }} caractères',
@@ -73,75 +75,70 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
+
+            // Champ Email
             ->add('email', EmailType::class, [
                 'label' => 'Email *',
                 'required' => true,
-                'label_attr' => [
-                    'class' => 'mt-2 mb-2'
-                ],
+                'label_attr' => ['class' => 'mt-2 mb-2'],
                 'attr' => [
                     'placeholder' => 'Saisir votre adresse email',
-                    'class' => 'form-control w-100'
+                    'class' => 'form-control w-100',
                 ],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir une adresse email',
-                    ]),
+                    new NotBlank(['message' => 'Veuillez saisir une adresse email']),
                 ]
             ])
+
+            // Champ Mot de passe
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Mot de passe *',
-                'mapped' => false,
+                'mapped' => false, // Le mot de passe est géré séparément
                 'required' => true,
-                'label_attr' => [
-                    'class' => 'mt-2 mb-2'
-                ],
+                'label_attr' => ['class' => 'mt-2 mb-2'],
                 'attr' => [
                     'placeholder' => 'Saisir un mot de passe',
-                    'class' => 'form-control w-100'
+                    'class' => 'form-control w-100',
                 ],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir un mot de passe',
-                    ]),
+                    new NotBlank(['message' => 'Veuillez saisir un mot de passe']),
                     new Regex([
                         'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{12,}$/',
                         'message' => 'Votre mot de passe doit contenir au moins 12 caractères, incluant au moins une majuscule, une minuscule, un chiffre et un caractère spécial.',
                     ]),
                 ],
             ])
-            //(?=.*[\W_]) : Vérifie qu'il y a au moins un caractère spécial ou un underscore (\W_ = non-lettre/chiffre ou underscore).
-            //\W est pratique pour les caractères spéciaux, car il couvre tout ce qui n'est ni une lettre, ni un chiffre, ni un underscore, ce qui correspond bien à ce qu'on entend par "caractère spécial" dans un mot de passe.
 
+            // Champ Photo de profil
             ->add('photoProfile', FileType::class, [
                 'label' => 'Photo de profil (Facultatif)',
-                'mapped' => false, // Ne pas mapper directement sur l'entité
-                'required' => false, // Rendre le champ facultatif
-                'label_attr' => [
-                    'class' => 'mt-2 mb-2'
-                ],
+                'mapped' => false, // Champ non lié directement à l'entité
+                'required' => false, // Le champ est facultatif
+                'label_attr' => ['class' => 'mt-2 mb-2'],
                 'attr' => [
-                    'class' => 'form-control-file w-100' // Champ occupe toute la largeur
+                    'class' => 'form-control-file w-100', // Occupe toute la largeur
                 ]
-            ])
-            ->add('captcha', CaptchaType::class, [
-                'label' => 'Vérification * ', //Vérification anti-robot
-                'required' => true,
-                'mapped' => false,
-                'label_attr' => [
-                    'class' => 'mt-3 mb-2'
-                ],
-                'attr' => [
-                    'placeholder' => 'Entrez le texte de l’image',
-                    'class' => 'form-control w-100 mt-3 mb-2'
-                ],
             ]);
+
+        // Condition pour ajouter le CAPTCHA si captcha_disabled est false
+       // if (!$this->params->get('captcha_disabled')) {
+           // $builder->add('captcha', CaptchaType::class, [
+               //// 'label' => 'Vérification *', // CAPTCHA pour vérifier que l'utilisateur est humain
+               // 'required' => true,
+               // 'mapped' => false,
+               // 'label_attr' => ['class' => 'mt-3 mb-2'],
+               /// 'attr' => [
+                  //  'placeholder' => 'Entrez le texte de l’image',
+                  //  'class' => 'form-control w-100 mt-3 mb-2',
+              //  ],
+           // ]);
+        //}
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => User::class, // Associe le formulaire à l'entité User
         ]);
     }
 }

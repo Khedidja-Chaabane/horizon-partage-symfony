@@ -2,53 +2,54 @@
 
 {% block title %}Infos
 {% endblock %}
-
-
-
+{% block stylesheets %}
+	{# Appel de la fonction parent() pour inclure le contenu du bloc stylesheets du parent (le fichier base.html.twig ) #}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/info/info.css') }}">
+{% endblock %}
 {% block body %}
 	<div
-		class="container my-2">
-{# Ici des boutons de liens vers actualité , transparence, galerie multémedia #}
-		
-		<div class="row">
-			<!-- Section des règles du forum -->
-			<div class="col-lg-6 col-md-12">
-				<div class="recent-infos">
-					<h4>Nos dernières actualités</h4>
-					{% for info in recentInfos %}
-                    {# faire en sorte que 2 cards s'affichent sur une ligne #}
-					<div class="card card-info">
-						{% if info.image %}
-							<img src="{{ asset('images/info/' ~ info.image )}}" alt="{{ info.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
-						{% endif %}
-						<div class="card-body">
-							<h5 class="card-title">{{ info.titre | capitalize }}</h5>
-							<p class="card-text">{{ info.texte | capitalize | slice(0, 150) ~ ' ...' }}</p>
-							
-							<div class="card-footer text-center border-0">
-								<a href="{{ path('show_info', {'id': info.id}) }}" class="btn read-post-btn">Lire la suite</a>
-							</div>
-						</div>
+		class="container my-2 p-5 bg-white">
+		{# Boutons de liens vers actualité, transparence, galerie multimédia #}
+
+		<div
+			class="row">
+			<!-- Section bilan -->
+			<div class="col-lg-4 col-md-12 ">
+				<div class="bilan">
+					<h4 class="text-center mt-3 mb-3">Transparence</h4>
+					<div class="bilan">
+						<p>Consultez le rapport d'activités de notre association</p>
+						<embed src="{{ asset('images/bilan.pdf') }}" type="application/pdf" width="100%" height="600px">
 					</div>
-				{% endfor %}
-                {# >> Voir toute l'actualité #}
-                <a href="{{ path('all_infos') }}" class="btn see-all-infos-btn">>> Voir toute l'actualité</a>
 				</div>
 			</div>
-			<!-- Section des posts récents -->
-			<div class="col-lg-6 col-md-12 bilan">
-				<h4>Transparence</h4>
-				{# ici un carousel pour le bilan #}
-				
+
+			<!-- Section actualités récentes -->
+			<div class="col-lg-8 col-md-12 order-md-1 order-lg-2">
+				<div class="recent-infos">
+					<h4 class="text-center mt-3 mb-3">Nos dernières actualités</h4>
+					<div class="row">
+						{% for info in recentInfos %}
+							<div class="col-md-6 mb-4">
+								<div class="card card-info">
+									{% if info.image %}
+										<img src="{{ asset('images/info/' ~ info.image) }}" alt="{{ info.titre }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+									{% endif %}
+									<div class="card-body">
+										<h5 class="card-title">{{ info.titre | capitalize }}</h5>
+										<p class="card-text">{{ info.texte | capitalize | slice(0, 150) ~ ' ...' }}</p>
+										<div class="card-footer text-center border-0">
+											<a href="{{ path('show_info', {'id': info.id}) }}" class="btn read-info-btn">Lire la suite</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+					<a href="{{ path('all_infos') }}" class="btn see-all-infos-btn">>> Voir toute l'actualité</a>
+				</div>
 			</div>
-
-
 		</div>
-        <div class="row">
-            <!-- Section des photos de la galerie -->
-            <div class="galerie col-12">
-            
-            </div>
-        </div>
 	</div>
 {% endblock %}

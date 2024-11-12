@@ -3,9 +3,6 @@
 {% block title %}Acceuil
 {% endblock %}
 {% block stylesheets %}
-	{# Bloc 'stylesheets' pour inclure des fichiers CSS spécifiques à cette page.
-		 Il utilise {{ parent() }} pour inclure les styles du parent (base.html.twig), 
-		 puis ajoute un fichier CSS spécifique pour cette page d'accueil. #}
 	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('styles/home/home.css') }}">
 {% endblock %}
@@ -16,94 +13,80 @@
 		<button class="btn scroll-button" onclick="scrollToContent()">
 			<i class="bi bi-chevron-double-down"></i>
 		</button>
-		{# Bouton qui, lorsqu'on clique dessus, déclenche la fonction JavaScript scrollToContent(). 
-		    Il est stylisé pour être un indicateur visuel (ici un chevron vers le bas) incitant à scroller vers le bas. #}
 	</div>
-	{# Section principale de la page qui affichera des contenus spécifiques #}
-	<div
-		class="container" id="main-content">
-        <section class="about mt-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <img src="{{ asset('images/about/about.png') }}" alt="À propos de nous" class="img-fluid rounded">
-            </div>
-            <div class="col-md-6">
-                <p>Solidarité, communauté, et aspiration.</p>
-<p>Ensemble, nous pouvons faire la différence.</p>   
-             <a href="{{ path('about') }}" class="btn btn-success">En savoir plus</a>
-            </div>
-        </div>
-    </div>
-</section>
-{# Nos actions #}
-		<h2 class="text-center mt-3 mb-3">Nos actions principales</h2>
-        <div id="actionsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-			<div class="carousel-inner">
-				{% for action in actions %}
-					<div class="carousel-item {% if loop.first %}active{% endif %}">
-						<div class="card">
-							<a href="{{ path('show_action', {'id': action.id}) }}" target="_blank"><img src="{{ asset('images/action/' ~ action.image) }}" class="d-block w-100" alt="{{ action.titre }}"></a>
 
-							<div class="carousel-caption ">
- <a href="{{ path('show_action', {'id': action.id}) }}" target="_blank"><h5 class="card-title text-white">{{ action.titre }}</h5></a>
+	<div class="container" id="main-content">
 
-                            
-                        </div>
+		<div
+			class="bg-white p-5">
+			{# Nos actions #}
+			<h2 class="text-center mt-3 mb-5">Nos actions principales</h2>
+			<div id="actionsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+				<div class="carousel-inner">
+					{% for action in actions %}
+						<div class="carousel-item {% if loop.first %}active{% endif %}">
+							<div class="card">
+								<a href="{{ path('show_action', {'id': action.id}) }}" target="_blank"><img src="{{ asset('images/action/' ~ action.image) }}" class="d-block w-100" alt="{{ action.titre }}"></a>
+
+								<div class="carousel-caption ">
+									<a href="{{ path('show_action', {'id': action.id}) }}" target="_blank">
+										<h5 class="card-title text-white">{{ action.titre }}</h5>
+									</a>
+
+
+								</div>
+							</div>
 						</div>
-					</div>
-				{% endfor %}
+					{% endfor %}
+				</div>
+				{# Controls for previous/next #}
+				<button class="carousel-control-prev" type="button" data-bs-target="#actionsCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Précédent</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#actionsCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Suivant</span>
+				</button>
 			</div>
-			{# Controls for previous/next #}
-			<button class="carousel-control-prev" type="button" data-bs-target="#actionsCarousel" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Précédent</span>
-			</button>
-			<button class="carousel-control-next" type="button" data-bs-target="#actionsCarousel" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Suivant</span>
-			</button>
-		</div>
-<div class="text-center">
-<h5 class="text_center mt-3">Nos actions vous intéressent ?</h5>
-<a href="{{path('dons')}}" class="btn">Nous soutenir</a>
-<a href="{{path('app_annonces')}}" class="btn">Agir avec nous</a>
-
-</div>
-
-
-		{# Dernières actualités  #}
-		<h2 class="text-center mt-5 mb-3">Dernières actualités</h2>
-		{# affichage des infos recntes sous forme de carousel #}
-		{# Carousel Bootstrap #}
-		<div id="recentInfosCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-			<div class="carousel-inner">
-				{% for info in recentInfos %}
-					<div class="carousel-item {% if loop.first %}active{% endif %}">
-						<div class="card">
-							<a href="{{ path('show_info', {'id': info.id}) }}" target="_blank"><img src="{{ asset('images/info/' ~ info.image) }}" class="d-block w-100" alt="{{ info.titre }}"></a>
-
-							<div class="carousel-caption ">
- <a href="{{ path('show_info', {'id': info.id}) }}" target="_blank"><h5 class="card-title text-white">{{ info.titre }}</h5></a>
-
-                            
-                        </div>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-			{# Controls for previous/next #}
-			<button class="carousel-control-prev" type="button" data-bs-target="#recentInfosCarousel" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Précédent</span>
-			</button>
-			<button class="carousel-control-next" type="button" data-bs-target="#recentInfosCarousel" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Suivant</span>
-			</button>
 		</div>
 
 
+		<div
+			class="bg-white p-5">
+			{# Dernières actualités  #}
+			<h2 class="text-center mt-2 mb-5">Dernières actualités</h2>
+			{# affichage des infos recntes sous forme de carousel #}
+			{# Carousel Bootstrap #}
+			<div id="recentInfosCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+				<div class="carousel-inner">
+					{% for info in recentInfos %}
+						<div class="carousel-item {% if loop.first %}active{% endif %}">
+							<div class="card">
+								<a href="{{ path('show_info', {'id': info.id}) }}" target="_blank"><img src="{{ asset('images/info/' ~ info.image) }}" class="d-block w-100" alt="{{ info.titre }}"></a>
+
+								<div class="carousel-caption ">
+									<a href="{{ path('show_info', {'id': info.id}) }}" target="_blank">
+										<h5 class="card-title text-white">{{ info.titre }}</h5>
+									</a>
+
+
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				{# Controls for previous/next #}
+				<button class="carousel-control-prev" type="button" data-bs-target="#recentInfosCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Précédent</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#recentInfosCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Suivant</span>
+				</button>
+			</div>
+		</div>
 
 
 	</div>

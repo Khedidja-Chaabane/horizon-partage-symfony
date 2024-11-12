@@ -2,16 +2,9 @@
 footer {
     background-color: #3F4446;
     color: white;
-    padding: 10px ;
-    position: absolute;
+    padding: 10px;
     margin-top: 50px;
-    margin-bottom: 0;
     width: 100%;
-}
-
-.logo-footer {
-    height: 100%; 
-   width: 100%;
 }
 
 .social-icons img {
@@ -20,23 +13,32 @@ footer {
     border-radius: 50%;
 }
 
-.legal-links a{
+.contact-info p {
+    font-size: 20px;
+}
+
+.legal-links a {
     color: #67BC45;
     text-decoration: none;
 }
 
-.legal-links a:hover{
+.legal-links a:hover {
     color: rgb(137, 147, 235);
 }
 
 .copyright {
     padding: 10px 0;
     text-align: center;
-    color:white;
+    color: white;
 }
+
 /* Styles pour la flèche "Back to Top" */
 .back-to-top {
-margin-right: 30px;
+    padding-right: 30px;
+    /* Optionnel : centrer verticalement avec un espacement uniforme */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .back-to-top-link {
@@ -45,7 +47,6 @@ margin-right: 30px;
 
 .back-to-top-icon {
     width: 50px; /* Ajuste la taille de la flèche selon ton design */
-    height: auto;
     cursor: pointer;
     transition: transform 0.3s ease;
     background-color: white;

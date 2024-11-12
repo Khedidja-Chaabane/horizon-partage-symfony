@@ -11,14 +11,20 @@ framework:
         cookie_secure: auto
         cookie_samesite: lax
         storage_factory_id: session.storage.factory.native
-
+        
     #esi: true
     #fragments: true
     php_errors:
         log: true
 
+# Configuration spécifique à l'environnement de test
 when@test:
-    framework:
-        test: true
+    framework:  
+        test: true  
         session:
+            handler_id: null
+            cookie_secure: auto
+            cookie_samesite: lax
             storage_factory_id: session.storage.factory.mock_file
+    parameters:
+        captcha_disabled: true

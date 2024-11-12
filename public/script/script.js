@@ -2,10 +2,10 @@
 //Fonction JavaScript qui scroll vers l'élément avec l'id 'main-content'.
 //Utilise scrollIntoView() avec l'option 'smooth' pour un défilement fluide.
 //Appelée lors du clic sur le bouton de défilement dans la section 'hero'
+
 function scrollToContent() {
     const mainContent = document.getElementById('main-content');
     mainContent.scrollIntoView({ behavior: 'smooth' });
-
 }
 //-------------------------------------------------------------------------------
 //Script pour le filtre des actions

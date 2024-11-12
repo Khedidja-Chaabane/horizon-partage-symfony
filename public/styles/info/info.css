@@ -3,7 +3,7 @@
      object-fit: cover;
  }
  
- .card {
+ .card-info {
      border: none; /* Enlève la bordure par défaut */
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre douce pour un effet d'élévation */
      border-radius: 20px;
@@ -16,6 +16,7 @@
     color: #555; /* Couleur du texte de la carte */
      line-height: 35px; /* Espace entre les lignes de texte */
      text-align: justify;
+     font-size: 16px;
  }
  .img-container{
      padding: 20px;
@@ -25,3 +26,21 @@
   height: 300px; 
      border-radius: 20px;
   }
+ .read-info-btn{
+    width: 80%;
+    background-color: #3F4446;
+    color: white;
+    margin-top: 10px;
+ }
+ .see-all-infos-btn {
+    width: 100%;
+    background-color: #67BC45;
+    color: white;
+    margin-top: 20px;
+    font-weight: bold;
+}
+.see-all-infos-btn:hover{
+    background-color: #157347 ;
+    color: white;
+    font-weight: bold;
+}

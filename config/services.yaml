@@ -8,6 +8,7 @@ parameters:
     action: '%kernel.project_dir%/public/images/action'
     user: '%kernel.project_dir%/public/images/user'
     info: '%kernel.project_dir%/public/images/info'
+    captcha_disabled: false
 services:
     # default configuration for services in *this* file
     _defaults:
