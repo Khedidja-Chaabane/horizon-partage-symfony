@@ -20,4 +20,4 @@
 ###< symfony/phpunit-bridge ###
 
 # Ignorer le dossier contenant les images
-/public/images/
+#/public/images/
